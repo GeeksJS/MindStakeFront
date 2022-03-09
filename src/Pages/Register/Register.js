@@ -1,11 +1,12 @@
+import { MenuItem, Select } from '@material-ui/core';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import './login.css'
+import '../Login/login.css'
 
 
-class Login extends React.Component {
+class Register extends React.Component {
 
-    
+
     render() {
         return (
             <div id="loginform" >
@@ -22,17 +23,30 @@ const FormHeader = props => (
 );
 
 
+
 const Form = props => (
     <div>
-        <FormInput description="Username" placeholder="Enter your username" type="text" />
+
+        <FormInput description="Firstname" placeholder="Enter your firstname" type="text" />
+        <FormInput description="Lastname" placeholder="Enter your lastname" type="text" />
+        <FormInput description="Phone number" placeholder="Enter your phone number" type="number" />
+        <br/>
+        <label style={{ marginRight: '420px' }}>Role</label>
+        <select  className='select'>
+            <option>Select your role</option>
+            <option>Creator</option>
+            <option>Investor</option>
+            <option>Simple user</option>
+        </select>
+        <FormInput description="Email" placeholder="Enter your email" type="email" />
         <FormInput description="Password" placeholder="Enter your password" type="password" />
-        <a href="#" className='forgotPass'>Forgot password?</a>
-        <a href='/' style={{width:'100%'}}>
-            <FormButton title="Login" />
+        
+        <a href='/' style={{ width: '100%' }}>
+            <FormButton title="Register" />
         </a>
         <div className='register'>
-            <p>Don't have an account? &nbsp;  </p>
-            <a href="/register">Register</a>
+            <p>You already have an account? &nbsp;  </p>
+            <a href="/login">Login</a>
         </div>
     </div>
 );
@@ -52,7 +66,7 @@ const FormInput = props => (
 
 const OtherMethods = props => (
     <div id="alternativeLogin">
-        <label>Or sign in with:</label>
+        <label>Or sign up with:</label>
         <div id="iconGroup">
             <Facebook />
             <Twitter />
@@ -77,4 +91,4 @@ const Google = props => (
     <i class="fab fa-google-plus-square fa-3x icon-google "></i>
 );
 
-export default Login;
+export default Register;

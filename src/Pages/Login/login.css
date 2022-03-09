@@ -9,6 +9,15 @@
   z-index: 997;
 }
 
+.bodyRegister{
+  background: rgb(34,193,195);
+  background: linear-gradient(135deg, rgba(34,193,195,1) 0%,     rgba(253,187,45,1) 100%);
+  font-family: "work sans";
+  height: 120%;
+  margin-top: -100px;
+  margin-bottom: -100px;
+  z-index: 997;
+}
 
 
 #loginform{
@@ -20,6 +29,7 @@
   background-color: #FFFFFF;
   border-radius: 25px;
   z-index: 998;
+  
 }
 
 
@@ -39,12 +49,17 @@
   max-width: 100%;
   
 }
+.select{
+  width: 80%;
+  border: transparent;
+  border-bottom: 3px solid rgb(236, 235, 235);
+}
 
 .rowLogin input{
   width: 80%;
   box-sizing: border-box;
 	border: none;
-  font-size: 1.3rem;
+  font-size: 1rem;
   padding-left: 1.5rem;
   padding-bottom: 1rem;
   box-shadow: inset 0px -3px 0px 0px rgba(187,187,187,0.2);
@@ -137,6 +152,11 @@
   color: rgb(173, 0, 0);
   margin-left: 10px;
 }
+.icon-linkedin{
+  color: rgb(14, 0, 139);
+  margin-left: 10px;
+}
+
 
 .loginButton{
   height: 70px;
@@ -160,4 +180,8 @@
   flex-direction: row;
   justify-content: center;
   margin-top: 10px;
+}
+
+.box{
+  display:flex;
 }

@@ -256,7 +256,7 @@ export default function Home() {
                                 </div>
                                 <p>
                                     We provide a Chatbot powered by IA to guide you and help you
-                                    find the best offerswith a
+                                    find the best offers with a highly advanced recommendation system.
                                 </p>
 
                             </div>

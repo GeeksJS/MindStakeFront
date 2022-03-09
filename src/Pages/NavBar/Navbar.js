@@ -70,10 +70,10 @@ export default function Navbar() {
                         <div className="navbar-inner">
                             <div className="logo1">
                                 <a href="index.html">
-                                    <img src="assets/img/logo.png" alt="MindStake" />
+                                    <img src="../assets/img/logo.png" alt="MindStake" />
                                 </a>
                             </div>
-                            <div className="nav-menu">
+                            <div className="nav-menu" >
                                 <ul>
                                     <li className={window.location.pathname === "/" && "current"}>
                                         <NavLink to="/">Home</NavLink>
@@ -81,7 +81,7 @@ export default function Navbar() {
                                     <li className={window.location.pathname === "/projects" && "current"}>
                                         <NavLink to="projects"  >Project </NavLink>
                                     </li>
-                                    <li className={window.location.pathname === "/about" && "current"}>
+                                    {/* <li className={window.location.pathname === "/Organization" && "current"}>
                                         <NavLink to="/organizations">Organizations</NavLink>
                                         <ul className="submenu">
                                             <li>
@@ -95,7 +95,7 @@ export default function Navbar() {
                                             </li>
 
                                         </ul>
-                                    </li>
+                                    </li> */}
                                     <li className={window.location.pathname === "/about" && "current"}>
                                         <NavLink to="/about">About</NavLink>
                                     </li>
@@ -119,17 +119,44 @@ export default function Navbar() {
                                     </div>
 
                                     <div className="footer-widgets widget contact-widget li ml-30 mr--30">
-                                        <a href='#'>
-                                            <span className="icon1">
-                                                <i class="far fa-bell" ></i>
-                                            </span>
-                                        </a>
 
-                                        <a href='#'>
-                                            <span className="icon1">
-                                                <i class="far fa-user" ></i>
-                                            </span>
-                                        </a>
+                                        <li>
+                                            <Link to='/pricing'>
+                                                <span className="icon1">
+                                                <i class="fas fa-rocket"></i>
+                                                </span>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <a href='#'>
+                                                <span className="icon1">
+                                                    <i class="far fa-bell" ></i>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href='#'>
+                                                <span className="icon1">
+                                                    <i class="far fa-user" ></i>
+                                                </span>
+                                            </a>
+                                            <ul className="submenu">
+                                                <li>
+                                                    <NavLink to='/profile'>Profile</NavLink>
+                                                </li>
+                                                <li>
+                                                    <a href='/login'>Login</a>
+                                                </li>
+                                                <li>
+                                                    <a href='/register'>Register</a>
+                                                </li>
+
+
+                                            </ul>
+                                        </li>
+
+
                                     </div>
                                 </ul>
 

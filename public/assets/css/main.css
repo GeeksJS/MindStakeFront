@@ -515,6 +515,17 @@ a:hover {
 	border: 1px solid transparent;
 }
 
+.pricing{
+    color: gray;
+    font-size: 25px;
+
+}
+
+.pricing1{
+	color: white;
+	font-size: 25px;
+}
+
 .main-btn i {
 	margin-left: 5px;
 	width: 30px;
@@ -1859,6 +1870,87 @@ a:hover {
 	background-color: var(--white);
 }
 
+
+
+
+
+
+.page-title-area1 {
+	position: relative;
+	z-index: 1;
+	padding: 125px 0;
+	background-image: url(../img/4.jpg);
+	background-size: cover;
+	background-position: center;
+}
+
+.page-title-area1::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	background-color: var(--secondary-color);
+	opacity: 0.8;
+}
+
+.page-title-area1 .page-title {
+	color: var(--white);
+	font-size: 65px;
+}
+
+.page-title-area1 .page-breadcrumb {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-box-pack: end;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+}
+
+.page-title-area1 .page-breadcrumb li {
+	font-size: 20px;
+	font-weight: 500;
+	position: relative;
+	z-index: 1;
+}
+
+.page-title-area1 .page-breadcrumb li,
+.page-title-area1 .page-breadcrumb li a {
+	color: var(--white);
+}
+
+.page-title-area1 .page-breadcrumb li:not(:last-child) {
+	margin-right: 45px;
+}
+
+.page-title-area1 .page-breadcrumb li:not(:last-child)::before,
+.page-title-area1 .page-breadcrumb li:not(:last-child)::after {
+	content: "";
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	right: calc(-45px / 2);
+	top: 50%;
+	-webkit-transform: translate(50%, -50%);
+	-ms-transform: translate(50%, -50%);
+	transform: translate(50%, -50%);
+	border: 1px solid var(--white);
+	border-radius: 50%;
+	z-index: -2;
+}
+
+.page-title-area1 .page-breadcrumb li:not(:last-child)::before {
+	width: 5px;
+	height: 5px;
+	border: none;
+	z-index: -1;
+	background-color: var(--white);
+}
 /*======= Common Heading =======*/
 .common-heading .tagline {
 	position: relative;
@@ -3938,6 +4030,7 @@ a:hover {
 
 .pricing-box:hover .plan-name,
 .pricing-box:hover .price,
+.pricing-box:hover .pricing,
 .pricing-box:hover .plan-subtitle,
 .pricing-box:hover .plan-feature li,
 .pricing-box:hover .plan-feature li i,

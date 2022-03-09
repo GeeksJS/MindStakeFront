@@ -87,6 +87,9 @@ export default function ProjectDetails() {
                                         <button type="submit" className="main-btn">
                                             Donate Now <i className="far fa-arrow-right" />
                                         </button>
+                                        <button type="submit" className="main-btn" style={{backgroundColor:'rgba(255, 180, 40)',marginLeft:'30px'}}>
+                                            Contact <i class="fab fa-facebook-messenger"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -110,7 +113,6 @@ export default function ProjectDetails() {
                     </div>
                 </div>
             </section>
-
 
 
         </React.Fragment>

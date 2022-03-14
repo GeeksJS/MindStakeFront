@@ -1,9 +1,72 @@
-import React from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import Comments from './Comments'
 import Description from './Description'
 
 export default function ProjectDetails() {
+
+    const [dollar5,setDollar5]=useState(false)
+    const [dollar10,setDollar10]=useState(false)
+    const [dollar20,setDollar20]=useState(false)
+    const [dollar50,setDollar50]=useState(false)
+    const [dollar100,setDollar100]=useState(false)
+
+    const navigate = useNavigate();
+
+
+
+    const click5 = () => {
+        setDollar5(true) 
+        setDollar10(false)
+        setDollar20(false)
+        setDollar50(false)
+        setDollar100(false)
+        
+    }
+    const click10 = () => {
+        setDollar5(false) 
+        setDollar10(true)
+        setDollar20(false)
+        setDollar50(false)
+        setDollar100(false)
+        
+
+    }
+    const click20 = () => {
+        setDollar5(false) 
+        setDollar10(false)
+        setDollar20(true)
+        setDollar50(false)
+        setDollar100(false)
+        
+
+    }
+    const click50 = () => {
+        setDollar5(false) 
+        setDollar10(false)
+        setDollar20(false)
+        setDollar50(true)
+        setDollar100(false)
+        
+
+    }
+    const click100 = () => {
+        setDollar5(false) 
+        setDollar10(false)
+        setDollar20(false)
+        setDollar50(false)
+        setDollar100(true)
+    
+    }
+    
+
+
+    const donate = () =>{
+        //navigate('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op' ,{replace:true})
+       // window.location.replace('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op')
+       <Link to={{pathname:'https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'}}></Link>
+    }
+
     return (
         <React.Fragment>
 
@@ -18,7 +81,7 @@ export default function ProjectDetails() {
                         <div className="col-auto">
                             <ul className="page-breadcrumb">
                                 <li>
-                                    <a href="index.html">Home</a>
+                                    <Link to='/'>Home</Link>
                                 </li>
                                 <li>Project Details</li>
                             </ul>
@@ -78,16 +141,16 @@ export default function ProjectDetails() {
                                 <div className="project-form">
                                     <form action="#">
                                         <ul className="donation-amount">
-                                            <li>$5</li>
-                                            <li>$50</li>
-                                            <li>$180</li>
-                                            <li>$500</li>
-                                            <li>$1000</li>
+                                            <li className={dollar5 && 'dollar-5'} onClick={click5}>$5</li>
+                                            <li className={dollar10 && 'dollar-5'} onClick={click10}> $10</li>
+                                            <li className={dollar20 && 'dollar-5'} onClick={click20}>$20</li>
+                                            <li className={dollar50 && 'dollar-5'} onClick={click50}>$50</li>
+                                            <li className={dollar100 && 'dollar-5'} onClick={click100}>$100</li>
                                         </ul>
-                                        <button type="submit" className="main-btn">
-                                            Donate Now <i className="far fa-arrow-right" />
-                                        </button>
-                                        <button type="submit" className="main-btn" style={{backgroundColor:'rgba(255, 180, 40)',marginLeft:'30px'}}>
+                                        <a type="submit" className="main-btn" href='https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'>
+                                            Donate Now <i className="fas fa-arrow-right" />
+                                        </a>
+                                        <button type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px' }}>
                                             Contact <i class="fab fa-facebook-messenger"></i>
                                         </button>
                                     </form>

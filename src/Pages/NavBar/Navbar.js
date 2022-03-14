@@ -1,6 +1,7 @@
 import React, { Component, Fragment, useEffect, useState } from 'react'
 import { Link, NavLink, Route, useLocation, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Checkout from '../Checkout/Checkout';
 
 export default function Navbar() {
     var classNameHome = "site-header sticky-header transparent-header topbar-transparent";
@@ -13,6 +14,11 @@ export default function Navbar() {
     const [path, setPath] = useState("/");
     const navigate = useNavigate();
 
+    const push = () => {
+        window.history.pushState(null, "payment", "localhost:3000/off");
+
+        window.history.replaceState(null, "payment", "localhost:3000/off")
+    }
 
     return (
 
@@ -112,9 +118,9 @@ export default function Navbar() {
 
                                         </div>
                                         <div className="btn-buy text-amount">
-
-                                            <span >BUY</span>
-
+                                            
+                                                <a href='https://buy.stripe.com/test_6oE9Ev0l2c6jepacMT'  style={{color:'white',fontWeight:'bold'}}>BUY</a>
+                                            
                                         </div>
                                     </div>
 
@@ -123,7 +129,7 @@ export default function Navbar() {
                                         <li>
                                             <Link to='/pricing'>
                                                 <span className="icon1">
-                                                <i class="fas fa-rocket"></i>
+                                                    <i class="fas fa-rocket"></i>
                                                 </span>
                                             </Link>
                                         </li>
@@ -246,6 +252,8 @@ export default function Navbar() {
 
                 </div>
             </header>
+
+            
 
         </React.Fragment>
     )

@@ -3,10 +3,12 @@ import { Link, Route, Routes } from 'react-router-dom'
 import Review from '../Chatbot/Review'
 import Footer from '../Footer/Footer'
 import Navbar from '../NavBar/Navbar'
+import ScrollToTop from "react-scroll-to-top";
+
 
 
 export default function Home() {
-
+    
     return (
         <React.Fragment>
 
@@ -29,7 +31,7 @@ export default function Home() {
                                     className="main-btn wow fadeInUp"
                                     data-wow-delay="0.5s"
                                 >
-                                    Explore Projects <i className="far fa-arrow-right" />
+                                    Explore Projects <i className="fas fa-arrow-right" />
                                 </Link>
                             </div>
                         </div>
@@ -60,6 +62,68 @@ export default function Home() {
                         data-wow-delay="0.7s"
                     >
                         <img src="assets/img/hero/hero-one-small-2.jpeg" alt="Image" />
+                    </div>
+                </div>
+            </section>
+            <section className="counter-section-one mt-negative" style={{ marginTop: '100px ' }}>
+                <div className="container primary-bg">
+                    <div className="row counter-boxes justify-content-xl-between justify-content-center">
+                        <div className="col-xl-auto col-lg-5 col-md-5 col-sm-6">
+                            <div className="counter-box mb-40 icon-left">
+                                <div className="icon white-color">
+                                    <i className="flaticon-crowdfunding" />
+                                </div>
+                                <div className="content white-color">
+                                    <div className="count-wrap">
+                                        <span className="count">3598</span>
+                                        <span className="suffix">+</span>
+                                    </div>
+                                    <h6 className="title">We’ve Project Complate</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-xl-auto col-lg-5 col-md-5 col-sm-6">
+                            <div className="counter-box mb-40 icon-left">
+                                <div className="icon white-color">
+                                    <i className="flaticon-crowdfunding" />
+                                </div>
+                                <div className="content white-color">
+                                    <div className="count-wrap">
+                                        <span className="count">9634</span>
+                                        <span className="suffix">+</span>
+                                    </div>
+                                    <h6 className="title">Global Partners</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-xl-auto col-lg-5 col-md-5 col-sm-6">
+                            <div className="counter-box mb-40 icon-left">
+                                <div className="icon white-color">
+                                    <i className="flaticon-crowdfunding" />
+                                </div>
+                                <div className="content white-color">
+                                    <div className="count-wrap">
+                                        <span className="count">8565</span>
+                                        <span className="suffix">+</span>
+                                    </div>
+                                    <h6 className="title">Awards Winning</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-xl-auto col-lg-5 col-md-5 col-sm-6">
+                            <div className="counter-box mb-40 icon-left">
+                                <div className="icon white-color">
+                                    <i className="flaticon-crowdfunding" />
+                                </div>
+                                <div className="content white-color">
+                                    <div className="count-wrap">
+                                        <span className="count">4756</span>
+                                        <span className="suffix">+</span>
+                                    </div>
+                                    <h6 className="title">Active Volunteer</h6>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -268,423 +332,7 @@ export default function Home() {
 
 
 
-            <section className="project-section project-section-extra-gap secondary-bg">
-                <div className="container-fluid fluid-extra-padding">
-                    <div className="common-heading text-center color-version-white mb-60">
-                        <span className="tagline">
-                            <i className="fas fa-plus" /> Popular Projects
-                            <span className="heading-shadow-text">Our Projects</span>
-                        </span>
-                        <h2 className="title">Explore Our Projects</h2>
-                    </div>
-                    <div className="row project-slider-one project-items project-style-one no-shadow">
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-details.jpeg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Video &amp; Movies</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/team/03.jpeg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            Best Romantic &amp; Action English Movie Release in 2022.
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">79%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={79}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-grid-02.jpg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Educations</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/author-thumbs/02.jpg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            Needs Close Up Students Class Room In University
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">87%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={87}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-grid-03.jpg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Technology</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/author-thumbs/03.jpg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            Original Shinecon VR Pro Virtual Reality 3D Glasses VRBOX
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">85%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={85}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-grid-04.jpg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Clothes</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/author-thumbs/01.jpg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            Fundraising For The People And Causes You Care About
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">83%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={83}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-grid-05.jpg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Covid -19</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/author-thumbs/02.jpg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            COVID-19 Vaccine Have Already Begun Introduced Countries
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">93%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={93}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-grid-06.jpg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Business</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/author-thumbs/03.jpg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            Mobile First Is Just Not Goodies Enough Meet Journey
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">70%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={70}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-grid-07.jpg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Technology</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/author-thumbs/01.jpg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            Fundraising For The People And Causes You Care About
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">81%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={81}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-grid-08.jpg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Mobile Kits</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/author-thumbs/02.jpg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            COVID-19 Vaccine Have Already Begun Introduced Countries
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">73%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={73}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <div className="project-item">
-                                <div
-                                    className="thumb"
-                                    style={{
-                                        backgroundImage: "url(assets/img/project/project-grid-09.jpg)"
-                                    }}
-                                />
-                                <div className="content">
-                                    <div className="cats">
-                                        <a href="#">Business</a>
-                                    </div>
-                                    <div className="author">
-                                        <img src="assets/img/author-thumbs/03.jpg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
-                                    </div>
-                                    <h5 className="title">
-                                        <a href="project-details.html">
-                                            Mobile First Is Just Not Goodies Enough Meet Journey
-                                        </a>
-                                    </h5>
-                                    <div className="project-stats">
-                                        <div className="stats-value">
-                                            <span className="value-title">
-                                                Raised of <span className="value">$59,689</span>
-                                            </span>
-                                            <span className="stats-percentage">75%</span>
-                                        </div>
-                                        <div className="stats-bar" data-value={75}>
-                                            <div className="bar-line" />
-                                        </div>
-                                    </div>
-                                    <span className="date">
-                                        <i className="far fa-calendar-alt" /> 25 February 2021
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section className="counter-section-one mt-negative">
-                <div className="container primary-bg">
-                    <div className="row counter-boxes justify-content-xl-between justify-content-center">
-                        <div className="col-xl-auto col-lg-5 col-md-5 col-sm-6">
-                            <div className="counter-box mb-40 icon-left">
-                                <div className="icon white-color">
-                                    <i className="flaticon-crowdfunding" />
-                                </div>
-                                <div className="content white-color">
-                                    <div className="count-wrap">
-                                        <span className="count">3598</span>
-                                        <span className="suffix">+</span>
-                                    </div>
-                                    <h6 className="title">We’ve Project Complate</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-auto col-lg-5 col-md-5 col-sm-6">
-                            <div className="counter-box mb-40 icon-left">
-                                <div className="icon white-color">
-                                    <i className="flaticon-crowdfunding" />
-                                </div>
-                                <div className="content white-color">
-                                    <div className="count-wrap">
-                                        <span className="count">9634</span>
-                                        <span className="suffix">+</span>
-                                    </div>
-                                    <h6 className="title">Global Partners</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-auto col-lg-5 col-md-5 col-sm-6">
-                            <div className="counter-box mb-40 icon-left">
-                                <div className="icon white-color">
-                                    <i className="flaticon-crowdfunding" />
-                                </div>
-                                <div className="content white-color">
-                                    <div className="count-wrap">
-                                        <span className="count">8565</span>
-                                        <span className="suffix">+</span>
-                                    </div>
-                                    <h6 className="title">Awards Winning</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-auto col-lg-5 col-md-5 col-sm-6">
-                            <div className="counter-box mb-40 icon-left">
-                                <div className="icon white-color">
-                                    <i className="flaticon-crowdfunding" />
-                                </div>
-                                <div className="content white-color">
-                                    <div className="count-wrap">
-                                        <span className="count">4756</span>
-                                        <span className="suffix">+</span>
-                                    </div>
-                                    <h6 className="title">Active Volunteer</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
             <br /><br />
             <section className="emergency-project-with-cta">
                 <div className="container">
@@ -724,15 +372,15 @@ export default function Home() {
 
                 </div>
             </section>
-            <section className="partners-section section-gap section-border-bottom justify-content-center">
+            <section className="partners-section section-gap section-border-bottom justify-content-center" style={{ marginTop: '-200px' }}>
                 <div className="container">
                     <div className="about-text mt-md-70 mb-md-50">
-                        <div className="common-heading mb-30">
-                            <span className="tagline">
-                                <i className="fas fa-plus" /> Our Partners
+                        <div className="common-heading mb-30" style={{ textAlign: 'left' }}>
+                            <span className="tagline" >
+                                <i className="fas fa-plus" style={{ marginLeft: '8%' }} /> Our Partners
                                 <span className="heading-shadow-text">Partners</span>
                             </span>
-                            <h2 className="title">Trusted Partners</h2>
+                            <h2 className="title" >Trusted Partners</h2>
                         </div>
                     </div>
                     <div className="row partners-logos-one">
@@ -795,12 +443,16 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <Link to="chatbot" class="rsc-float-button sc-fjdhpX godhbL">
-                <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path>
-                    <path d="M0 0h24v24H0z" fill="none"></path>
-                </svg>
-            </Link>
+            <div className='row'>
+                <Link to="chatbot" class="rsc-float-button sc-fjdhpX godhbL" >
+                    <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                    </svg>
+                </Link>
+
+                <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%' ,marginBottom: '60px',zIndex:'999'}} color='white'></ScrollToTop>
+            </div>
 
 
             <Routes>
@@ -811,6 +463,8 @@ export default function Home() {
 
                 }></Route>
             </Routes>
+
+
 
 
 

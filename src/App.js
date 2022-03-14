@@ -6,6 +6,7 @@ import ProjectDetails from './Pages/Project/ProjectDetails';
 import Navbar from './Pages/NavBar/Navbar';
 import Footer from './Pages/Footer/Footer';
 import Login from './Pages/Login/Login';
+import Review from './Pages/Chatbot/Review';
 import { useEffect, useState } from 'react';
 import BubbleChatbot from './Pages/BubbleChatbot/BubbleChatbot';
 import About from './Pages/About/About';
@@ -13,6 +14,7 @@ import Contact from './Pages/Contact/Contact';
 import Profile from './Pages/Profile/Profile';
 import Pricing from './Pages/Pricing/Pricing';
 import Register from './Pages/Register/Register';
+import Checkout from './Pages/Checkout/Checkout';
 
 function App() {
   const [show, setShow] = useState(false)
@@ -22,7 +24,7 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        {(window.location.pathname !== "/login" && window.location.pathname !== "/register") && <Navbar />}
+        {(window.location.pathname !== "/login" && window.location.pathname !== "/register" && window.location.pathname !== "/checkout") && <Navbar />}
 
         <Routes>
           <Route exact path='/login' element={
@@ -46,11 +48,13 @@ function App() {
           <Route path='/contact' element={<Contact />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
           <Route path='/pricing' element={<Pricing />}></Route>
+          <Route path='/checkout' element={<Checkout /> } ></Route>
+
 
         </Routes>
 
 
-        {window.location.pathname !== "/login" && window.location.pathname !== "/register" && <Footer />}
+        {window.location.pathname !== "/login" && window.location.pathname !== "/register"  && window.location.pathname !== "/checkout" && <Footer />}
 
       </BrowserRouter>
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function About() {
     return (
@@ -13,7 +14,7 @@ export default function About() {
                             <div className="col-auto">
                                 <ul className="page-breadcrumb">
                                     <li>
-                                        <a href="index.html">Home</a>
+                                        <Link to='/'>Home</Link>
                                     </li>
                                     <li>About Us</li>
                                 </ul>
@@ -100,7 +101,7 @@ export default function About() {
                                         safe and secure thanks to the Blockchain Technology.
                                     </p>
                                     <a href="project-details.html" className="link">
-                                        <i className="far fa-arrow-right" />
+                                        <i className="fas fa-arrow-right" />
                                     </a>
                                     <span className="box-index">01</span>
                                     <div className="box-img">
@@ -122,7 +123,7 @@ export default function About() {
                                         between investors and entrepreneurs who seek to promote their projects.
                                     </p>
                                     <a href="project-details.html" className="link">
-                                        <i className="far fa-arrow-right" />
+                                        <i className="fas fa-arrow-right" />
                                     </a>
                                     <span className="box-index">02</span>
                                     <div className="box-img">
@@ -144,7 +145,7 @@ export default function About() {
                                         find the best offers with a highly advanced recommendation system.
                                     </p>
                                     <a href="project-details.html" className="link">
-                                        <i className="far fa-arrow-right" />
+                                        <i className="fas fa-arrow-right" />
                                     </a>
                                     <span className="box-index">03</span>
                                     <div className="box-img">
@@ -171,7 +172,7 @@ export default function About() {
                             </div>
                             <div className="col-auto">
                                 <a href="contact.html" className="main-btn mb-40">
-                                    Join Our Team <i className="far fa-arrow-right" />
+                                    Join Our Team <i className="fas fa-arrow-right" />
                                 </a>
                             </div>
                         </div>
@@ -318,13 +319,13 @@ export default function About() {
                                     </div>
                                 </div>
                             </div>
-                           
+
                         </div>
                     </div>
                 </section>
                 {/*====== Team section End ======*/}
                 {/*====== Counter With Image Text Block Start ======*/}
-                
+
                 {/*====== Counter With Image Text Block End ======*/}
                 {/*====== Testimonials Start ======*/}
                 <section className="testimonials-section section-gap">
@@ -582,7 +583,7 @@ export default function About() {
                 </section>
                 {/*====== Testimonials End ======*/}
                 {/*====== Partners Section With CTA Start ======*/}
-                
+
             </>
 
         </React.Fragment>

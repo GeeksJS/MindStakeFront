@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 export default function Contact() {
     const Facebook = props => (
@@ -28,7 +29,7 @@ export default function Contact() {
                             <div className="col-auto">
                                 <ul className="page-breadcrumb">
                                     <li>
-                                        <a href="index.html">Home</a>
+                                        <Link to='/'>Home</Link>
                                     </li>
                                     <li>Contact Us</li>
                                 </ul>
@@ -51,7 +52,7 @@ export default function Contact() {
                                         </span>
                                         <h2 className="title">Find Us On Social Media</h2>
                                     </div>
-                                    <div style={{marginTop:'80px'}}>
+                                    <div style={{ marginTop: '80px' }}>
                                         <Facebook />
                                         <Twitter />
                                         <LinkedIn />
@@ -181,7 +182,7 @@ export default function Contact() {
                                                 <div className="col-12">
                                                     <div className="form-field">
                                                         <button className="main-btn">
-                                                            Send Us Message <i className="far fa-arrow-right" />
+                                                            Send Us Message <i className="fas fa-arrow-right" />
                                                         </button>
                                                     </div>
                                                 </div>

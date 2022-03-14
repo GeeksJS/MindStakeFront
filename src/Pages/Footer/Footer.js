@@ -21,7 +21,7 @@ export default function Footer() {
                                             <form action="#">
                                                 <input type="text" placeholder="Email Address" />
                                                 <button type="submit">
-                                                    <i className="far fa-arrow-right" />
+                                                    <i className="fas fa-arrow-right" />
                                                 </button>
                                             </form>
                                         </div>
@@ -82,7 +82,7 @@ export default function Footer() {
                                         <ul className="info-list">
                                             <li>
                                                 <span className="icon">
-                                                    <i className="far fa-phone" />
+                                                    <i className="fas fa-phone" />
                                                 </span>
                                                 <span className="info">
                                                     <span className="info-title">Phone Number</span>
@@ -91,7 +91,7 @@ export default function Footer() {
                                             </li>
                                             <li>
                                                 <span className="icon">
-                                                    <i className="far fa-envelope-open" />
+                                                    <i className="fas fa-envelope-open" />
                                                 </span>
                                                 <span className="info">
                                                     <span className="info-title">Email Address</span>
@@ -100,7 +100,7 @@ export default function Footer() {
                                             </li>
                                             <li>
                                                 <span className="icon">
-                                                    <i className="far fa-map-marker-alt" />
+                                                    <i className="fas fa-map-marker-alt" />
                                                 </span>
                                                 <span className="info">
                                                     <span className="info-title">Locations</span>

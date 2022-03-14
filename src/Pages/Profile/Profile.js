@@ -2,6 +2,7 @@ import React from 'react'
 import './Profile.css'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { Link } from 'react-router-dom'
 
 
 export default function Profile() {
@@ -96,7 +97,7 @@ export default function Profile() {
                         <div className="col-auto">
                             <ul className="page-breadcrumb">
                                 <li>
-                                    <a href="index.html">Home</a>
+                                    <Link to='/'>Home</Link>
                                 </li>
                                 <li>Profile</li>
                             </ul>

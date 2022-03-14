@@ -85,7 +85,7 @@ export default function Comments() {
                                                 <div className="col-12">
                                                     <div className="input-field">
                                                         <button className="main-btn" onClick={addComment()}>
-                                                            Send Comments <i className="far fa-arrow-right" />
+                                                            Send Comments <i className="fas fa-arrow-right" />
                                                         </button>
                                                     </div>
                                                 </div>

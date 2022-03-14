@@ -18,7 +18,7 @@ export default function Projects() {
                         <div className="col-auto">
                             <ul className="page-breadcrumb">
                                 <li>
-                                    <a href="index.html">Home</a>
+                                    <Link to='/'>Home</Link>
                                 </li>
                                 <li>Project</li>
                             </ul>

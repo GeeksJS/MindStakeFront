@@ -15,12 +15,14 @@ import Profile from './Pages/Profile/Profile';
 import Pricing from './Pages/Pricing/Pricing';
 import Register from './Pages/Register/Register';
 import Checkout from './Pages/Checkout/Checkout';
+import useToken from './UseToken';
 
 function App() {
   const [show, setShow] = useState(false)
 
+  const { token, setToken } = useToken();
 
-
+  
   return (
     <div className='App'>
       <BrowserRouter>
@@ -30,7 +32,7 @@ function App() {
           <Route exact path='/login' element={
             <div className='bodyLogin'>
               <div className='container ' >
-                <Login />
+                <Login setToken={setToken}/>
               </div>
             </div>
           }></Route>

@@ -1,90 +1,38 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './login.css'
-import  axios  from "axios";
+import axios from "axios";
 
 
-async function loginUser(credentials) {
-    return fetch('http://localhost:3000/users/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-   }
 
 export default function Login({ setToken }) {
-
+    const navigate = useNavigate()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    const [login, setLogin] = useState({Email:"",Password:""})
 
 
 
-    // const doLogin = (e) => {
-    //     e.preventDefault()
-    //     const data = {
-    //         Email: email,
-    //         Password: password
-    //     }
-    //    // console.log(process.env.REACT_APP_API_URL)
-    //     axios.post(`http://localhost:3000/users/login`, data)
-    //         .then(res => {
-    //             console.log(res)
-    //         })
-    //         .catch(err => {
-    //             console.error(err);
-    //         })
-    // }
+    const doLogin = (e) => {
+        e.preventDefault()
+        const data = {
+            Email: email,
+            Password: password
+        }
+        axios.post(`http://localhost:3000/users/login`, data)
+            .then(res => {
+                console.log(res)
+                setToken(res.data.token)
+                navigate('/')
+                window.location.reload()
+                console.log(localStorage.getItem('token'))
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
 
-    const handleSubmit = async e => {
-        e.preventDefault();
-        const token = await loginUser({
-          email,
-          password
-        });
-        setToken(token);
-      }
-
-
-    const FormHeader = props => (
-        <h2 id="headerTitle">{props.title}</h2>
-    );
-
-
-    const Form = props => (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input type="email"  onChange={e => setEmail(e.target.value)}/>
-                <FormInput description="Password" placeholder="Enter your password" type="password" name="Password" value={password} onChange={e => setPassword(e.target.value)}/>
-                <a href="#" className='forgotPass'>Forgot password?</a>
-                <a href='/' style={{ width: '100%' }}>
-                    <FormButton title="Login" />
-                </a>
-                <div className='register'>
-                    <p>Don't have an account? &nbsp;  </p>
-                    <a href="/register">Register</a>
-                </div>
-            </form>
-        </div>
-    );
-
-    const FormButton = props => (
-        <div id="button" class="rowLogin">
-            <button>{props.title}</button>
-        </div>
-    );
-
-    const FormInput = props => (
-        <div class="rowLogin">
-            <label>{props.description}</label>
-            <input type={props.type} placeholder={props.placeholder} value={props.value} onChange={props.onChange}/>
-        </div>
-    );
 
     const OtherMethods = props => (
         <div id="alternativeLogin">
@@ -118,7 +66,29 @@ export default function Login({ setToken }) {
     return (
         <div id="loginform" >
             <img src='assets/img/logo.png' alt="logo" className='logo' />
-            <Form />
+            <div>
+                <form onSubmit={doLogin}>
+                    <div className='rowLogin'>
+                        <label>Email</label>
+                        <input placeholder="Enter you email" type="email" onChange={e => setEmail(e.target.value)} />
+                        <br />
+                        <label>Password</label>
+                        <input placeholder="Enter you password" type="password" onChange={e => setPassword(e.target.value)} />
+                    </div>
+                    <a href="#" className='forgotPass'>Forgot password?</a>
+                    <a href='/' style={{ width: '100%' }}>
+                        <div id='button' className='rowLogin'>
+                            <button >login</button>
+                        </div>
+
+                    </a>
+                    <div className='register'>
+                        <p>Don't have an account? &nbsp;  </p>
+                        <a href="/register">Register</a>
+                    </div>
+                </form>
+
+            </div>
             <OtherMethods />
         </div>
     )

@@ -39,7 +39,7 @@ function App() {
           <Route exact path='/register' element={
             <div className='bodyRegister'>
               <div className='container ' >
-                <Register />
+                <Register setToken={setToken}/>
               </div>
             </div>
           }></Route>

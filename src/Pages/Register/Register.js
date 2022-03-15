@@ -1,68 +1,67 @@
 import { MenuItem, Select } from '@material-ui/core';
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import '../Login/login.css'
 
 
-class Register extends React.Component {
+export default function Register() {
 
+    const [userRole, setUserRole] = useState("Simple user")
+    const changeRole = (e) => {
 
-    render() {
-        return (
-            <div id="loginform" >
-                <img src='assets/img/logo.png' alt="logo" className='logo' />
-                <Form />
-                <OtherMethods />
-            </div>
-        )
     }
+    return (
+        <div id="loginform" >
+            <img src='assets/img/logo.png' alt="logo" className='logo' />
+            <div>
+                <form>
+                    <div className='rowLogin'>
+                        <label>UserName</label>
+                        <input placeholder="Enter you userName" type="text" />
+                        <br />
+                        <label>Email</label>
+                        <input placeholder="Enter you email" type="email" />
+                        <br />
+                        <label>Password</label>
+                        <input placeholder="Enter you password" type="password" />
+                        <br />
+                        <label>Phone number</label>
+                        <input placeholder="Enter you phone number" type="number" />
+                        <br />
+                        <label>profile  picture</label>
+                        <input placeholder="Enter you profile picture" type="file" />
+                        <br />
+                        <label style={{ marginRight: '420px' }}>Role</label>
+                        <select className='select' onChange={changeRole} >
+                            <option >Select your role</option>
+                            <option  value={"Creator"}>Creator</option>
+                            <option value={"Investor"}>Investor</option>
+                            <option value={"SimpleUser"}>Simple user</option>
+                        </select>
+                    </div>
+
+                    <a href='/' style={{ width: '100%' }}>
+                        <div id='button' className='rowLogin' >
+                            <button >Register</button>
+                        </div>
+
+                    </a>
+                    <div className='register'>
+                        <p>already have an account? &nbsp;  </p>
+                        <a href="/login">Login</a>
+                    </div>
+                </form>
+
+            </div>
+            <OtherMethods />
+        </div>
+    )
+
 }
 
-const FormHeader = props => (
-    <h2 id="headerTitle">{props.title}</h2>
-);
 
 
 
-const Form = props => (
-    <div>
-
-        <FormInput description="Firstname" placeholder="Enter your firstname" type="text" />
-        <FormInput description="Lastname" placeholder="Enter your lastname" type="text" />
-        <FormInput description="Phone number" placeholder="Enter your phone number" type="number" />
-        <br/>
-        <label style={{ marginRight: '420px' }}>Role</label>
-        <select  className='select'>
-            <option>Select your role</option>
-            <option>Creator</option>
-            <option>Investor</option>
-            <option>Simple user</option>
-        </select>
-        <FormInput description="Email" placeholder="Enter your email" type="email" />
-        <FormInput description="Password" placeholder="Enter your password" type="password" />
-        
-        <a href='/' style={{ width: '100%' }}>
-            <FormButton title="Register" />
-        </a>
-        <div className='register'>
-            <p>You already have an account? &nbsp;  </p>
-            <a href="/login">Login</a>
-        </div>
-    </div>
-);
-
-const FormButton = props => (
-    <div id="button" class="rowLogin">
-        <button>{props.title}</button>
-    </div>
-);
-
-const FormInput = props => (
-    <div class="rowLogin">
-        <label>{props.description}</label>
-        <input type={props.type} placeholder={props.placeholder} />
-    </div>
-);
 
 const OtherMethods = props => (
     <div id="alternativeLogin">
@@ -91,4 +90,3 @@ const Google = props => (
     <i class="fab fa-google-plus-square fa-3x icon-google "></i>
 );
 
-export default Register;

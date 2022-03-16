@@ -19,6 +19,7 @@ export default function Navbar() {
 
         window.history.replaceState(null, "payment", "localhost:3000/off")
     }
+    
 
     return (
 
@@ -86,6 +87,18 @@ export default function Navbar() {
                                     </li>
                                     <li className={window.location.pathname === "/projects" && "current"}>
                                         <NavLink to="projects"  >Project </NavLink>
+                                        <ul className="submenu">
+                                                
+                                                <li>
+                                                <NavLink to="">Create Project</NavLink>
+                                                </li>
+                                                <li>
+                                                <NavLink to="">My Projects</NavLink>
+                                                </li>
+                                                <li>
+                                                <NavLink to="">All Projects</NavLink>
+                                                </li>
+                                            </ul>
                                     </li>
                                     {/* <li className={window.location.pathname === "/Organization" && "current"}>
                                         <NavLink to="/organizations">Organizations</NavLink>
@@ -149,16 +162,12 @@ export default function Navbar() {
                                             </a>
                                             <ul className="submenu">
                                                 <li>
-                                                    <NavLink to='/profile'>Profile</NavLink>
+                                                    <NavLink hidden={!localStorage.getItem("token")} to='/profile'>Profile</NavLink>
                                                 </li>
                                                 <li>
-                                                    <a href='/login'>Login</a>
+                                                <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
+                                                <a href='/login'hidden={!localStorage.getItem("token")} onClick={()=>localStorage.removeItem("token")} >Logout</a>
                                                 </li>
-                                                <li>
-                                                    <a href='/register'>Register</a>
-                                                </li>
-
-
                                             </ul>
                                         </li>
 

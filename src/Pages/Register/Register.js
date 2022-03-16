@@ -3,84 +3,85 @@ import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import '../Login/login.css'
 import axios from "axios";
-
-
-
+import Swal from 'sweetalert2'
 
 export default function Register({ setToken }) {
     localStorage.clear()
-
     const navigate = useNavigate()
-
-    const filePicker = useRef()
-
-
     const [next, setNext] = useState(false)
-
     const [back, setBack] = useState(false)
-
-    const [newuser, setNewUser] = useState({Role:"SimpleUser"})
-
+    const [newuser, setNewUser] = useState({ Role: "SimpleUser" })
+    const [imageP, setImageP] = useState()
+    const [cvP, setCvP] = useState()
     const [userRole, setUserRole] = useState("SimpleUser")
 
     const changeRole = (e) => {
-
-        console.log(userRole)
         { document.getElementById('select').value !== "SimpleUser" && setNext(true) }
         { document.getElementById('select').value === "SimpleUser" && setNext(false) }
-
-        filePicker.current.click()
-
         setNewUser({ ...newuser, [e.target.name]: e.target.value })
-
     }
 
 
     const handleNextClick = (e) => {
         e.preventDefault();
         setUserRole(document.getElementById('select').value)
-        console.log(userRole)
         setNext(false)
         setBack(true)
-        // setUserRole("SimpleUser")
     }
 
     const handleBackClick = (e) => {
         e.preventDefault();
+        
         setBack(false)
         setUserRole("SimpleUser")
-        //setNext(false)
-        document.getElementById('select').value = "SimpleUser"
-        document.getElementById('cv').value = ""
-        document.getElementById('selectCreator').value = ""
-        document.getElementById('startup').value = ""
-        document.getElementById('company').value = ""
-        document.getElementById('address').value = ""
-
+        setNewUser({
+            ...newuser,
+            Role:"SimpleUser",
+           CompanyName: "",
+           StartupName:"",
+           Address:"",
+           Typecreator: ""
+          
+        })
+        setCvP()
+      
     }
 
     const doRegister = (e) => {
         e.preventDefault()
-        const data = {
-            UserName: newuser.UserName,
-            Email: newuser.Email,
-            Password: newuser.Password,
-            Role: newuser.Role,
-            Phone: newuser.Phone,
-            Cv: newuser.Cv,
-            StartupName: newuser.StartupName,
-            Typecreator: newuser.Typecreator,
-            CompanyName: newuser.CompanyName,
-            Address: newuser.Address,
-            ImageProfile: newuser.ImageProfile
+        const dataI = new FormData();
+        dataI.append("file", imageP)
+        dataI.append("UserName", newuser.UserName)
+        dataI.append("Email", newuser.Email)
+        dataI.append("Password", newuser.Password)
+        dataI.append("Phone", newuser.Phone)
+        dataI.append("Role", newuser.Role)
+        if (newuser.Role === "Creator") {
+            dataI.append("file", cvP)
+            dataI.append("StartupName", newuser.StartupName)
+            dataI.append("Typecreator", newuser.Typecreator)
+            dataI.append("Address", newuser.Address)
         }
-        axios.post(`http://localhost:3000/users/signup`, data)
-            .then(res => {
-                console.log(res)
-                setToken(res.data.token)
-                navigate('/')
-                window.location.reload()
-                console.log(localStorage.getItem('token'))
+        if (newuser.Role === "Investor") {
+            dataI.append("CompanyName", newuser.CompanyName)
+        }
+
+
+        axios.post(`http://localhost:3000/users/signup`, dataI)
+            .then(res => { 
+                if(res.data == null){
+                    Swal.fire(
+                        'This email already exist!',
+                        '',
+                        'warning'
+                      )
+                }else{
+                    setToken(res.data.token)
+                    navigate('/')
+                    window.location.reload()
+                    console.log(localStorage.getItem('token'))
+                }
+               
             })
             .catch(err => {
                 console.error(err);
@@ -90,14 +91,21 @@ export default function Register({ setToken }) {
     const handleChange = (e) => {
         e.preventDefault()
         setNewUser({ ...newuser, [e.target.name]: e.target.value })
-        console.log(newuser)
     }
 
     const onInputClick = (event) => {
         event.target.value = ''
     }
 
+    const changeImage = (e) => {
+        setImageP(e.target.files[0])
 
+    }
+
+    const changePdf = (e) => {
+        setCvP(e.target.files[0])
+
+    }
     return (
         <div id="loginform" >
             <a onClick={handleBackClick} style={{ color: "#484848", position: 'absolute', marginLeft: '-180px', marginTop: '30px' }} hidden={!back}>
@@ -120,9 +128,9 @@ export default function Register({ setToken }) {
                         <input placeholder="Enter you phone number" type="number" name='Phone' value={newuser.Phone} onChange={handleChange} />
                         <br />
                         <label>profile  picture</label>
-                        <input id="filee" placeholder="Enter you profile picture" type="file"  name='ImageProfile'  onChange={e=>setNewUser({ ...newuser, ImageProfile: e.target.files[0] })}
-                          />
-                          <p>{newuser.ImageProfile}</p>
+                        <input id="filee" placeholder="Enter you profile picture" type="file" name='ImageProfile' onChange={changeImage}
+                        />
+
                         <br />
                         <label style={{ marginRight: '420px' }}>Role</label>
                         <select defaultValue={"SimpleUser"} className='select' id='select' onChange={changeRole} name='Role' value={newuser.Role}
@@ -134,7 +142,7 @@ export default function Register({ setToken }) {
                     </div>
                     <div id='creator' className='rowLogin' hidden={userRole !== "Creator"}>
                         <label>CV</label>
-                        <input id='cv' placeholder="Enter you Curriculum Vitae" type="file" name='Cv' value={newuser.Cv} onChange={handleChange} />
+                        <input id='cv' placeholder="Enter you Curriculum Vitae" type="file" name='Cv'  onChange={changePdf} />
                         <br />
                         <label >Creator Type</label>
                         <select id='selectCreator' className='select' name='Typecreator' value={newuser.Typecreator} onChange={handleChange} >

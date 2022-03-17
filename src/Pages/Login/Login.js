@@ -22,11 +22,17 @@ export default function Login({ setToken }) {
         }
         axios.post(`http://localhost:3000/users/login`, data)
             .then(res => {
-                console.log(res)
+                console.log(res.data)
                 setToken(res.data.token)
+
+                localStorage.setItem('user' , JSON.stringify(res.data))
+         
+
                 navigate('/')
                 window.location.reload()
+
                 console.log(localStorage.getItem('token'))
+                console.log(res.data)
             })
             .catch(err => {
                 console.error(err);

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from 'rea
 import Home from './Pages/Home/Home';
 import Projects from './Pages/Project/Projects';
 import ProjectDetails from './Pages/Project/ProjectDetails';
+import CreateProject from './Pages/Project/CreateProject';
 import Navbar from './Pages/NavBar/Navbar';
 import Footer from './Pages/Footer/Footer';
 import Login from './Pages/Login/Login';
@@ -16,6 +17,7 @@ import Pricing from './Pages/Pricing/Pricing';
 import Register from './Pages/Register/Register';
 import Checkout from './Pages/Checkout/Checkout';
 import useToken from './UseToken';
+import MyProjects from './Pages/Project/MyProjects';
 
 function App() {
   const [show, setShow] = useState(false)
@@ -45,12 +47,14 @@ function App() {
           }></Route>
           <Route exact path='/*' element={<Home />}></Route>
           <Route path='/projects' element={<Projects />}></Route>
-          <Route exact path='/detailProject/*' element={<ProjectDetails />}></Route>
+          <Route exact path='/detailProject/:id/*' element={<ProjectDetails />}></Route>
           <Route path='/about' element={<About />}></Route>
           <Route path='/contact' element={<Contact />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
           <Route path='/pricing' element={<Pricing />}></Route>
           <Route path='/checkout' element={<Checkout /> } ></Route>
+          <Route path='/createproject' element={<CreateProject />}> </Route>
+          <Route path='/myprojects' element={<MyProjects />}> </Route>
 
 
         </Routes>

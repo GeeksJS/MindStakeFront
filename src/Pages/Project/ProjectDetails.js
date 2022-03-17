@@ -1,18 +1,52 @@
-import React, { useState } from 'react'
-import { Link, Route, Routes, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import Comments from './Comments'
 import Description from './Description'
 
 export default function ProjectDetails() {
 
+    const Connected = JSON.parse(localStorage.getItem('user'))
     const [dollar5,setDollar5]=useState(false)
     const [dollar10,setDollar10]=useState(false)
     const [dollar20,setDollar20]=useState(false)
     const [dollar50,setDollar50]=useState(false)
     const [dollar100,setDollar100]=useState(false)
 
-    const navigate = useNavigate();
+    const [project, setProject] = useState()
+    let {id} = useParams();
 
+
+    // useEffect(() => {
+      
+    //       console.log(id)
+    //             axios.get(`http://localhost:3000/projects/getproject/${id}`)
+    //             .then(res =>{
+    //                 setProject(res.data[0]);
+    //             })
+    //             .catch(err => {
+    //                 console.error(err);
+    //             })
+    // }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const {data: response} = await axios.get(`http://localhost:3000/projects/getproject/${id}`);
+                console.log(response[0])
+                setProject(response[0]);
+            } catch (error) {
+                console.error(error)
+            }
+        };
+        fetchData().then(project);
+
+    }, []);
+
+    
+    const date = new Date(project.CreationDate)
+    const start = new Intl.DateTimeFormat('en-US', {day: 'numeric'}).format(date)
+    const endDate = new Date(project.EndDate)
+    const end = new Intl.DateTimeFormat('en-US', {day: 'numeric'}).format(endDate)
 
 
     const click5 = () => {
@@ -94,38 +128,38 @@ export default function ProjectDetails() {
                     <div className="row align-items-center justify-content-center">
                         <div className="col-lg-6 col-md-10">
                             <div className="project-thumb mb-md-50">
-                                <img src="https://funden.vercel.app/assets/img/project/project-details.jpg" alt="Image" />
+                                <img src={`http://localhost:3000/uploads/images/${project.Picture}`} alt="Image" />
                             </div>
                         </div>
                         <div className="col-lg-6">
                             <div className="project-summery ">
                                 <a href="#" className="category ">
-                                    Headphone
+                                    {project.Category}
                                 </a>
                                 <h3 className="project-title">
-                                    Kodak PIXPRO Friendly Zoom FZ53-RD 1605MP Digital Camera
+                                    {project.Title}
                                 </h3>
                                 <div className="meta">
                                     <div className="author">
-                                        <img src="assets/img/team/03.jpeg" alt="Thumb" />
-                                        <a href="#">James W. Barrows</a>
+                                        <img src={`http://localhost:3000/uploads/images/${Connected.ImageProfile}`} alt="Thumb" />
+                                        <a href="#">{Connected.UserName}</a>
                                     </div>
                                     <a href="#" className="date">
                                         <i className="far fa-calendar-alt" />
-                                        25 Feb 2021
+                                        {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: 'numeric'}).format(date)}
                                     </a>
                                 </div>
                                 <div className="project-funding-info">
                                     <div className="info-box">
-                                        <span>$5036k</span>
-                                        <span className="info-title">Pledged</span>
+                                        <span>${project.Goal/1000}k</span>
+                                        <span className="info-title">Goal</span>
                                     </div>
                                     <div className="info-box">
                                         <span>9</span>
                                         <span className="info-title">Backers</span>
                                     </div>
                                     <div className="info-box">
-                                        <span>29</span>
+                                        <span>{end - start}</span>
                                         <span className="info-title">Days Left</span>
                                     </div>
                                 </div>

@@ -5,20 +5,21 @@ import Project from './Project'
 import Review from '../Chatbot/Review'
 import axios from 'axios'
 
-export default function Projects() {
+export default function MyProjects() {
 
-    const [projects, setProjects] = useState('')
+    const [Myprojects, setMyprojects] = useState('')
+    const User = JSON.parse(localStorage.getItem('user'))
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`http://localhost:3000/projects/getallprojects`);
-                setProjects(response);
+                const { data: response } = await axios.get(`http://localhost:3000/projects/getProjectByUser/${User.userId}`);
+                setMyprojects(response);
             } catch (error) {
                 console.error(error)
             }
         };
-        fetchData().then(projects);
+        fetchData().then(Myprojects);
 
     }, []);
 
@@ -30,7 +31,7 @@ export default function Projects() {
                 <div className="container">
                     <div className="row align-items-center justify-content-between">
                         <div className="col-lg-8">
-                            <h1 className="page-title">Latest Project</h1>
+                            <h1 className="page-title">{User.UserName.charAt(0).toUpperCase()+ User.UserName.slice(1)}'s projects</h1>
                         </div>
                         <div className="col-auto">
                             <ul className="page-breadcrumb">
@@ -47,8 +48,8 @@ export default function Projects() {
                 <div className="container">
                     <div className="row project-items justify-content-center project-style-one">
 
-                        {projects &&
-                            projects.map((project, index) => (
+                        {Myprojects &&
+                            Myprojects.map((project, index) => (
                                 <Project key={index} project={project} />
                             ))
                         }

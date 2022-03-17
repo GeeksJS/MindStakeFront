@@ -77,6 +77,7 @@ export default function Register({ setToken }) {
                       )
                 }else{
                     setToken(res.data.token)
+                    localStorage.setItem('userId' , res.data.userId)
                     navigate('/')
                     window.location.reload()
                     console.log(localStorage.getItem('token'))
@@ -127,7 +128,7 @@ export default function Register({ setToken }) {
                         <label>Phone number</label>
                         <input placeholder="Enter you phone number" type="number" name='Phone' value={newuser.Phone} onChange={handleChange} />
                         <br />
-                        <label>profile  picture</label>
+                        
                         <input id="filee" placeholder="Enter you profile picture" type="file" name='ImageProfile' onChange={changeImage}
                         />
 

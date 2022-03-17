@@ -85,18 +85,18 @@ export default function Navbar() {
                                     <li className={window.location.pathname === "/" && "current"}>
                                         <NavLink to="/">Home</NavLink>
                                     </li>
-                                    <li className={window.location.pathname === "/projects" && "current"}>
+                                    <li className={(window.location.pathname === "/projects" || window.location.pathname === "/createproject" ) && "current"}>
                                         <NavLink to="projects"  >Project </NavLink>
                                         <ul className="submenu">
                                                 
                                                 <li>
-                                                <NavLink to="">Create Project</NavLink>
+                                                <NavLink to="createproject">Create Project</NavLink>
                                                 </li>
                                                 <li>
-                                                <NavLink to="">My Projects</NavLink>
+                                                <NavLink to="myprojects">My Projects</NavLink>
                                                 </li>
                                                 <li>
-                                                <NavLink to="">All Projects</NavLink>
+                                                <NavLink to="projects">All Projects</NavLink>
                                                 </li>
                                             </ul>
                                     </li>
@@ -166,7 +166,7 @@ export default function Navbar() {
                                                 </li>
                                                 <li>
                                                 <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
-                                                <a href='/login'hidden={!localStorage.getItem("token")} onClick={()=>localStorage.removeItem("token")} >Logout</a>
+                                                <a href='/login'hidden={!localStorage.getItem("token")} onClick={()=>localStorage.clear()} >Logout</a>
                                                 </li>
                                             </ul>
                                         </li>

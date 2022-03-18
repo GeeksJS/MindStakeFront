@@ -26,10 +26,10 @@ export default function Project(props) {
                             <img src="assets/img/team/03.jpeg" alt="Thumb" />
                             <a href="#">James W. Barrows</a>
                         </div>
-                        <h5 className="title" key={project._id}>
-                            <Link to={"/detailProject/"+ project._id}>
+                        <h5 className="title" >
+                           <li key={project._id}> <Link to={"/detailProject/"+ project._id}>
                                 {project.Title}
-                            </Link>
+                            </Link></li>
                         </h5>
                         <div className="project-stats">
                             <div className="stats-value">

@@ -7,98 +7,84 @@ import Description from './Description'
 export default function ProjectDetails() {
 
     const Connected = JSON.parse(localStorage.getItem('user'))
-    const [dollar5,setDollar5]=useState(false)
-    const [dollar10,setDollar10]=useState(false)
-    const [dollar20,setDollar20]=useState(false)
-    const [dollar50,setDollar50]=useState(false)
-    const [dollar100,setDollar100]=useState(false)
+    const [dollar5, setDollar5] = useState(false)
+    const [dollar10, setDollar10] = useState(false)
+    const [dollar20, setDollar20] = useState(false)
+    const [dollar50, setDollar50] = useState(false)
+    const [dollar100, setDollar100] = useState(false)
 
-    const [project, setProject] = useState()
-    let {id} = useParams();
+    const [project, setProject] = useState({})
+    let { id } = useParams();
 
 
-    // useEffect(() => {
-      
-    //       console.log(id)
-    //             axios.get(`http://localhost:3000/projects/getproject/${id}`)
-    //             .then(res =>{
-    //                 setProject(res.data[0]);
-    //             })
-    //             .catch(err => {
-    //                 console.error(err);
-    //             })
-    // }, []);
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const {data: response} = await axios.get(`http://localhost:3000/projects/getproject/${id}`);
-                console.log(response[0])
-                setProject(response[0]);
-            } catch (error) {
-                console.error(error)
-            }
-        };
-        fetchData().then(project);
 
+        axios.get(`http://localhost:3000/projects/getproject/${id}`)
+            .then(res => {
+               setProject(res.data[0])
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }, []);
 
-    
-    const date = new Date(project.CreationDate)
-    const start = new Intl.DateTimeFormat('en-US', {day: 'numeric'}).format(date)
-    const endDate = new Date(project.EndDate)
-    const end = new Intl.DateTimeFormat('en-US', {day: 'numeric'}).format(endDate)
+
+    // const date = new Date(project.CreationDate)
+    // const start = new Intl.DateTimeFormat('en-US', {day: 'numeric'}).format(date)
+    // const endDate = new Date(project.EndDate)
+    // const end = new Intl.DateTimeFormat('en-US', {day: 'numeric'}).format(endDate)
 
 
-    const click5 = () => {
-        setDollar5(true) 
-        setDollar10(false)
-        setDollar20(false)
-        setDollar50(false)
-        setDollar100(false)
-        
-    }
-    const click10 = () => {
-        setDollar5(false) 
-        setDollar10(true)
-        setDollar20(false)
-        setDollar50(false)
-        setDollar100(false)
-        
+    // const click5 = () => {
+    //     setDollar5(true) 
+    //     setDollar10(false)
+    //     setDollar20(false)
+    //     setDollar50(false)
+    //     setDollar100(false)
 
-    }
-    const click20 = () => {
-        setDollar5(false) 
-        setDollar10(false)
-        setDollar20(true)
-        setDollar50(false)
-        setDollar100(false)
-        
-
-    }
-    const click50 = () => {
-        setDollar5(false) 
-        setDollar10(false)
-        setDollar20(false)
-        setDollar50(true)
-        setDollar100(false)
-        
-
-    }
-    const click100 = () => {
-        setDollar5(false) 
-        setDollar10(false)
-        setDollar20(false)
-        setDollar50(false)
-        setDollar100(true)
-    
-    }
-    
+    // }
+    // const click10 = () => {
+    //     setDollar5(false) 
+    //     setDollar10(true)
+    //     setDollar20(false)
+    //     setDollar50(false)
+    //     setDollar100(false)
 
 
-    const donate = () =>{
+    // }
+    // const click20 = () => {
+    //     setDollar5(false) 
+    //     setDollar10(false)
+    //     setDollar20(true)
+    //     setDollar50(false)
+    //     setDollar100(false)
+
+
+    // }
+    // const click50 = () => {
+    //     setDollar5(false) 
+    //     setDollar10(false)
+    //     setDollar20(false)
+    //     setDollar50(true)
+    //     setDollar100(false)
+
+
+    // }
+    // const click100 = () => {
+    //     setDollar5(false) 
+    //     setDollar10(false)
+    //     setDollar20(false)
+    //     setDollar50(false)
+    //     setDollar100(true)
+
+    // }
+
+
+
+    const donate = () => {
         //navigate('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op' ,{replace:true})
-       // window.location.replace('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op')
-       <Link to={{pathname:'https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'}}></Link>
+        // window.location.replace('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op')
+        <Link to={{ pathname: 'https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op' }}></Link>
     }
 
     return (
@@ -146,12 +132,12 @@ export default function ProjectDetails() {
                                     </div>
                                     <a href="#" className="date">
                                         <i className="far fa-calendar-alt" />
-                                        {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: 'numeric'}).format(date)}
+                                        {/* {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: 'numeric'}).format(date)} */}
                                     </a>
                                 </div>
                                 <div className="project-funding-info">
                                     <div className="info-box">
-                                        <span>${project.Goal/1000}k</span>
+                                        <span>${project.Goal}k</span>
                                         <span className="info-title">Goal</span>
                                     </div>
                                     <div className="info-box">
@@ -159,7 +145,7 @@ export default function ProjectDetails() {
                                         <span className="info-title">Backers</span>
                                     </div>
                                     <div className="info-box">
-                                        <span>{end - start}</span>
+                                        {/* <span>{end - start}</span> */}
                                         <span className="info-title">Days Left</span>
                                     </div>
                                 </div>
@@ -174,13 +160,13 @@ export default function ProjectDetails() {
                                 </div>
                                 <div className="project-form">
                                     <form action="#">
-                                        <ul className="donation-amount">
+                                        {/* <ul className="donation-amount">
                                             <li className={dollar5 && 'dollar-5'} onClick={click5}>$5</li>
                                             <li className={dollar10 && 'dollar-5'} onClick={click10}> $10</li>
                                             <li className={dollar20 && 'dollar-5'} onClick={click20}>$20</li>
                                             <li className={dollar50 && 'dollar-5'} onClick={click50}>$50</li>
                                             <li className={dollar100 && 'dollar-5'} onClick={click100}>$100</li>
-                                        </ul>
+                                        </ul> */}
                                         <a type="submit" className="main-btn" href='https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'>
                                             Donate Now <i className="fas fa-arrow-right" />
                                         </a>

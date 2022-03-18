@@ -1,22 +1,36 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState } from 'react'
+import { Link, Navigate } from 'react-router-dom';
 
 export default function Contact() {
-    const Facebook = props => (
-        <a>
-            <i class="fab fa-facebook fa-4x icon-fb" style={{ marginRight: '10px' }}></i>
-        </a>
-    );
+    const [newComplaint, setNewComplaint] = useState({})
+    const Connected = JSON.parse(localStorage.getItem('user'))
 
-    const Twitter = props => (
-        <a href='#'>
-            <i class="fab fa-twitter-square fa-4x icon-twitter"></i>
-        </a>
-    );
+    const CreateComplaint = (e) => {
+        e.preventDefault()
+        
+        const data = {
+            Description: newComplaint.Description,
+            Title: newComplaint.Title,
+            User: Connected.userId
+        }
 
-    const LinkedIn = props => (
-        <i class="fab fa-linkedin fa-4x icon-linkedin "></i>
-    );
+       
+        
+        axios.post(`http://localhost:3000/complaints/addcomplaint/`, data)
+            .then(res => {
+                Navigate('/contact')
+                window.location.reload()
+            })
+            .catch(err => {
+                console.error(err);
+            })
+    }
+    const handleChange = (e) => {
+        e.preventDefault()
+        setNewComplaint({ ...newComplaint, [e.target.name]: e.target.value })
+    }
+   
     return (
         <React.Fragment>
             <>
@@ -126,46 +140,41 @@ export default function Contact() {
                                 </div>
                                 <div className="col-lg-7">
                                     <div className="contact-form">
-                                        <form action="#">
-                                            <h3 className="form-title">Send Us Message</h3>
+                                        <form onSubmit={CreateComplaint}>
+                                            <h3 className="form-title">Send Us your complaint</h3>
                                             <div className="row">
                                                 <div className="col-lg-6">
                                                     <div className="form-field mb-25">
                                                         <label htmlFor="name">Your Name</label>
                                                         <input
                                                             type="text"
-                                                            placeholder="Willie M. Stanley"
+                                                            value={Connected.UserName.charAt(0).toUpperCase() + Connected.UserName.slice(1)}
+                                                            disabled
                                                             id="name"
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className="col-lg-6">
-                                                    <div className="form-field mb-25">
-                                                        <label htmlFor="phone-number">Phone Number</label>
-                                                        <input
-                                                            type="text"
-                                                            placeholder="Willie M. Stanley"
-                                                            id="phone-number"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-6">
-                                                    <div className="form-field mb-25">
+
+                                                <div className="col-lg-6" >
+                                                    <div className="form-field mb-25"  >
                                                         <label htmlFor="email">Email Address</label>
                                                         <input
                                                             type="text"
-                                                            placeholder="support@gmail.com"
+                                                            value={Connected.Email}
+                                                            disabled
                                                             id="email"
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className="col-lg-6">
+                                                <div className="col-lg-12">
                                                     <div className="form-field mb-25">
-                                                        <label htmlFor="subject">Subject</label>
+                                                        <label htmlFor="subject">Title</label>
                                                         <input
+                                                            className="form-control"
+                                                            name="Title" id="Title"
                                                             type="text"
                                                             placeholder="I would like to"
-                                                            id="subject"
+                                                            value={newComplaint.Title} onChange={handleChange}
                                                         />
                                                     </div>
                                                 </div>
@@ -173,16 +182,17 @@ export default function Contact() {
                                                     <div className="form-field mb-30">
                                                         <label htmlFor="message">Write Message</label>
                                                         <textarea
-                                                            id="message"
+                                                            name='Description'
+                                                            id="Description"
                                                             placeholder="Hello"
-                                                            defaultValue={""}
+                                                            value={newComplaint.Description} onChange={handleChange}
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="form-field">
-                                                        <button className="main-btn">
-                                                            Send Us Message <i className="fas fa-arrow-right" />
+                                                        <button className="main-btn" type='submit'>
+                                                            Send Us Your Complaint <i className="fas fa-arrow-right" />
                                                         </button>
                                                     </div>
                                                 </div>
@@ -199,3 +209,18 @@ export default function Contact() {
         </React.Fragment>
     )
 }
+const Facebook = props => (
+    <a>
+        <i class="fab fa-facebook fa-4x icon-fb" style={{ marginRight: '10px' }}></i>
+    </a>
+);
+
+const Twitter = props => (
+    <a href='#'>
+        <i class="fab fa-twitter-square fa-4x icon-twitter"></i>
+    </a>
+);
+
+const LinkedIn = props => (
+    <i class="fab fa-linkedin fa-4x icon-linkedin "></i>
+);

@@ -1,73 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Profile.css'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import EditProfile from '../EditProfile/EditProfile'
 
 
 export default function Profile() {
-
+    const Connected = JSON.parse(localStorage.getItem('user'))
+    console.log(Connected.UserName)
     const MySwal = withReactContent(Swal)
-    const edit = () => {
-        Swal.fire({
-            title: 'Edit profile',
-            html: `
-            <div class="container">
-            <form style="text-align:left;">
-            <div class="form-row" >
-              <div class="form-group col-md-6">
-                <label for="inputEmail4">FistName</label>
-                <input type="text" class="form-control" id="FistName" placeholder="FistName">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputPassword4">LastName</label>
-                <input type="text" class="form-control" id="LastName" placeholder="LastName">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="inputAddress">Email</label>
-              <input type="email" class="form-control" id="Email" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <label for="inputAddress2">Password</label>
-              <input type="password" class="form-control" id="Password" placeholder="Password">
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputCity">Phone</label>
-                <input type="number" class="form-control" id="Phone" placeholder="Phone">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="inputState">Creator Type</label>
-                <select id="Type" class="form-control">
-                  <option selected>Choose...</option>
-                  <option>Individual</option>
-                  <option>Startup</option>
-
-                </select>
-              </div>
-              
-            </div>
-            <div class="form-group">
-              
-            </div>
-            
-          </form>
-          </div>`,
-            confirmButtonText: 'Save',
-            focusConfirm: false,
-
-        }).then(() => {
-
-            Swal.fire(
-                'Updated!',
-                'Your file has been updated.',
-                'success'
-            )
-
-        })
-    }
-
+    console.log(Connected.Role)
+    const[openPopup, setOpenPopup] =useState(false)
 
 
     const Facebook = props => (
@@ -110,7 +55,7 @@ export default function Profile() {
 
                 <div className="card social-prof" style={{ zIndex: '999' }}>
                     <div className="card-body">
-                        <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={() => edit()}>
+                        <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={()=> setOpenPopup(true)}  >
                             Edit <i className="far fa-edit" />
                         </button>
                         <div className="wrapper">
@@ -389,7 +334,11 @@ export default function Profile() {
                 </div>
             </div>
 
-
+            <EditProfile
+            User_id= {Connected.userId}
+             openPopup={openPopup}
+             setOpenPopup={setOpenPopup}
+             ></EditProfile>
 
         </React.Fragment>
     )

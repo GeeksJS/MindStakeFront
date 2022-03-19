@@ -4,14 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-export default function EditProfile(props) {
+export default function EditProfileUser(props) {
     const { User_id, openPopup, setOpenPopup } = props;
     const [profile, setProfile] = useState({})
-    const [cvP, setCvP] = useState()
     const [imageP, setImageP] = useState()
-
-
-
     useEffect(async () => {
 
         await axios.get(`http://localhost:3000/users/${User_id}`)
@@ -31,15 +27,14 @@ export default function EditProfile(props) {
         const data = new FormData();
         data.append("imageProfile", imageP)
         data.append("FistName", profile.FistName)
-        data.append("StartupName", profile.StartupName)
         data.append("LastName", profile.LastName)
         data.append("Email", profile.Email)
         data.append("Phone", profile.Phone)
-        data.append("Cv", cvP)
+
 
         console.log("hethi l data", data)
 
-        await axios.put(`http://localhost:3000/users/update/${User_id}`, data)
+        await axios.put(`http://localhost:3000/users/updateSimpleUser/${User_id}`, data)
             .then(res => {
                 setOpenPopup(false)
                 Navigate('/profile')
@@ -61,10 +56,6 @@ export default function EditProfile(props) {
 
     }
 
-    const changePdf = (e) => {
-        setCvP(e.target.files[0])
-
-    }
 
     return (
         <Dialog open={openPopup}>
@@ -106,22 +97,13 @@ export default function EditProfile(props) {
                                         <label for="inputCity">Change Your Photo</label>
                                         <input id="filee" placeholder="Enter you profile picture" type="file" name='ImageProfile' onChange={changeImage} />
                                     </div>
-                                    <div className="form-group col-md-6">
-                                        <label for="inputPassword4">Startup Name</label>
-                                        <input type="text" className="form-control" id="StartupName" placeholder="StartupName" name="StartupName" value={profile.StartupName} onChange={handleChange} />
-                                    </div>
                                 </div>
-                                <div className="form-row">
-                                    <div className="form-group col-md-12">
-                                        <label for="inputCity">Change Your CV</label>
-                                        <input id="filee" placeholder="Enter you profile picture" type="file" name='Cv' onChange={changePdf} />
-                                    </div>
 
-                                </div>
-                                <div class="col-md-12 text-center">
+                            </div>
+                            <div class="col-md-12 text-center">
                             <button class="main-btn" type='submit'>Update Your Profile <i class="fas fa-arrow-right"></i></button>
                             </div>
-                            </div>
+                            
                         </form>
                     </div></div>
             </DialogContent>

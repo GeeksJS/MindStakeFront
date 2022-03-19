@@ -3,8 +3,10 @@ import './Profile.css'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
 import EditProfile from '../EditProfile/EditProfile'
+import EditProfileInvestor from '../EditProfile/EditProfileInvestor'
+import EditProfileUser from '../EditProfile/EditProfileUser'
+import ChangePassword from '../EditProfile/ChangePassword'
 
 
 export default function Profile() {
@@ -13,7 +15,7 @@ export default function Profile() {
     const MySwal = withReactContent(Swal)
     console.log(Connected.Role)
     const [openPopup, setOpenPopup] = useState(false)
-
+    const [openPopupPW, setOpenPopupPW] = useState(false)
 
     const Facebook = props => (
         <a>
@@ -58,7 +60,10 @@ export default function Profile() {
                         <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={() => setOpenPopup(true)}  >
                             Edit <i className="far fa-edit" />
                         </button>
-                        <div className="wrapper">
+
+                        <button class="btn" onClick={() => setOpenPopupPW(true)}> <i class="fas fa-cog" style={{ marginLeft: '10px' }} ></i></button>
+
+                        <div className="wrapper" >
                             <img
                                 src="https://prium.github.io/falcon/v3.8.0/assets/img/team/2.jpg"
                                 alt=""
@@ -334,13 +339,25 @@ export default function Profile() {
                 </div>
             </div>
 
-            {openPopup && <EditProfile
-
+            {Connected.Role === "Creator" && openPopup && <EditProfile
                 User_id={Connected.userId}
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             ></EditProfile>}
-
+            {Connected.Role === "SimpleUser" && openPopup && <EditProfileUser
+                User_id={Connected.userId}
+                openPopup={openPopup}
+                setOpenPopup={setOpenPopup}
+            ></EditProfileUser>}
+            {Connected.Role === "Investor" && openPopup && <EditProfileInvestor
+                User_id={Connected.userId}
+                openPopup={openPopup}
+                setOpenPopup={setOpenPopup}
+            ></EditProfileInvestor>}
+            <ChangePassword
+                User_id={Connected.userId}
+                openPopupPW={openPopupPW}
+                setOpenPopupPW={setOpenPopupPW}></ChangePassword>
         </React.Fragment>
     )
 }

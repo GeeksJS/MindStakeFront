@@ -12,7 +12,7 @@ export default function Profile() {
     console.log(Connected.UserName)
     const MySwal = withReactContent(Swal)
     console.log(Connected.Role)
-    const[openPopup, setOpenPopup] =useState(false)
+    const [openPopup, setOpenPopup] = useState(false)
 
 
     const Facebook = props => (
@@ -55,7 +55,7 @@ export default function Profile() {
 
                 <div className="card social-prof" style={{ zIndex: '999' }}>
                     <div className="card-body">
-                        <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={()=> setOpenPopup(true)}  >
+                        <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={() => setOpenPopup(true)}  >
                             Edit <i className="far fa-edit" />
                         </button>
                         <div className="wrapper">
@@ -334,11 +334,12 @@ export default function Profile() {
                 </div>
             </div>
 
-            <EditProfile
-            User_id= {Connected.userId}
-             openPopup={openPopup}
-             setOpenPopup={setOpenPopup}
-             ></EditProfile>
+            {openPopup && <EditProfile
+
+                User_id={Connected.userId}
+                openPopup={openPopup}
+                setOpenPopup={setOpenPopup}
+            ></EditProfile>}
 
         </React.Fragment>
     )

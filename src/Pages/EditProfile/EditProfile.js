@@ -1,19 +1,20 @@
 import { Button, Dialog, DialogContent, DialogTitle, Typography } from '@material-ui/core'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export default function EditProfile(props) {
     const { User_id, openPopup, setOpenPopup } = props;
-    const [profile, setProfile] = useState({ Role: "SimpleUser" })
+    const [profile, setProfile] = useState({})
     const [cvP, setCvP] = useState()
     const [imageP, setImageP] = useState()
 
-    console.log(User_id)
 
-    useEffect(() => {
 
-        axios.get(`http://localhost:3000/users/${User_id}`)
+    useEffect(async () => {
+
+        await axios.get(`http://localhost:3000/users/${User_id}`)
             .then(res => {
                 setProfile(res.data[0])
             })
@@ -25,40 +26,34 @@ export default function EditProfile(props) {
 
 
 
-
-    const doModify = (e) => {
+    const doModify = async(e) => {
         e.preventDefault()
-        const dataI = new FormData();
-        dataI.append("file", imageP)
-        dataI.append("UserName", profile.UserName)
-        dataI.append("FistName", profile.FistName)
-        dataI.append("LastName", profile.LastName)
-        dataI.append("Email", profile.Email)
-        dataI.append("Password", profile.Password)
-        dataI.append("Phone", profile.Phone)
-        dataI.append("file", cvP)
+        const data = new FormData();
+        data.append("imageProfile", imageP)
+        data.append("UserName", profile.FistName)
+        data.append("FistName", profile.FistName)
+         data.append("StartupName", profile.StartupName)
+        data.append("LastName", profile.LastName)
+        data.append("Email", profile.Email)
+        data.append("Phone", profile.Phone)
+        data.append("Cv", cvP)
+      
+        console.log("hethi l data", data)
 
-        axios.post(`http://localhost:3000/users/update`+ User_id, dataI)
+       await axios.put(`http://localhost:3000/users/update/${User_id}`, data)
             .then(res => {
-                if (res.data == null) {
-                    Swal.fire(
-                        'You should enter the correct password!',
-                        '',
-                        'warning'
-                    )
-                } else {
-
-
-                }
-
+                Navigate('/profile')
+                window.location.reload()
             })
             .catch(err => {
                 console.error(err);
             })
     }
+
+
     /** */
     const handleChange = (e) => {
-        e.preventDefault()
+
         setProfile({ ...profile, [e.target.name]: e.target.value })
     }
     const changeImage = (e) => {
@@ -87,38 +82,34 @@ export default function EditProfile(props) {
                                 <div className="form-row" >
                                     <div className="form-group col-md-6">
                                         <label for="inputEmail4">First Name</label>
-                                        <input type="text" className="form-control" id="FistName" placeholder="FistName" value={profile.FistName} onChange={handleChange} />
+                                        <input type="text" className="form-control" id="FistName" placeholder="FistName" name="FistName" value={profile.FistName} onChange={handleChange} />
                                     </div>
                                     <div className="form-group col-md-6">
                                         <label for="inputPassword4">Last Name</label>
-                                        <input type="text" className="form-control" id="LastName" placeholder="LastName" value={profile.LastName} onChange={handleChange} />
+                                        <input type="text" className="form-control" id="LastName" placeholder="LastName" name="LastName" value={profile.LastName} onChange={handleChange} />
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <label for="inputAddress">Email</label>
-                                    <input type="email" className="form-control" id="Email" placeholder="Email" value={profile.Email} onChange={handleChange} />
+                                    <input type="email" className="form-control" id="Email" placeholder="Email" name="Email" value={profile.Email} onChange={handleChange} />
                                 </div>
-                                <div className="form-group">
-                                    <label for="inputAddress2">Password</label>
-                                    <input type="password" className="form-control" id="Password" placeholder="Password" onChange={handleChange} />
-                                </div>
-                                <div className="form-group">
-                                    <label for="inputAddress2">New Password</label>
-                                    <input type="password" className="form-control" id="Password" placeholder="Password" onChange={handleChange} />
-                                </div>
+
                                 <div className="form-row">
                                     <div className="form-group col-md-6">
                                         <label for="inputCity">Phone</label>
-                                        <input type="number" className="form-control" id="Phone" placeholder="Phone" value={profile.Phone} onChange={handleChange} />
+                                        <input type="number" className="form-control" id="Phone" placeholder="Phone" name="Phone" value={profile.Phone} onChange={handleChange} />
                                     </div>
 
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md-12">
                                         <label for="inputCity">Change Your Photo</label>
-                                        <input id="filee" placeholder="Enter you profile picture" type="file" name='ImageProfile' onChange={changeImage} />
+                                        <input id="filee" placeholder="Enter you profile picture" type="file" name='ImageProfile'  onChange={changeImage} />
                                     </div>
-
+                                    <div className="form-group col-md-6">
+                                        <label for="inputPassword4">Startup Name</label>
+                                        <input type="text" className="form-control" id="StartupName" placeholder="StartupName" name="StartupName" value={profile.StartupName} onChange={handleChange} />
+                                    </div>
                                 </div>
                                 <div className="form-row">
                                     <div className="form-group col-md-12">
@@ -128,6 +119,8 @@ export default function EditProfile(props) {
 
                                 </div>
                             </div>
+                            <button class="main-btn" type='submit'>Update Your Profile <i class="fas fa-arrow-right"></i></button>
+
                         </form>
                     </div></div>
             </DialogContent>

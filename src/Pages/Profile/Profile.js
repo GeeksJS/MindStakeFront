@@ -141,7 +141,7 @@ export default function Profile() {
                                         <div className="col-6">
                                             <div className="social-info">
                                                 <i className="fas fas fa-users mr-2" />
-                                                <span>{Profile.FistName.charAt(0).toUpperCase() + Profile.FistName.slice(1)}</span>
+                                                <span>{Profile.FirstName.charAt(0).toUpperCase() + Profile.FirstName.slice(1)}</span>
                                             </div>
                                         </div>
                                         <div className="col-6">

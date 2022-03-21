@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom'
 
 export default function Project(props) {
     const [project, setProject] = useState(props.project)
-
     const date = new Date(project.CreationDate)
 
-    const pourcentqge = project.Raised  / (100*project.Goal) ;
+    const pourcentage = project.Raised  / (100*project.Goal) ;
 
     return (
         <React.Fragment>
@@ -26,7 +25,7 @@ export default function Project(props) {
                             <img src="assets/img/team/03.jpeg" alt="Thumb" />
                             <a href="#">James W. Barrows</a>
                         </div>
-                        <h5 className="title" key={project._id}>
+                        <h5 className="title">
                             <Link to={"/detailProject/"+ project._id}>
                                 {project.Title}
                             </Link>
@@ -36,7 +35,7 @@ export default function Project(props) {
                                 <span className="value-title">
                                     Raised of <span className="value">${project.Raised}</span>
                                 </span>
-                                <span className="stats-percentage">{pourcentqge}%</span>
+                                <span className="stats-percentage">{pourcentage}%</span>
                             </div>
                             <div className="stats-bar" data-value={79}>
                                 <div className="bar-line" />

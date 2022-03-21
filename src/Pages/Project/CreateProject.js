@@ -87,7 +87,7 @@ export default function CreateProject() {
                                 <div className="tp-donations-amount">
                                     <h2>Create Project</h2>
                                     <input type="text" className="form-control" name="Title" id="Title"
-                                        placeholder="Enter your project title" value={newproject.Title} onChange={handleChange} />
+                                         value={newproject.Title} onChange={handleChange} placeholder="Enter your project title" />
                                 </div>
                                 <div className="tp-donations-details">
                                     <h2>Project Details</h2>

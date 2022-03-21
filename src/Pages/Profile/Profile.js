@@ -40,7 +40,7 @@ export default function Profile() {
                 if (Connected.userId && id) {
                     if (Connected.userId === id) {
                         await axios.get(`http://localhost:3000/users/${id}`).then(res => setProfile(res.data[0]));
-                        
+
 
                     }
                     else {
@@ -185,7 +185,7 @@ export default function Profile() {
                                                     <strong>Creator Type</strong>
                                                 </h4>
                                                 <p>
-                                                {Profile.Typecreator}
+                                                    {Profile.Typecreator}
                                                 </p>
                                             </div>
                                             <div className="col-lg-6">

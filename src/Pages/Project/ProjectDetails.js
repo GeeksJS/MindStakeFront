@@ -8,6 +8,11 @@ import EditProject from './EditProject'
 
 export default function ProjectDetails() {
 
+    const creator = ''
+    const end1 = 0
+    const start1 = 0
+    const pourcentage = 0
+
     const Connected = JSON.parse(localStorage.getItem('user'))
     const [dollar5, setDollar5] = useState(false)
     const [dollar10, setDollar10] = useState(false)
@@ -17,34 +22,46 @@ export default function ProjectDetails() {
 
 
     const [project, setProject] = useState({})
+    const [user, setUser] = useState({})
     const [date, setDate] = useState()
-    const [pourcentage, setpourcentage] = useState(0)
     const [endDate, setEndDate] = useState()
-    const [start, setStart] = useState()
     const [startDate, setStartDate] = useState()
-    const [end, setEnd] = useState()
-    const [showEdit , setShowEdit] = useState(false)
+    const [showEdit, setShowEdit] = useState(false)
     let { id } = useParams();
     const navigate = useNavigate()
 
+    
+    
+
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/projects/getproject/${id}`)
-            .then(res => {
-                setProject(res.data[0])
-                setDate(new Date(project.CreationDate))
-              //  setpourcentage(project.Raised / (100 * project.Goal))
-                setEndDate(new Date(project.EndDate))
-                setStart(new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date))
-                setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
-                setEnd(new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate))
+        const fetchData = async () => {
+            try {
+                await axios.get(`http://localhost:3000/projects/getproject/${id}`)
+                    .then(res => {
+                        setProject(res.data[0])
+                        creator = project.User
+                        setDate(new Date(project.CreationDate))
+                         pourcentage = project.Raised / (100 * project.Goal)
+                        setEndDate(new Date(project.EndDate))
+                        start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
+                        setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
+                        end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
+                    })
+            } catch (error) {
+                console.error(error)
+            }
+            try {
 
-
-            })
-            .catch(err => {
-                console.error(err);
-            })
-
+                    await axios.get(`http://localhost:3000/users/${creator}`)
+                        .then(res => {
+                            setUser(res.data[0]);
+                        })
+            } catch (error) {
+                console.error(error)
+            }
+        };
+        fetchData().then(project).then(user)
     }, []);
 
     const click5 = () => {
@@ -116,7 +133,7 @@ export default function ProjectDetails() {
                 axios.delete(`http://localhost:3000/projects/deleteproject/${id}`)
                     .then(
                         console.log("Deleted")
-                        
+
                     )
                     .catch(err => {
                         console.error(err);
@@ -138,12 +155,8 @@ export default function ProjectDetails() {
         // window.location.replace('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op')
         <Link to={{ pathname: 'https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op' }}></Link>
     }
-
     return (
         <React.Fragment>
-
-           {/* <EditProject /> */}
-
             <section className="page-title-area" >
                 <div className="container">
                     <div className="row align-items-center justify-content-between">
@@ -166,7 +179,7 @@ export default function ProjectDetails() {
                     <div className="row align-items-center justify-content-center">
                         <div className="col-lg-6 col-md-10">
                             <div className="project-thumb mb-md-50">
-                                <img src={`http://localhost:3000/uploads/images/${project.Picture}`}
+                                <img src={`http://localhost:3000/uploads/images/${project.Picture}`} className="proj-img"
                                     alt="Image" />
                             </div>
                         </div>
@@ -178,12 +191,12 @@ export default function ProjectDetails() {
                                 <h3 className="project-title">
                                     {project.Title}
                                 </h3>
-                                <div className="meta">
-                                    <div className="author">
-                                        <img src={`http://localhost:3000/uploads/images/${Connected.ImageProfile}`}
-                                            alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
-                                        <a href="#">{Connected.UserName}</a>
-                                    </div>
+                                <div className="meta">                                  
+                                        <div className="author">
+                                            <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`}
+                                                alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+                                            <a href="#">{user.UserName}</a>
+                                        </div>
                                     <a href="#" className="date">
                                         <i className="far fa-calendar-alt" />
                                         {startDate}
@@ -199,7 +212,7 @@ export default function ProjectDetails() {
                                         <span className="info-title">Backers</span>
                                     </div>
                                     <div className="info-box">
-                                        <span>{end - start}</span>
+                                        <span>{end1 - start1}</span>
                                         <span className="info-title">Days Left</span>
                                     </div>
                                 </div>
@@ -223,25 +236,36 @@ export default function ProjectDetails() {
                                         </ul>
                                         <br />
 
-                                        {showEdit && <EditProject clicked={showEdit} close={setShowEdit} proj={project}/>} 
-                                        {/* <div >
-                                            <a type="submit" className="main-btn" href='https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'>
-                                                Donate Now <i className="fas fa-arrow-right" />
-                                            </a>
-                                            <button type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
-                                                Contact <i class="fab fa-facebook-messenger"></i>
-                                            </button>
-                                        </div> */}
-                                        <div >
-                                            <a type="submit" className="main-btn" onClick={() => setShowEdit(true)}
-                                               style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
-                                                Edit <i class='fas fa-edit'></i>
-                                            </a>
-                                            <button type="submit" className="main-btn" onClick={handleDelete}
-                                                style={{ backgroundColor: 'rgba(255, 0, 0, 0.8)', marginLeft: '30px', marginTop: '0px' }}>
-                                                Delete <i class='fas fa-trash-alt' style={{ fontSize: '15px' }}></i>
-                                            </button>
-                                        </div>
+                                        {showEdit && <EditProject clicked={showEdit} close={setShowEdit} proj={project} />}
+                                        {Connected.Role === 'SimpleUser' &&
+                                            <div >
+                                                <a type="submit" className="main-btn" href='https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'>
+                                                    Donate Now <i className="fas fa-arrow-right" />
+                                                </a>
+                                            </div>
+                                        }
+                                        {Connected.Role === 'Investor' &&
+                                            <div >
+                                                <a type="submit" className="main-btn" href='https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'>
+                                                    Donate Now <i className="fas fa-arrow-right" />
+                                                </a>
+                                                <button type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
+                                                    Contact <i class="fab fa-facebook-messenger"></i>
+                                                </button>
+                                            </div>
+                                        }
+                                        {Connected.Role === 'Creator' &&
+                                            <div >
+                                                <a type="submit" className="main-btn" onClick={() => setShowEdit(true)}
+                                                    style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
+                                                    Edit <i class='fas fa-edit'></i>
+                                                </a>
+                                                <button type="submit" className="main-btn" onClick={handleDelete}
+                                                    style={{ backgroundColor: 'rgba(255, 0, 0, 0.8)', marginLeft: '30px', marginTop: '0px' }}>
+                                                    Delete <i class='fas fa-trash-alt' style={{ fontSize: '15px' }}></i>
+                                                </button>
+                                            </div>
+                                        }
                                     </form>
                                 </div>
                             </div>
@@ -257,8 +281,8 @@ export default function ProjectDetails() {
                                 <Route path='' element={<Description />}></Route>
                                 <Route path='comment' element={
                                     // <div className='container'>
-                                        <Comments idProject={id}/>
-                                    }></Route>
+                                    <Comments idProject={id} />
+                                }></Route>
                             </Routes>
 
                         </div>

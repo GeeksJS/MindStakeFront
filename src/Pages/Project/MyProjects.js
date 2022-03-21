@@ -20,7 +20,6 @@ export default function MyProjects() {
             }
         };
         fetchData().then(Myprojects);
-
     }, []);
 
     return (

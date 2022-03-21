@@ -37,18 +37,18 @@ export default function Description() {
                                     </p>
                                     <br />
 
-                                    {project.Video!=="video.mp4" ? 
-                                    <video controls width="700">
-                                        <source src={`http://localhost:3000/uploads/video/${project.Video}`}
-                                            type="video/mp4"></source>
-                                        salem</video> :
+                                    {project.Video !== "video.mp4" ?
+                                        <video controls width="700">
+                                            <source src={`http://localhost:3000/uploads/video/${project.Video}`}
+                                                type="video/mp4"></source>
+                                            salem</video> :
                                         <img className="mt-50 mb-50"
-                                        src={`http://localhost:3000/uploads/images/${project.Picture}`}
-                                        alt="Image"
-                                    />
-                                        }
-                                    
-                                    
+                                            src={`http://localhost:3000/uploads/images/${project.Picture}`}
+                                            alt="Image"
+                                        />
+                                    }
+
+
 
                                     <h4 className="description-title">
                                         Why Donate Our Products
@@ -143,5 +143,7 @@ export default function Description() {
                 </div>
             </div>
         )
-    }else{return(<div>aaaa</div>)}
+    } else {
+        return (<div>&nbsp;</div>)
+    }
 }

@@ -16,7 +16,7 @@ export default function Comments(props) {
         }
         axios.post(`http://localhost:3000/comments/addComment/${User.userId}/${props.idProject}` , data)
             .then(res => {
-               // window.location.reload()
+               document.getElementById('com').value = ''
             })
             .catch(err => {
                 console.error(err);
@@ -40,7 +40,7 @@ export default function Comments(props) {
         };
         fetchData().then(comments);
 
-    }, []);
+    }, [comments]);
     return (
         <React.Fragment>
             <div className="project-details-tab">
@@ -67,7 +67,7 @@ export default function Comments(props) {
                                             <div className="row">
                                                 <div className="col-12">
                                                     <div className="input-field mb-30">
-                                                        <textarea placeholder="Write your comment" name="Description" value={newcomment.Description} onChange={handleChange}/>
+                                                        <textarea placeholder="Write your comment" id='com' name="Description" value={newcomment.Description} onChange={handleChange}/>
                                                     </div>
                                                 </div>
                                                 <div className="col-12">

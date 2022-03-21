@@ -1,9 +1,46 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import Comment from './Comment';
 
-export default function Comments() {
+export default function Comments(props) {
+
+    const [comments, setComment] = useState('')
+    const [newcomment, setNewComment] = useState({})
+    const User = JSON.parse(localStorage.getItem('user'))
+
+
     const addComment = (e) => {
-        
+        e.preventDefault()
+        const data = {
+            Description: newcomment.Description
+        }
+        axios.post(`http://localhost:3000/comments/addComment/${User.userId}/${props.idProject}` , data)
+            .then(res => {
+               // window.location.reload()
+            })
+            .catch(err => {
+                console.error(err);
+            })
     }
+
+    const handleChange = (e) => {
+        e.preventDefault()
+        setNewComment({ ...newcomment, [e.target.name]: e.target.value })
+        console.log(newcomment)
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data: response } = await axios.get(`http://localhost:3000/comments/getAllComments/${props.idProject}`);
+                setComment(response);
+            } catch (error) {
+                console.error(error)
+            }
+        };
+        fetchData().then(comments);
+
+    }, []);
     return (
         <React.Fragment>
             <div className="project-details-tab">
@@ -15,76 +52,27 @@ export default function Comments() {
                     >
                         <div className="row justify-content-center">
                             <div className="col-lg-8">
-                                <div className="comments-template" style={{marginTop: '-50px'}}>
+                                <div className="comments-template" style={{ marginTop: '-50px' }}>
                                     <h4 className="template-title commentP">Peopel Comments</h4>
                                     <ul className="comments-list">
-                                        <li>
-                                            <div className="comment-body">
-                                                <div className="commentator-img">
-                                                    <img src="https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png" alt="Author" />
-                                                </div>
-                                                <div className="comment-content">
-                                                    <h5 className="commentator">John F. Medina</h5>
-                                                    <span className="date">25 May 2021</span>
-                                                    <p className='commentP'>
-                                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                                                        doloremque laudantium totam rem aperiam
-                                                    </p>
-                                                    <a href="#" className="reply-link">
-                                                        Reply <i className="far fa-long-arrow-right" />
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <ul className="children">
-                                                <li>
-                                                    <div className="comment-body">
-                                                        <div className="commentator-img">
-                                                            <img src="https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png" alt="Author" />
-                                                        </div>
-                                                        <div className="comment-content">
-                                                            <h5 className="commentator">Jeffrey T. Kelly</h5>
-                                                            <span className="date">25 May 2021</span>
-                                                            <p className='commentP'>
-                                                                Perspiciatis unde omnis iste natus error sit voluptatem
-                                                                accusantium doloremque laudantium
-                                                            </p>
-                                                            <a href="#" className="reply-link">
-                                                                Reply <i className="far fa-long-arrow-right" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </li>
-
+                                        {comments &&
+                                            comments.map((comment, index) => (
+                                                <Comment key={index} comment={comment} />
+                                            ))
+                                        }
                                     </ul>
                                     <div className="comment-form">
-                                        <h4 className="template-title commentP">Leave A Message</h4>
-                                        <form action="#">
+                                        <h4 className="template-title commentP">Leave A Comment</h4>
+                                        <form onSubmit={addComment}>
                                             <div className="row">
-                                                <div className="col-md-6">
-                                                    <div className="input-field mb-20">
-                                                        <input type="text" placeholder="Full Name" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <div className="input-field mb-20">
-                                                        <input type="text" placeholder="Email Address" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-12">
-                                                    <div className="input-field mb-20">
-                                                        <input type="text" placeholder="Website URL" />
-                                                    </div>
-                                                </div>
                                                 <div className="col-12">
                                                     <div className="input-field mb-30">
-                                                        <textarea placeholder="Write Message" defaultValue={""} />
+                                                        <textarea placeholder="Write your comment" name="Description" value={newcomment.Description} onChange={handleChange}/>
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
                                                     <div className="input-field">
-                                                        <button className="main-btn" onClick={addComment()}>
+                                                        <button className="main-btn" >
                                                             Send Comments <i className="fas fa-arrow-right" />
                                                         </button>
                                                     </div>
@@ -97,7 +85,6 @@ export default function Comments() {
                             <div className="col-lg-4 col-md-6 col-sm-10">
                                 <div className="rewards-box mt-md-50">
                                     <h4 className="title">Latest Donations</h4>
-
                                     <ul>
                                         <li className='liDonations' >
                                             <div className='row'>
@@ -107,9 +94,7 @@ export default function Comments() {
                                                     <h5 className='name' >David Marks
                                                         <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
                                                     </h5>
-
                                                 </div>
-
                                             </div>
                                             <span className='msg'>“God bless you dear”</span>
                                         </li>
@@ -121,9 +106,7 @@ export default function Comments() {
                                                     <h5 className='name' >David Marks
                                                         <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
                                                     </h5>
-
                                                 </div>
-
                                             </div>
                                             <span className='msg'>“God bless you dear”</span>
                                         </li>
@@ -135,17 +118,13 @@ export default function Comments() {
                                                     <h5 className='name' >David Marks
                                                         <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
                                                     </h5>
-
                                                 </div>
-
                                             </div>
                                             <span className='msg'>“God bless you dear”</span>
                                         </li>
                                     </ul>
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

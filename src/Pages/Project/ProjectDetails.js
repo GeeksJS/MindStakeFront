@@ -223,7 +223,7 @@ export default function ProjectDetails() {
                                         </ul>
                                         <br />
 
-                                         <EditProject clicked={showEdit} close={setShowEdit} proj={project}/>
+                                        {showEdit && <EditProject clicked={showEdit} close={setShowEdit} proj={project}/>} 
                                         {/* <div >
                                             <a type="submit" className="main-btn" href='https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'>
                                                 Donate Now <i className="fas fa-arrow-right" />
@@ -256,9 +256,9 @@ export default function ProjectDetails() {
                             <Routes>
                                 <Route path='' element={<Description />}></Route>
                                 <Route path='comment' element={
-                                    <div className='container'>
-                                        <Comments />
-                                    </div>}></Route>
+                                    // <div className='container'>
+                                        <Comments idProject={id}/>
+                                    }></Route>
                             </Routes>
 
                         </div>

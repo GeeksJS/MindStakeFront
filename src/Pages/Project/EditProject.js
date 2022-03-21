@@ -1,20 +1,51 @@
-import React, { useState } from 'react'
-import { Dialog, DialogTitle, DialogContent, makeStyles, Typography, Button } from '@material-ui/core';
+import React, { useEffect, useState } from 'react'
+import { Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 
 
 export default function EditProject(props) {
 
+    let { id } = useParams();
+
     const { clicked, close, proj } = props;
-    const proj1 = {proj}
     const [project, setProject] = useState(proj)
+    const [pic, setPic] = useState(proj.Picture)
+    const [vid, setVid] = useState(proj.Video)
 
-    
-console.log(proj)
     const handleChange = (e) => {
-         setProject({...project , [e.target.name]: e.target.value})
-
+          setProject({...project , [e.target.name]: e.target.value})
     }
+
+    const changePicture = (e) => {
+        setPic(e.target.files[0])
+    }
+
+    const changeVideo = (e) => {
+        setVid(e.target.files[0])
+    }
+
+    const doUpdate = (e) =>{
+        e.preventDefault()
+        const data = new FormData();
+        data.append("Title", project.Title)
+        data.append("Goal", project.Goal)
+        data.append("Category", project.Category)
+        data.append("file", pic)
+        data.append("file", vid)
+        data.append("Description", project.Description)
+        console.log(data)
+        axios.put(`http://localhost:3000/projects/updateproject/${id}` , data)
+        .then(res => {
+            console.log("updated")
+            window.location.reload()
+        })
+        .catch(err => {
+            console.error(err);
+        })
+    }
+   
 
     return (
         <Dialog open={clicked}>
@@ -28,7 +59,7 @@ console.log(proj)
                 </div>
             </DialogTitle>
             <DialogContent dividers>
-                <form >
+                <form onSubmit={doUpdate}>
                     <div className="tp-donations-details">
                         <div>
                             <label>Title</label>
@@ -60,11 +91,11 @@ console.log(proj)
                         <div className="form-row" >
                             <div className="form-group col-md-6">
                                 <label>Picture</label>
-                                <input id="filee" type="file" name='Picture' />
+                                <input id="filee" type="file" name='Picture' onChange={changePicture}/>
                             </div>
                             <div className="form-group col-md-6">
                                 <label>Video</label>
-                                <input id="filee" type="file" name='Video' />
+                                <input id="filee" type="file" name='Video' onChange={changeVideo}/>
                             </div>
                         </div>
                         <div className="form-group">

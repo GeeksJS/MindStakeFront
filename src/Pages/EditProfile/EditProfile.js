@@ -30,7 +30,7 @@ export default function EditProfile(props) {
         e.preventDefault()
         const data = new FormData();
         data.append("imageProfile", imageP)
-        data.append("FistName", profile.FistName)
+        data.append("FirstName", profile.FirstName)
         data.append("StartupName", profile.StartupName)
         data.append("LastName", profile.LastName)
         data.append("Email", profile.Email)
@@ -82,7 +82,7 @@ export default function EditProfile(props) {
                                 <div className="form-row" >
                                     <div className="form-group col-md-6">
                                         <label for="inputEmail4">First Name</label>
-                                        <input type="text" className="form-control" id="FistName" placeholder="FistName" name="FistName" value={profile.FistName} onChange={handleChange} />
+                                        <input type="text" className="form-control" id="FirstName" placeholder="FirstName" name="FirstName" value={profile.FirstName} onChange={handleChange} />
                                     </div>
                                     <div className="form-group col-md-6">
                                         <label for="inputPassword4">Last Name</label>

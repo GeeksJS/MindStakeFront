@@ -52,7 +52,7 @@ export default function Register({ setToken }) {
         const dataI = new FormData();
         dataI.append("file", imageP)
         dataI.append("UserName", newuser.UserName)
-        dataI.append("FistName", newuser.FistName)
+        dataI.append("FirstName", newuser.FirstName)
         dataI.append("LastName", newuser.LastName)
         dataI.append("Email", newuser.Email)
         dataI.append("Password", newuser.Password)
@@ -121,8 +121,8 @@ export default function Register({ setToken }) {
                         <label>UserName</label>
                         <input placeholder="Enter you userName" type="text" name='UserName' value={newuser.UserName} onChange={handleChange} />
                         <br />
-                        <label>FistName</label>
-                        <input placeholder="Enter you FistName" type="text" name='FistName' value={newuser.FistName} onChange={handleChange} />
+                        <label>FirstName</label>
+                        <input placeholder="Enter you FirstName" type="text" name='FirstName' value={newuser.FirstName} onChange={handleChange} />
                         <br />
                         <label>LastName</label>
                         <input placeholder="Enter you LastName" type="text" name='LastName' value={newuser.LastName} onChange={handleChange} />

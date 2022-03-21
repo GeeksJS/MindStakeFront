@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Project(props) {
+    console.log(props)
     const [project, setProject] = useState(props.project)
     const date = new Date(project.CreationDate)
 
@@ -25,8 +26,10 @@ export default function Project(props) {
                             <img src="assets/img/team/03.jpeg" alt="Thumb" />
                             <a href="#">James W. Barrows</a>
                         </div>
+
                         <h5 className="title">
                             <Link to={"/detailProject/"+ project._id}>
+
                                 {project.Title}
                             </Link>
                         </h5>

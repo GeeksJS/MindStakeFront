@@ -52,6 +52,8 @@ export default function Register({ setToken }) {
         const dataI = new FormData();
         dataI.append("file", imageP)
         dataI.append("UserName", newuser.UserName)
+        dataI.append("FistName", newuser.FistName)
+        dataI.append("LastName", newuser.LastName)
         dataI.append("Email", newuser.Email)
         dataI.append("Password", newuser.Password)
         dataI.append("Phone", newuser.Phone)
@@ -118,6 +120,12 @@ export default function Register({ setToken }) {
                     <div className='rowLogin' hidden={userRole !== "SimpleUser"}>
                         <label>UserName</label>
                         <input placeholder="Enter you userName" type="text" name='UserName' value={newuser.UserName} onChange={handleChange} />
+                        <br />
+                        <label>FistName</label>
+                        <input placeholder="Enter you FistName" type="text" name='FistName' value={newuser.FistName} onChange={handleChange} />
+                        <br />
+                        <label>LastName</label>
+                        <input placeholder="Enter you LastName" type="text" name='LastName' value={newuser.LastName} onChange={handleChange} />
                         <br />
                         <label>Email</label>
                         <input placeholder="Enter you email" type="email" name='Email' value={newuser.Email} onChange={handleChange} />

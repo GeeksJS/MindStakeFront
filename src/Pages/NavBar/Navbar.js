@@ -13,7 +13,7 @@ export default function Navbar() {
 
     const [path, setPath] = useState("/");
     const navigate = useNavigate();
-
+    const User = JSON.parse(localStorage.getItem('user'))
     const push = () => {
         window.history.pushState(null, "payment", "localhost:3000/off");
 
@@ -161,8 +161,8 @@ export default function Navbar() {
                                                 </span>
                                             </a>
                                             <ul className="submenu">
-                                                <li>
-                                                    <NavLink hidden={!localStorage.getItem("token")} to='/profile'>Profile</NavLink>
+                                                <li key={User.userId}>
+                                                    <NavLink hidden={!localStorage.getItem("token")} to={'/profile/' + User.userId}>Profile</NavLink>
                                                 </li>
                                                 <li>
                                                 <a href='/login' hidden={localStorage.getItem("token")}>Login</a>

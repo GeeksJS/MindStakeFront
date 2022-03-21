@@ -77,7 +77,7 @@ export default function Navbar() {
                         <div className="navbar-inner">
                             <div className="logo1">
                                 <a href="index.html">
-                                    <img src="../assets/img/logo.png" alt="MindStake" />
+                                    <img src="/assets/img/logo.png" alt="MindStake" />
                                 </a>
                             </div>
                             <div className="nav-menu" >

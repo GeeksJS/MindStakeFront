@@ -22,7 +22,7 @@
     "react-scripts": "5.0.0",
     "react-scroll-to-top": "^1.0.8",
     "react-simple-chatbot": "^0.6.1",
-    "stream-chat": "^6.1.0",
+    "stream-chat": "^6.2.0",
     "stream-chat-react": "^7.0.0",
     "styled-components": "^5.3.3",
     "sweetalert2": "^11.4.4",

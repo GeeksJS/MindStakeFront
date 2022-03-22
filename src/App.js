@@ -18,6 +18,7 @@ import Register from './Pages/Register/Register';
 import Checkout from './Pages/Checkout/Checkout';
 import useToken from './UseToken';
 import MyProjects from './Pages/Project/MyProjects';
+import Messenger from './Pages/Messenger/Messenger';
 
 function App() {
   const [show, setShow] = useState(false)
@@ -55,7 +56,7 @@ function App() {
           <Route path='/checkout' element={<Checkout /> } ></Route>
           <Route path='/createproject' element={<CreateProject />}> </Route>
           <Route path='/myprojects' element={<MyProjects />}> </Route>
-
+          <Route path='/messenger' element={<Messenger/>}> </Route>
 
         </Routes>
 

@@ -20,7 +20,7 @@ const channel = chatClient.channel('messaging', 'custom_channel_id', {
   // add as many custom fields as you'd like
   image: 'https://www.drupal.org/files/project-images/react.png',
   name: 'Talk about mindstake',
-  members: ['6235cc9c726b6001e8fd0d9f','6238681d2b03c436ecd0d6f3'],
+  members: ['6235cc9c726b6001e8fd0d9f'],
 });
 const filters = { members: { $in: [  ] } }
 const sort = { last_message_at: -1 };

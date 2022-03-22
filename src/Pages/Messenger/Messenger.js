@@ -5,10 +5,10 @@ import 'stream-chat-react/dist/css/index.css';
 
 const chatClient = StreamChat.getInstance('dz5f4d5kzrue');
 
-const userToken = chatClient.devToken(JSON.parse(localStorage.getItem('user')).user_id);
+const userToken = chatClient.devToken("JSON.parse(localStorage.getItem('user')).user_id");
 chatClient.connectUser(
   {
-    id: JSON.parse(localStorage.getItem('user')).user_id,
+    id: "JSON.parse(localStorage.getItem('user')).user_id",
     name: 'saif eddine gouider',
     image: 'https://getstream.io/random_png/?id=soft-dew-1&name=soft',
   },

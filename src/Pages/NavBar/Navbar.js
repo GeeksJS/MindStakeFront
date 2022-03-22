@@ -123,6 +123,13 @@ export default function Navbar() {
                                     <li className={window.location.pathname === "/contact" && "current"}>
                                         <NavLink to="/contact">Contact</NavLink>
                                     </li>
+                                   {
+                                       localStorage.getItem('user')?<li className={window.location.pathname === "/messenger" && "current"}>
+                                       <NavLink to="/messenger">Messenger</NavLink>
+                                   </li>:null
+                                   }
+                                    
+                                   
                                     <div className='btn-group'>
                                         <div className="icon0 text-amount">
 

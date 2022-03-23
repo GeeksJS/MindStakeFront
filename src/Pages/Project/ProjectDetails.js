@@ -8,10 +8,10 @@ import EditProject from './EditProject'
 
 export default function ProjectDetails() {
 
-    const creator = ''
-    const end1 = 0
-    const start1 = 0
-    const pourcentage = 0
+    let author
+    let end1 = 0
+    let start1 = 0
+    let pourcentage = 0
 
     const Connected = JSON.parse(localStorage.getItem('user'))
     const [dollar5, setDollar5] = useState(false)
@@ -30,40 +30,30 @@ export default function ProjectDetails() {
     let { id } = useParams();
     const navigate = useNavigate()
 
-    
-    
-
-
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                await axios.get(`http://localhost:3000/projects/getproject/${id}`)
-                    .then(res => {
-                        setProject(res.data[0])
-                        creator = project.User
-                        setDate(new Date(project.CreationDate))
-                         pourcentage = project.Raised / (100 * project.Goal)
-                        setEndDate(new Date(project.EndDate))
-                        start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
-                        setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
-                        end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
-                    })
-            } catch (error) {
-                console.error(error)
-            }
-            try {
+            await axios.get(`http://localhost:3000/projects/getproject/${id}`)
+                .then(res => {
+                    setProject(res.data[0])
+                    if (!author) {
+                        author = res.data[0].User
+                    }
 
-                    await axios.get(`http://localhost:3000/users/${creator}`)
-                        .then(res => {
-                            setUser(res.data[0]);
-                        })
-            } catch (error) {
-                console.error(error)
-            }
-        };
-        fetchData().then(project).then(user)
+                    setDate(new Date(project.CreationDate))
+                    pourcentage = project.Raised / (100 * project.Goal)
+                    setEndDate(new Date(project.EndDate))
+                    start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
+                    setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
+                    end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
+                })
+            console.log(author)
+            await axios.get(`http://localhost:3000/users/${author}`)
+                .then(res => {
+                    setUser(res.data[0]);
+                })
+        }
+        fetchData().then(project, user)
     }, []);
-
     const click5 = () => {
         setDollar5(true)
         setDollar10(false)
@@ -191,12 +181,12 @@ export default function ProjectDetails() {
                                 <h3 className="project-title">
                                     {project.Title}
                                 </h3>
-                                <div className="meta">                                  
-                                        <div className="author">
-                                            <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`}
-                                                alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
-                                            <a href="#">{user.UserName}</a>
-                                        </div>
+                                <div className="meta">
+                                    <div className="author">
+                                        <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`}
+                                            alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+                                        <a href="#">{user.UserName}</a>
+                                    </div>
                                     <a href="#" className="date">
                                         <i className="far fa-calendar-alt" />
                                         {startDate}
@@ -289,8 +279,6 @@ export default function ProjectDetails() {
                     </div>
                 </div>
             </section>
-
-
         </React.Fragment>
     )
 }

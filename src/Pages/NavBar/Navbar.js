@@ -133,7 +133,7 @@ export default function Navbar() {
                                     <div className='btn-group'>
                                         <div className="icon0 text-amount">
 
-                                            <i class="fab fa-gg-circle fa-2x fa-spin"></i>
+                                            <i className="fab fa-gg-circle fa-2x fa-spin"></i>
                                             <span className='mr-30'>88</span>
 
                                         </div>
@@ -149,14 +149,14 @@ export default function Navbar() {
                                         <li>
                                             <Link to='/pricing'>
                                                 <span className="icon1">
-                                                    <i class="fas fa-rocket"></i>
+                                                    <i className="fas fa-rocket"></i>
                                                 </span>
                                             </Link>
                                         </li>
                                         <li>
                                             <a href='#'>
                                                 <span className="icon1">
-                                                    <i class="far fa-bell" ></i>
+                                                    <i className="far fa-bell" ></i>
                                                 </span>
                                             </a>
                                         </li>
@@ -164,7 +164,7 @@ export default function Navbar() {
                                         <li>
                                             <a href='#'>
                                                 <span className="icon1">
-                                                    <i class="far fa-user" ></i>
+                                                    <i className="far fa-user" ></i>
                                                 </span>
                                             </a>
                                             <ul className="submenu">

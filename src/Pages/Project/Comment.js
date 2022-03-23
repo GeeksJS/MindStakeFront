@@ -7,6 +7,7 @@ export default function Comment(props) {
     const [comment, setComment] = useState(props.comment)
     const [idCom, setIdCom] = useState('')
     const [replys, setReplys] = useState('')
+    const [rep, setRep] = useState('')
     const [newreply, setNewReply] = useState({})
     const [replyform, setReplyForm] = useState(false)
     const [user, setUser] = useState({})
@@ -21,6 +22,17 @@ export default function Comment(props) {
         // console.log(comment._id)
     }
 
+    const deleteComment = (e) =>{
+        props.deleteComment(comment._id)  
+    }
+
+    const deleteRep = (id) => {
+        axios.delete(`http://localhost:3000/comments/delete/${id}`)
+            .then(setRep(!rep))
+            .catch(err => {
+                console.error(err);
+            })
+    }
     const handleChange = (e) => {
         e.preventDefault()
         setNewReply({ ...newreply, [e.target.name]: e.target.value })
@@ -35,6 +47,7 @@ export default function Comment(props) {
             .then(res => {
                 setNewReply({})
                 setReplyForm(false)
+                setRep(!rep)
             })
             .catch(err => {
                 console.error(err);
@@ -61,7 +74,7 @@ export default function Comment(props) {
             }
         };
         fetchData().then(user, replys);
-    }, [replys]);
+    }, [rep]);
 
 
     return (
@@ -77,6 +90,7 @@ export default function Comment(props) {
                         <p className='commentP'>                                                                                                                                                                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             {comment.Description}                                                                                                                                                                                                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </p>
+                        <i class='fas fa-trash-alt' id='deleteIcon' onClick={deleteComment}></i>
                         <a className="reply-link" value={replyform} onClick={addForm}>
                             Reply <i className="fa fa-long-arrow-right" />
                         </a>
@@ -88,7 +102,7 @@ export default function Comment(props) {
                             <div className="row">
                                 <div className="col-12">
                                     <div className="input-field mb-30">
-                                        <input type='text'id='rep' placeholder="   Reply to this comment" name="Description" value={newreply.Description} onChange={handleChange} ></input>
+                                        <input type='text' id='rep' placeholder="   Reply to this comment" name="Description" value={newreply.Description} onChange={handleChange} ></input>
                                     </div>
                                 </div>
                                 <div className="col-12">
@@ -105,7 +119,7 @@ export default function Comment(props) {
                 <ul className="children">
                     {replys &&
                         replys.map((reply, index) => (
-                            <Reply key={index} reply={reply} />
+                            <Reply key={index} reply={reply}  deleteReply={(id) => { deleteRep(id) }}/>
                         ))
                     }
                 </ul>

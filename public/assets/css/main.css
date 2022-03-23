@@ -5691,3 +5691,29 @@ a:hover {
 	width: 600px;
 	height: 650px;
 }
+
+#deleteIcon{
+	font-size: 20px;
+	width:1%;
+	height:1%;
+	color:rgb(197, 38, 38);
+	position: absolute;
+	left: 80%;
+	top: 4px;
+}
+
+#deleteIcon1{
+	font-size: 20px;
+	width:1%;
+	height:1%;
+	color:rgb(197, 38, 38);
+	position: absolute;
+	left: 78%;
+	top: 4px;
+}
+#deleteIcon1:hover{
+	color:rgb(255, 0, 34);
+}
+#deleteIcon:hover{
+	color:rgb(255, 0, 34);
+}

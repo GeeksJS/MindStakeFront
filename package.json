@@ -27,6 +27,8 @@
     "react-scripts": "5.0.0",
     "react-scroll-to-top": "^1.0.8",
     "react-simple-chatbot": "^0.6.1",
+    "redux-persist": "^4.10.2",
+    "redux-persist5": "npm:redux-persist@^6.0.0",
     "stream-chat": "^6.2.0",
     "stream-chat-react": "^7.0.0",
     "styled-components": "^5.3.3",

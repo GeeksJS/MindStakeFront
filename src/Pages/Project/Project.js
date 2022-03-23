@@ -1,12 +1,20 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Project(props) {
-    console.log(props)
+
+    let author
     const [project, setProject] = useState(props.project)
+    const [user, setUser] = useState({})
     const date = new Date(project.CreationDate)
 
     const pourcentage = project.Raised  / (100*project.Goal) ;
+
+     axios.get(`http://localhost:3000/users/${project.User}`)
+                .then(res => {
+                    setUser(res.data[0]);
+                })
 
     return (
         <React.Fragment>
@@ -23,10 +31,9 @@ export default function Project(props) {
                             <a href="#">{project.Category}</a>
                         </div>
                         <div className="author">
-                            <img src="assets/img/team/03.jpeg" alt="Thumb" />
-                            <a href="#">James W. Barrows</a>
+                            <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Thumb" />
+                            <a href="#">{user.UserName}</a>
                         </div>
-
                         <h5 className="title">
                             <Link to={"/detailProject/"+ project._id}>
 

@@ -5,6 +5,9 @@ import Comments from './Comments'
 import Swal from 'sweetalert2'
 import Description from './Description'
 import EditProject from './EditProject'
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkAdd';
+import { green } from '@material-ui/core/colors'
+
 
 export default function ProjectDetails() {
 
@@ -139,6 +142,13 @@ export default function ProjectDetails() {
         })
     }
 
+    const addBookmark = () => {
+        axios.post(`http://localhost:3000/bookmarks/addBookmark/${id}/${Connected.userId}`)
+            .then(
+                navigate('/bookmarks')
+            )
+    }
+
 
     const donate = () => {
         //navigate('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op' ,{replace:true})
@@ -166,7 +176,7 @@ export default function ProjectDetails() {
             </section>
             <section className="project-details-area section-gap-extra-bottom">
                 <div className="container">
-                    <div className="row align-items-center justify-content-center">
+                    <div className="row align-items-center justify-content-start">
                         <div className="col-lg-6 col-md-10">
                             <div className="project-thumb mb-md-50">
                                 <img src={`http://localhost:3000/uploads/images/${project.Picture}`} className="proj-img"
@@ -175,9 +185,15 @@ export default function ProjectDetails() {
                         </div>
                         <div className="col-lg-6">
                             <div className="project-summery ">
-                                <a href="#" className="category ">
-                                    {project.Category}
-                                </a>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'start', padding: '15px 0px' }}>
+                                    <a className="category " >
+                                        {project.Category}
+                                    </a>
+                                    <div className="bookmarkIcon" data-bs-toggle="tooltip" data-bs-placement="top" title="Add to bookmarks">
+                                        {/* <span >Add to bookmarks</span> */}
+                                        <BookmarkBorderIcon style={{transform:'scale(1.5)'}} onClick={addBookmark} />
+                                    </div>
+                                </div>
                                 <h3 className="project-title">
                                     {project.Title}
                                 </h3>
@@ -217,13 +233,14 @@ export default function ProjectDetails() {
                                 </div>
                                 <div className="project-form">
                                     <form action="#">
-                                        <ul className="donation-amount">
+                                        {(Connected.Role === 'Investor' || Connected.Role === 'SimpleUser') && <ul className="donation-amount">
                                             <li className={dollar5 && 'dollar-5'} onClick={click5}>$5</li>
                                             <li className={dollar10 && 'dollar-5'} onClick={click10}> $10</li>
                                             <li className={dollar20 && 'dollar-5'} onClick={click20}>$20</li>
                                             <li className={dollar50 && 'dollar-5'} onClick={click50}>$50</li>
                                             <li className={dollar100 && 'dollar-5'} onClick={click100}>$100</li>
                                         </ul>
+                                        }
                                         <br />
 
                                         {showEdit && <EditProject clicked={showEdit} close={setShowEdit} proj={project} />}

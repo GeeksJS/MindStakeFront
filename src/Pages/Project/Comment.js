@@ -92,7 +92,7 @@ export default function Comment(props) {
                         </p>
                         <i class='fas fa-trash-alt' id='deleteIcon' onClick={deleteComment}></i>
                         <a className="reply-link" value={replyform} onClick={addForm}>
-                            Reply <i className="fa fa-long-arrow-right" />
+                            Reply<i className="fas fa-arrow-right" />
                         </a>
                     </div>
                 </div>

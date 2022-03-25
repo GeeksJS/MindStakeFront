@@ -2668,6 +2668,7 @@ a:hover {
 /*======= Project Details =======*/
 .project-summery {
 	padding: 0 30px 0 40px;
+
 }
 
 .cat{
@@ -2684,8 +2685,8 @@ a:hover {
 	font-weight: 700;
 	-webkit-box-shadow: 0px 10px 30px 0px rgba(2, 169, 92, 0.5);
 	box-shadow: 0px 10px 30px 0px rgba(2, 169, 92, 0.5);
-	margin-bottom: 35px;
-	margin-right: 500px;
+	/* margin-bottom: 35px;
+	margin-right: 500px; */
 }
 
 .project-summery .category:hover {
@@ -5717,3 +5718,15 @@ a:hover {
 #deleteIcon:hover{
 	color:rgb(255, 0, 34);
 }
+
+.bookmarkIcon{
+	color: #02a95c;
+	-webkit-box-shadow: 0px 10px 30px 0px rgba(2, 169, 92, 0.5);
+	box-shadow: 0px 10px 30px 0px rgba(2, 169, 92, 0.5);
+
+}
+
+.bookmarkIcon:hover{
+	color: #001d23;
+}
+

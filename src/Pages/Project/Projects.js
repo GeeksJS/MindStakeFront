@@ -56,7 +56,7 @@ export default function Projects() {
                         <div className="col-12">
                             <div className="view-more-btn text-center mt-40">
                                 <a href="project-details.html" className="main-btn bordered-btn">
-                                    View More Project <i className="far fa-arrow-right" />
+                                    View More Project <i className="fas fa-arrow-right" />
                                 </a>
                             </div>
                         </div>

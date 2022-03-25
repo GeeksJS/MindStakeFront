@@ -19,6 +19,7 @@ import Checkout from './Pages/Checkout/Checkout';
 import useToken from './UseToken';
 import MyProjects from './Pages/Project/MyProjects';
 import Messenger from './Pages/Messenger/Messenger';
+import Bookmarks from './Pages/Project/Bookmarks';
 
 function App() {
   const [show, setShow] = useState(false)
@@ -57,6 +58,7 @@ function App() {
           <Route path='/createproject' element={<CreateProject />}> </Route>
           <Route path='/myprojects' element={<MyProjects />}> </Route>
           <Route path='/messenger' element={<Messenger/>}> </Route>
+          <Route path='/bookmarks' element={<Bookmarks/>}> </Route>
 
         </Routes>
 

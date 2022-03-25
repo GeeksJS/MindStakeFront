@@ -1,20 +1,26 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Project(props) {
 
-    let author
+    const Connected = JSON.parse(localStorage.getItem('user'))
     const [project, setProject] = useState(props.project)
     const [user, setUser] = useState({})
     const date = new Date(project.CreationDate)
 
-    const pourcentage = project.Raised  / (100*project.Goal) ;
+    const pourcentage = project.Raised / (100 * project.Goal);
 
-     axios.get(`http://localhost:3000/users/${project.User}`)
-                .then(res => {
-                    setUser(res.data[0]);
-                })
+    useEffect(() => {
+        axios.get(`http://localhost:3000/users/${project.User}`)
+            .then(res => {
+                setUser(res.data[0]);
+            })
+    }, []);
+
+    const deleteBookmark = (e) =>{
+        props.deleteBookmark(project._id, Connected.userId)  
+    }
 
     return (
         <React.Fragment>
@@ -29,14 +35,17 @@ export default function Project(props) {
                     <div className="content">
                         <div className="cats">
                             <a href="#">{project.Category}</a>
+
                         </div>
+                        {window.location.pathname === "/bookmarks" &&
+                            <i class='fas fa-trash-alt' id='deleteIcon' style={{ marginLeft: '40px' }} onClick={deleteBookmark}></i>
+                        }
                         <div className="author">
                             <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Thumb" />
                             <a href="#">{user.UserName}</a>
                         </div>
                         <h5 className="title">
-                            <Link to={"/detailProject/"+ project._id}>
-
+                            <Link to={"/detailProject/" + project._id}>
                                 {project.Title}
                             </Link>
                         </h5>
@@ -52,7 +61,7 @@ export default function Project(props) {
                             </div>
                         </div>
                         <span className="date">
-                            <i className="far fa-calendar-alt" /> {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long',day: 'numeric'}).format(date)}
+                            <i className="far fa-calendar-alt" /> {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date)}
                         </span>
                     </div>
                 </div>

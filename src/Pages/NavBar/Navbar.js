@@ -19,7 +19,7 @@ export default function Navbar() {
 
         window.history.replaceState(null, "payment", "localhost:3000/off")
     }
-    
+
 
     return (
 
@@ -85,20 +85,20 @@ export default function Navbar() {
                                     <li className={window.location.pathname === "/" && "current"}>
                                         <NavLink to="/">Home</NavLink>
                                     </li>
-                                    <li className={(window.location.pathname === "/projects" || window.location.pathname === "/createproject" ) && "current"}>
+                                    <li className={(window.location.pathname === "/projects" || window.location.pathname === "/createproject") && "current"}>
                                         <NavLink to="projects"  >Project </NavLink>
                                         <ul className="submenu">
-                                                
-                                                <li>
+
+                                            <li>
                                                 <NavLink to="createproject">Create Project</NavLink>
-                                                </li>
-                                                <li>
+                                            </li>
+                                            <li>
                                                 <NavLink to="myprojects">My Projects</NavLink>
-                                                </li>
-                                                <li>
+                                            </li>
+                                            <li>
                                                 <NavLink to="projects">All Projects</NavLink>
-                                                </li>
-                                            </ul>
+                                            </li>
+                                        </ul>
                                     </li>
                                     {/* <li className={window.location.pathname === "/Organization" && "current"}>
                                         <NavLink to="/organizations">Organizations</NavLink>
@@ -123,13 +123,13 @@ export default function Navbar() {
                                     <li className={window.location.pathname === "/contact" && "current"}>
                                         <NavLink to="/contact">Contact</NavLink>
                                     </li>
-                                   {
-                                       localStorage.getItem('user')?<li className={window.location.pathname === "/messenger" && "current"}>
-                                       <NavLink to="/messenger">Messenger</NavLink>
-                                   </li>:null
-                                   }
-                                    
-                                   
+                                    {
+                                        localStorage.getItem('user') ? <li className={window.location.pathname === "/messenger" && "current"}>
+                                            <NavLink to="/messenger">Messenger</NavLink>
+                                        </li> : null
+                                    }
+
+
                                     <div className='btn-group'>
                                         <div className="icon0 text-amount">
 
@@ -138,9 +138,9 @@ export default function Navbar() {
 
                                         </div>
                                         <div className="btn-buy text-amount">
-                                            
-                                                <a href='https://buy.stripe.com/test_6oE9Ev0l2c6jepacMT'  style={{color:'white',fontWeight:'bold'}}>BUY</a>
-                                            
+
+                                            <a href='https://buy.stripe.com/test_6oE9Ev0l2c6jepacMT' style={{ color: 'white', fontWeight: 'bold' }}>BUY</a>
+
                                         </div>
                                     </div>
 
@@ -171,9 +171,12 @@ export default function Navbar() {
                                                 <li key={User.userId}>
                                                     <NavLink hidden={!localStorage.getItem("token")} to={'/profile/' + User.userId}>Profile</NavLink>
                                                 </li>
+                                                <li key={User.userId}>
+                                                    <NavLink hidden={!localStorage.getItem("token")} to={'/bookmarks'}>My Bookmarks</NavLink>
+                                                </li>
                                                 <li>
-                                                <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
-                                                <a href='/login'hidden={!localStorage.getItem("token")} onClick={()=>localStorage.clear()} >Logout</a>
+                                                    <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
+                                                    <a href='/login' hidden={!localStorage.getItem("token")} onClick={() => localStorage.clear()} >Logout</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -269,7 +272,7 @@ export default function Navbar() {
                 </div>
             </header>
 
-            
+
 
         </React.Fragment>
     )

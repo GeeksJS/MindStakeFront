@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
 import './login.css'
 import axios from "axios";
-
+import FacebookLogin from 'react-facebook-login';
+import Swal from 'sweetalert2';
 
 
 export default function Login({ setToken }) {
@@ -22,8 +24,8 @@ export default function Login({ setToken }) {
                 console.log(res.data)
                 setToken(res.data.token)
 
-                localStorage.setItem('user' , JSON.stringify(res.data))
-         
+                localStorage.setItem('user', JSON.stringify(res.data))
+
 
                 navigate('/')
                 window.location.reload()
@@ -41,35 +43,97 @@ export default function Login({ setToken }) {
         <div id="alternativeLogin">
             <label>Or sign in with:</label>
             <div id="iconGroup">
-                <Facebook />
-                <Twitter />
                 <Google />
+                <Facebook />
             </div>
         </div>
     );
 
+
+    //------------------- Begin Login with facebook Api consumer--------------
+     const responseFacebook = (response) => {
+         
+    if(response.email === undefined){
+          const { value: email } =  Swal.fire({
+            title: 'Input email address',
+            input: 'email',
+            inputLabel: 'Your email address',
+            inputPlaceholder: 'Enter your email address'
+          }).then(result=>{
+            let email = result.value;
+            axios({
+                method: "post",
+                url: "http://localhost:3000/users/facebooklogin",
+                data: { accessToken: response.accessToken,userID : response.userID, name:response.name,emailAdresse: email }
+            }).then(response => {
+                console.log("facebook login success, client side", response);
+                localStorage.setItem('token', JSON.stringify(response.data.token))
+                localStorage.setItem('user', JSON.stringify(response.data))
+                navigate('/')
+                window.location.reload()
+            })
+          });
+    }else {
+        axios({
+            method: "post",
+            url: "http://localhost:3000/users/facebooklogin",
+            data: { accessToken: response.accessToken,userID : response.userID, name:response.name,emailAdresse:response.email }
+        }).then(response => {
+            console.log("facebook login success, client side", response);
+            localStorage.setItem('token', JSON.stringify(response.data.token))
+            localStorage.setItem('user', JSON.stringify(response.data))
+            navigate('/')
+            window.location.reload()
+        })
+    }
+    };
     const Facebook = props => (
-        <a>
-            <i class="fab fa-facebook fa-3x icon-fb"></i>
-        </a>
+        <FacebookLogin
+            appId="810943683207241"
+            autoLoad={false}
+            callback={responseFacebook} />
     );
 
-    const Twitter = props => (
-        <a href='#'>
-            <i class="fab fa-twitter-square fa-3x icon-twitter"></i>
-        </a>
-    );
+    //------------------- End Login with facebook Api consumer--------------
 
+    //------------------- Begin Login with Google Api consumer--------------
+    const responseSuccessGoogle = (response) => {
+        axios({
+            method: "post",
+            url: "http://localhost:3000/users/googlelogin",
+            data: { tokenId: response.tokenId }
+        }).then(response => {
+            console.log("Google login success", response);
+            localStorage.setItem('token', JSON.stringify(response.data.token))
+            localStorage.setItem('user', JSON.stringify(response.data))
+            navigate('/')
+            window.location.reload()
+        })
+
+
+    }
+    const responseErrorGoogle = (response) => {
+        console.log(response);
+    }
     const Google = props => (
-        <i class="fab fa-google-plus-square fa-3x icon-google "></i>
-    );
 
+
+        <GoogleLogin
+            clientId="517644931989-igjmauces87orj0hvdr03168js1458e8.apps.googleusercontent.com"
+            buttonText="Login with Google"
+            onSuccess={responseSuccessGoogle}
+            onFailure={responseErrorGoogle}
+            cookiePolicy={'single_host_origin'}
+        />
+
+    );
+//------------------- End Login with facebook Api consumer--------------
 
 
     return (
         <div id="loginform" >
             <img src='assets/img/logo.png' alt="logo" className='logo' />
-            <div>
+            <div id="loginformcontainer">
                 <form onSubmit={doLogin}>
                     <div className='rowLogin'>
                         <label>Email</label>

@@ -37,7 +37,7 @@ export default function MyProjects() {
                                 <li>
                                     <Link to='/'>Home</Link>
                                 </li>
-                                <li>Project</li>
+                                <li>My Projects</li>
                             </ul>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ export default function MyProjects() {
 
                         <div className="col-12">
                             <div className="view-more-btn text-center mt-40">
-                                <a href="project-details.html" className="main-btn bordered-btn">
+                                <a className="main-btn bordered-btn">
                                     View More Project <i className="fas fa-arrow-right" />
                                 </a>
                             </div>

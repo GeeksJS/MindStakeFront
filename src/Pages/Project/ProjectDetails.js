@@ -261,7 +261,7 @@ export default function ProjectDetails() {
                                                 </button>
                                             </div>
                                         }
-                                        {Connected.Role === 'Creator' &&
+                                        {Connected.Role === 'Creator' && Connected.userId === user._id &&
                                             <div >
                                                 <a type="submit" className="main-btn" onClick={() => setShowEdit(true)}
                                                     style={{ backgroundColor: 'rgba(44, 130, 201)' }}>

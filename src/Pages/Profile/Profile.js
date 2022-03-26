@@ -9,6 +9,8 @@ import EditProfileUser from '../EditProfile/EditProfileUser'
 import ChangePassword from '../EditProfile/ChangePassword'
 import axios from 'axios'
 import { faPersonDotsFromLine } from '@fortawesome/free-solid-svg-icons'
+import Project from '../Project/Project'
+import ProjectCard from '../Project/ProjectCard'
 
 
 export default function Profile() {
@@ -18,6 +20,8 @@ export default function Profile() {
     const [openPopup, setOpenPopup] = useState(false)
     const [openPopupPW, setOpenPopupPW] = useState(false)
     const [Profile, setProfile] = useState()
+    const [Projects, setProject] = useState()
+    const [img, setImg] = useState(false)
     const Facebook = props => (
         <a>
             <i class="fab fa-facebook fa-3x icon-fb" style={{ marginRight: '10px' }}></i>
@@ -37,24 +41,17 @@ export default function Profile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (Connected.userId && id) {
-                    if (Connected.userId === id) {
-                        await axios.get(`http://localhost:3000/users/${id}`).then(res => setProfile(res.data[0]));
+                await axios.get(`http://localhost:3000/users/${id}`).then(res => setProfile(res.data[0]));
+                await axios.get(`http://localhost:3000/projects/getProjectByUser/${id}`).then(res => setProject(res.data));
 
-
-                    }
-                    else {
-                        console.log("kelma o5ra")
-                        await axios.get(`http://localhost:3000/users/${id}`).then(res => setProfile(res.data[0]));
-                    }
-                }
             } catch (error) {
                 console.error(error)
             }
         };
-        fetchData().then(Profile);
+        fetchData().then(Profile, Projects);
 
-    }, []);
+    }, [!openPopup]);
+
 
     if (Profile) {
         return (
@@ -71,7 +68,7 @@ export default function Profile() {
                                     <li>
                                         <Link to='/'>Home</Link>
                                     </li>
-                                    <li>Profile</li>
+                                    <li>Profile</li>{console.log("user connecté", Connected.userId, "Profile id", Profile._id)}
                                 </ul>
                             </div>
                         </div>
@@ -82,11 +79,11 @@ export default function Profile() {
 
                     <div className="card social-prof" style={{ zIndex: '999' }}>
                         <div className="card-body">
-                            <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={() => setOpenPopup(true)}  >
+                            {Profile._id === Connected.userId && <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={() => setOpenPopup(true)}  >
                                 Edit <i className="far fa-edit" />
-                            </button>
+                            </button>}
 
-                            <button class="btn" onClick={() => setOpenPopupPW(true)}> <i class="fas fa-cog" style={{ marginLeft: '10px' }} ></i></button>
+                            {Profile._id === Connected.userId && <button class="btn" onClick={() => setOpenPopupPW(true)}> <i class="fas fa-cog" style={{ marginLeft: '10px' }} ></i></button>}
 
                             <div className="wrapper" >
                                 <img
@@ -95,7 +92,7 @@ export default function Profile() {
                                     className="user-profile"
                                 />
                                 <h3>
-                                    {Profile.UserName} {console.log(Profile)}
+                                    {Profile.UserName}
                                     &nbsp;<span
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="right"
@@ -170,7 +167,7 @@ export default function Profile() {
                         </div>
                         <div className="col-lg-6">
                             <div className="card info-card">
-                                <div className="card-body">
+                                {Profile.Role === "Creator" && <div className="card-body">
                                     <h2 className="text-blue">Account Info</h2>
                                     <div className="row">
                                         <div className="row">
@@ -190,9 +187,9 @@ export default function Profile() {
                                             </div>
                                             <div className="col-lg-6">
                                                 <h4>
-                                                    <strong>{Profile.Role}</strong>
+                                                    <strong>Type of User</strong>
                                                 </h4>
-                                                <p>Aug 2004 to June 2009 </p>
+                                                <p>{Profile.Role} </p>
                                             </div>
                                             <div className="col-lg-6">
                                                 <h4>
@@ -205,95 +202,85 @@ export default function Profile() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>}
+                                {Profile.Role === "Investor" && <div className="card-body">
+                                    <h2 className="text-blue">Account Info</h2>
+                                    <div className="row">
+                                        <div className="row">
+                                            <div className="col-lg-6">
+                                                <h4>
+                                                    <strong>Company Name </strong>
+                                                </h4>
+                                                <p>{Profile.CompanyName}  </p>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <h4>
+                                                    <strong>Type of User</strong>
+                                                </h4>
+                                                <p>{Profile.Role} </p>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <h4>
+                                                    <strong>State</strong>
+                                                </h4>
+                                                <p>
+                                                    {!Profile.isActivated && <p>False</p>}
+                                                    {Profile.isActivated && <p>True</p>}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>}
+                                {Profile.Role === "SimpleUser" && <div className="card-body">
+                                    <h2 className="text-blue">Account Info</h2>
+                                    <div className="row">
+                                        <div className="row">
+                                            <div className="col-lg-6">
+                                                <h4>
+                                                    <strong>Type of User</strong>
+                                                </h4>
+                                                <p>{Profile.Role} </p>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <h4>
+                                                    <strong>State</strong>
+                                                </h4>
+                                                <p>
+                                                    {!Profile.isActivated && <p>False</p>}
+                                                    {Profile.isActivated && <p>True</p>}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>}
                             </div>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-lg-6">
-                            <div className="card info-card">
-                                <div className="card-body">
-                                    <h2 className="text-blue">My Project</h2>
-                                    <div className="row">
-                                        <div className="col-lg-6">
-                                            <h4>
-                                                <strong>Pune University </strong>
-                                            </h4>
-                                            <p>May 2009 to June 2011 </p>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <h4>
-                                                <strong>Course: Gamification</strong>
-                                            </h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                                            </p>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <h4>
-                                                <strong>St Xavier Highschool</strong>
-                                            </h4>
-                                            <p>Aug 2004 to June 2009 </p>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <h4>
-                                                <strong>Bachelor - Computer Science</strong>
-                                            </h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                                            </p>
-                                        </div>
+                        <section >
+                            <div className="container">
+                                <div className="row align-items-center justify-content-between">
+                                    <div className="col-lg-12">
+                                        <h2 className="text-blue">Projects</h2>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-6">
-                            <div className="card info-card">
-                                <div className="card-body">
-                                    <h2 className="text-blue">Work</h2>
-                                    <div className="row">
-                                        <div className="col-lg-6">
-                                            <h4>
-                                                <strong>Creative Arts - 2016-19</strong>
-                                            </h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                                            </p>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <h4>
-                                                <strong>Web Media - 2014-16</strong>
-                                            </h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                                            </p>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <h4>
-                                                <strong>Global Infosoft - 2012-14</strong>
-                                            </h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                                            </p>
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <h4>
-                                                <strong>Freelancer - 2011-12</strong>
-                                            </h4>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
-                                            </p>
-                                        </div>
-                                    </div>
+                        </section>
+                        <section className="project-section section-gap-extra-bottom">
+                            <div className="container">
+                                <div className="row project-items justify-content-center project-style-one">
+                                    {(Projects && Profile.Role == "Creator") &&
+                                        Projects.map((project, index) => (
+                                            <ProjectCard key={index} project={project} />
+                                        ))
+                                    }
+                                    {!Projects && <div>
+                                        This creator has no Projects
+                                    </div>}
                                 </div>
                             </div>
-                        </div>
+                        </section>
+
                     </div>
                 </div>
 

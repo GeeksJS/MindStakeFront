@@ -5,7 +5,7 @@ import Checkout from '../Checkout/Checkout';
 
 export default function Navbar() {
     var classNameHome = "site-header sticky-header transparent-header topbar-transparent";
-    var classNameOther = "site-header sticky-header";
+    var classNameOther = "site-header sticky-header other ";
 
 
     const [trans, setTrans] = React.useState(false);
@@ -88,13 +88,14 @@ export default function Navbar() {
                                     <li className={(window.location.pathname === "/projects" || window.location.pathname === "/createproject" || window.location.pathname === "/myprojects") && "current"}>
                                         <NavLink to="projects"  >Project </NavLink>
                                         <ul className="submenu">
-
-                                            <li>
-                                                <NavLink to="createproject">Create Project</NavLink>
-                                            </li>
-                                            <li>
-                                                <NavLink to="myprojects">My Projects</NavLink>
-                                            </li>
+                                            {User.Role === "Creator" &&
+                                                <div><li>
+                                                    <NavLink to="createproject">Create Project</NavLink>
+                                                </li>
+                                                    <li>
+                                                        <NavLink to="myprojects">My Projects</NavLink>
+                                                    </li></div>
+                                            }
                                             <li>
                                                 <NavLink to="projects">All Projects</NavLink>
                                             </li>

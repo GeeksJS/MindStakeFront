@@ -41,7 +41,6 @@ export default function ProjectDetails() {
                     if (!author) {
                         author = res.data[0].User
                     }
-
                     setDate(new Date(project.CreationDate))
                     pourcentage = project.Raised / (100 * project.Goal)
                     setEndDate(new Date(project.EndDate))
@@ -49,7 +48,6 @@ export default function ProjectDetails() {
                     setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
                     end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
                 })
-            console.log(author)
             await axios.get(`http://localhost:3000/users/${author}`)
                 .then(res => {
                     setUser(res.data[0]);
@@ -104,8 +102,6 @@ export default function ProjectDetails() {
     const handleEdit = (e) => {
         e.preventDefault()
         setShowEdit(true)
-        console.log("zeee")
-
     }
 
 
@@ -122,22 +118,16 @@ export default function ProjectDetails() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("hahaa")
                 axios.delete(`http://localhost:3000/projects/deleteproject/${id}`)
                     .then(
-                        console.log("Deleted")
-
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        ).then(
+                            navigate('/myprojects')
+                        )
                     )
-                    .catch(err => {
-                        console.error(err);
-                    })
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                ).then(
-                    navigate('/myprojects')
-                )
             }
         })
     }

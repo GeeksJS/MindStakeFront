@@ -127,9 +127,16 @@ export default function Profile() {
                                     <h4>
                                         <strong>About Me</strong>
                                     </h4>
-                                    <p>
+                                    {Profile.Cv !== "default.pdf" && <p>
                                         <embed src={`http://localhost:3000/uploads/cv/${Profile.Cv}`} type="application/pdf" width="100%" height="600px" />
-                                    </p>
+                                    </p>}
+                                    {Profile.Cv === "default.pdf" && Profile.Role == "SimpleUser" && <p>
+                                        As a simple user, we give you the opportunity to help your best creator by donating their project and encourage our creator with your feedback.
+                                    </p>}
+                                    {Profile.Cv === "default.pdf" && Profile.Role == "Investor" && <p>
+                                        We would like to take this opportunity to appreciate and thank you for your kind corporation and for trusting our company. 
+                                        We would like to apologize if we could not meet up with any of your expectations or give you regular updates.
+                                         We would request you to please keep investing in the future as well.                                    </p>}
                                     <h4 className="mb-3">
                                         <strong>Personal Info</strong>
                                     </h4>
@@ -257,7 +264,7 @@ export default function Profile() {
                         </div>
                     </div>
                     <div className="row">
-                        <section >
+                        {Profile.Role == "Creator" && <section >
                             <div className="container">
                                 <div className="row align-items-center justify-content-between">
                                     <div className="col-lg-12">
@@ -265,7 +272,7 @@ export default function Profile() {
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </section>}
                         <section className="project-section section-gap-extra-bottom">
                             <div className="container">
                                 <div className="row project-items justify-content-center project-style-one">

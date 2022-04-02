@@ -5,13 +5,16 @@ import Comments from './Comments'
 import Swal from 'sweetalert2'
 import Description from './Description'
 import EditProject from './EditProject'
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkAdd';
+import { green } from '@material-ui/core/colors'
+
 
 export default function ProjectDetails() {
 
-    const creator = ''
-    const end1 = 0
-    const start1 = 0
-    const pourcentage = 0
+    let author
+    let end1 = 0
+    let start1 = 0
+    let pourcentage = 0
 
     const Connected = JSON.parse(localStorage.getItem('user'))
     const [dollar5, setDollar5] = useState(false)
@@ -30,40 +33,28 @@ export default function ProjectDetails() {
     let { id } = useParams();
     const navigate = useNavigate()
 
-    
-    
-
-
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                await axios.get(`http://localhost:3000/projects/getproject/${id}`)
-                    .then(res => {
-                        setProject(res.data[0])
-                        creator = project.User
-                        setDate(new Date(project.CreationDate))
-                         pourcentage = project.Raised / (100 * project.Goal)
-                        setEndDate(new Date(project.EndDate))
-                        start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
-                        setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
-                        end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
-                    })
-            } catch (error) {
-                console.error(error)
-            }
-            try {
-
-                    await axios.get(`http://localhost:3000/users/${creator}`)
-                        .then(res => {
-                            setUser(res.data[0]);
-                        })
-            } catch (error) {
-                console.error(error)
-            }
-        };
-        fetchData().then(project).then(user)
+            await axios.get(`http://localhost:3000/projects/getproject/${id}`)
+                .then(res => {
+                    setProject(res.data[0])
+                    if (!author) {
+                        author = res.data[0].User
+                    }
+                    setDate(new Date(project.CreationDate))
+                    pourcentage = project.Raised / (100 * project.Goal)
+                    setEndDate(new Date(project.EndDate))
+                    start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
+                    setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
+                    end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
+                })
+            await axios.get(`http://localhost:3000/users/${author}`)
+                .then(res => {
+                    setUser(res.data[0]);
+                })
+        }
+        fetchData().then(project, user)
     }, []);
-
     const click5 = () => {
         setDollar5(true)
         setDollar10(false)
@@ -111,8 +102,6 @@ export default function ProjectDetails() {
     const handleEdit = (e) => {
         e.preventDefault()
         setShowEdit(true)
-        console.log("zeee")
-
     }
 
 
@@ -129,24 +118,25 @@ export default function ProjectDetails() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("hahaa")
                 axios.delete(`http://localhost:3000/projects/deleteproject/${id}`)
                     .then(
-                        console.log("Deleted")
-
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        ).then(
+                            navigate('/myprojects')
+                        )
                     )
-                    .catch(err => {
-                        console.error(err);
-                    })
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                ).then(
-                    navigate('/myprojects')
-                )
             }
         })
+    }
+
+    const addBookmark = () => {
+        axios.post(`http://localhost:3000/bookmarks/addBookmark/${id}/${Connected.userId}`)
+            .then(
+                navigate('/bookmarks')
+            )
     }
 
 
@@ -176,7 +166,7 @@ export default function ProjectDetails() {
             </section>
             <section className="project-details-area section-gap-extra-bottom">
                 <div className="container">
-                    <div className="row align-items-center justify-content-center">
+                    <div className="row align-items-center justify-content-start">
                         <div className="col-lg-6 col-md-10">
                             <div className="project-thumb mb-md-50">
                                 <img src={`http://localhost:3000/uploads/images/${project.Picture}`} className="proj-img"
@@ -185,18 +175,24 @@ export default function ProjectDetails() {
                         </div>
                         <div className="col-lg-6">
                             <div className="project-summery ">
-                                <a href="#" className="category ">
-                                    {project.Category}
-                                </a>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'start', padding: '15px 0px' }}>
+                                    <a className="category " >
+                                        {project.Category}
+                                    </a>
+                                    <div className="bookmarkIcon" data-bs-toggle="tooltip" data-bs-placement="top" title="Add to bookmarks">
+                                        {/* <span >Add to bookmarks</span> */}
+                                        <BookmarkBorderIcon style={{transform:'scale(1.5)'}} onClick={addBookmark} />
+                                    </div>
+                                </div>
                                 <h3 className="project-title">
                                     {project.Title}
                                 </h3>
-                                <div className="meta">                                  
-                                        <div className="author">
-                                            <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`}
-                                                alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
-                                            <a href="#">{user.UserName}</a>
-                                        </div>
+                                <div className="meta">
+                                    <div className="author">
+                                        <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`}
+                                            alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+                                        <a href="#">{user.UserName}</a>
+                                    </div>
                                     <a href="#" className="date">
                                         <i className="far fa-calendar-alt" />
                                         {startDate}
@@ -227,13 +223,14 @@ export default function ProjectDetails() {
                                 </div>
                                 <div className="project-form">
                                     <form action="#">
-                                        <ul className="donation-amount">
+                                        {(Connected.Role === 'Investor' || Connected.Role === 'SimpleUser') && <ul className="donation-amount">
                                             <li className={dollar5 && 'dollar-5'} onClick={click5}>$5</li>
                                             <li className={dollar10 && 'dollar-5'} onClick={click10}> $10</li>
                                             <li className={dollar20 && 'dollar-5'} onClick={click20}>$20</li>
                                             <li className={dollar50 && 'dollar-5'} onClick={click50}>$50</li>
                                             <li className={dollar100 && 'dollar-5'} onClick={click100}>$100</li>
                                         </ul>
+                                        }
                                         <br />
 
                                         {showEdit && <EditProject clicked={showEdit} close={setShowEdit} proj={project} />}
@@ -254,7 +251,7 @@ export default function ProjectDetails() {
                                                 </button>
                                             </div>
                                         }
-                                        {Connected.Role === 'Creator' &&
+                                        {Connected.Role === 'Creator' && Connected.userId === user._id &&
                                             <div >
                                                 <a type="submit" className="main-btn" onClick={() => setShowEdit(true)}
                                                     style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
@@ -289,8 +286,6 @@ export default function ProjectDetails() {
                     </div>
                 </div>
             </section>
-
-
         </React.Fragment>
     )
 }

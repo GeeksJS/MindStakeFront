@@ -211,7 +211,7 @@ export default function Contact() {
                                                         <textarea
                                                             name='Description'
                                                             id="Description"
-                                                            placeholder="Hello"
+                                                            placeholder="Description"
                                                             value={newComplaint.Description} onChange={handleChange}
                                                             {...register("Description", { required: 'Description is required' })}
                                                         />
@@ -246,7 +246,7 @@ const Facebook = props => (
 );
 
 const Twitter = props => (
-    <a href='#'>
+    <a>
         <i class="fab fa-twitter-square fa-4x icon-twitter"></i>
     </a>
 );

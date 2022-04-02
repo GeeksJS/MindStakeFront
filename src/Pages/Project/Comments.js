@@ -5,6 +5,7 @@ import Comment from './Comment';
 export default function Comments(props) {
 
     const [comments, setComment] = useState('')
+    const [cmnt, setCmnt] = useState(false)
     const [newcomment, setNewComment] = useState({})
     const User = JSON.parse(localStorage.getItem('user'))
 
@@ -14,10 +15,20 @@ export default function Comments(props) {
         const data = {
             Description: newcomment.Description
         }
-        axios.post(`http://localhost:3000/comments/addComment/${User.userId}/${props.idProject}` , data)
+        axios.post(`http://localhost:3000/comments/addComment/${User.userId}/${props.idProject}`, data)
             .then(res => {
-               document.getElementById('com').value = ''
+
+                setCmnt(!cmnt)
             })
+            .catch(err => {
+                console.error(err);
+            })
+        document.getElementById('com').value = ''
+    }
+
+    const deleteCom = (id) => {
+        axios.delete(`http://localhost:3000/comments/delete/${id}`)
+            .then(setCmnt(!cmnt))
             .catch(err => {
                 console.error(err);
             })
@@ -26,7 +37,7 @@ export default function Comments(props) {
     const handleChange = (e) => {
         e.preventDefault()
         setNewComment({ ...newcomment, [e.target.name]: e.target.value })
-        console.log(newcomment)
+        //  console.log(newcomment)
     }
 
     useEffect(() => {
@@ -40,7 +51,7 @@ export default function Comments(props) {
         };
         fetchData().then(comments);
 
-    }, [comments]);
+    }, [cmnt]);
     return (
         <React.Fragment>
             <div className="project-details-tab">
@@ -53,11 +64,11 @@ export default function Comments(props) {
                         <div className="row justify-content-center">
                             <div className="col-lg-8">
                                 <div className="comments-template" style={{ marginTop: '-50px' }}>
-                                    <h4 className="template-title commentP">Peopel Comments</h4>
+                                    {comments && <h4 className="template-title commentP">Peopel Comments</h4>}
                                     <ul className="comments-list">
                                         {comments &&
                                             comments.map((comment, index) => (
-                                                <Comment key={index} comment={comment} />
+                                                <Comment key={index} comment={comment} deleteComment={(id) => { deleteCom(id) }} />
                                             ))
                                         }
                                     </ul>
@@ -67,7 +78,7 @@ export default function Comments(props) {
                                             <div className="row">
                                                 <div className="col-12">
                                                     <div className="input-field mb-30">
-                                                        <textarea placeholder="Write your comment" id='com' name="Description" value={newcomment.Description} onChange={handleChange}/>
+                                                        <textarea placeholder="Write your comment" id='com' name="Description" onChange={handleChange} />
                                                     </div>
                                                 </div>
                                                 <div className="col-12">

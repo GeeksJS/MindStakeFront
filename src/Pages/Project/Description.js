@@ -42,7 +42,7 @@ export default function Description() {
                                             <source src={`http://localhost:3000/uploads/video/${project.Video}`}
                                                 type="video/mp4"></source>
                                             salem</video> :
-                                        <img className="mt-50 mb-50"
+                                        <img controls width="700"
                                             src={`http://localhost:3000/uploads/images/${project.Picture}`}
                                             alt="Image"
                                         />

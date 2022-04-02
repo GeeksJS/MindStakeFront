@@ -8,7 +8,7 @@ import ScrollToTop from "react-scroll-to-top";
 
 
 export default function Home() {
-    
+
     return (
         <React.Fragment>
 
@@ -37,9 +37,6 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="hero-shapes">
-                        <div className="hero-line-one">
-                            <img src="../public/assets/img/hero/hero-line.png" alt="Line" />
-                        </div>
                         <div className="hero-line-two">
                             <img src="../public/assets/img/hero/hero-line-2.png" alt="Line" />
                         </div>
@@ -140,11 +137,6 @@ export default function Home() {
                                     <h2 className="title">Popular Categories</h2>
                                 </div>
                             </div>
-                            {/* <div className="col-auto">
-                                <a href="project-1.html" className="main-btn mb-30">
-                                    View All Category <i className="far fa-angle-right" />
-                                </a>
-                            </div> */}
                         </div>
                     </div>
                     <div className="row justify-content-center fancy-icon-boxes">
@@ -158,7 +150,7 @@ export default function Home() {
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a href="project-details.html">Education</a>
+                                        <a>Education</a>
                                     </h4>
                                     <p>School, Collage &amp; University</p>
                                 </div>
@@ -174,7 +166,7 @@ export default function Home() {
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a href="project-details.html">Medical &amp; Health</a>
+                                        <a>Medical &amp; Health</a>
                                     </h4>
                                     <p>School, Collage &amp; University</p>
                                 </div>
@@ -190,7 +182,7 @@ export default function Home() {
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a href="project-details.html">Clothes</a>
+                                        <a>Clothes</a>
                                     </h4>
                                     <p>School, Collage &amp; University</p>
                                 </div>
@@ -206,7 +198,7 @@ export default function Home() {
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a href="project-details.html">Video &amp; Films</a>
+                                        <a>Video &amp; Films</a>
                                     </h4>
                                     <p>School, Collage &amp; University</p>
                                 </div>
@@ -222,7 +214,7 @@ export default function Home() {
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a href="project-details.html">Technology</a>
+                                        <a>Technology</a>
                                     </h4>
                                     <p>School, Collage &amp; University</p>
                                 </div>
@@ -238,7 +230,7 @@ export default function Home() {
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a href="project-details.html">Organic Foods</a>
+                                        <a>Organic Foods</a>
                                     </h4>
                                     <p>School, Collage &amp; University</p>
                                 </div>
@@ -347,9 +339,9 @@ export default function Home() {
                                     <p>
                                         Add your project idea and we will help you bring it to life.
                                     </p>
-                                    <a href="events.html" className="main-btn">
-                                        Add Project <i className="far fa-arrow-right" />
-                                    </a>
+                                    <Link to='/createproject' className="main-btn">
+                                        Add Project <i className="fas fa-arrow-right" />
+                                    </Link>
                                 </div>
                             </div>
                             <div className="col-xl-2 col-lg-1 cta-double-content-gap" />
@@ -360,9 +352,9 @@ export default function Home() {
                                         You can boost a project and make it more visible
                                         and reachable by buying a pack.
                                     </p>
-                                    <a href="events.html" className="main-btn">
-                                        Buy Pack<i className="far fa-arrow-right" />
-                                    </a>
+                                    <Link to='/pricing' className="main-btn">
+                                        Buy Pack<i className="fas fa-arrow-right" />
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -450,8 +442,6 @@ export default function Home() {
                         <path d="M0 0h24v24H0z" fill="none"></path>
                     </svg>
                 </Link>
-
-                <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%' ,marginBottom: '60px',zIndex:'999'}} color='white'></ScrollToTop>
             </div>
 
 

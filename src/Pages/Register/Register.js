@@ -79,10 +79,9 @@ export default function Register({ setToken }) {
                       )
                 }else{
                     setToken(res.data.token)
-                    localStorage.setItem('userId' , res.data.userId)
+                    localStorage.setItem('user' , JSON.stringify(res.data))
                     navigate('/')
                     window.location.reload()
-                    console.log(localStorage.getItem('token'))
                 }
                
             })

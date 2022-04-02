@@ -170,11 +170,6 @@ export default function About() {
                                     <h2 className="title">Meet Professional Team</h2>
                                 </div>
                             </div>
-                            <div className="col-auto">
-                                <a href="contact.html" className="main-btn mb-40">
-                                    Join Our Team <i className="fas fa-arrow-right" />
-                                </a>
-                            </div>
                         </div>
                     </div>
                     <div className="container-fluid fluid-extra-padding">

@@ -1,6 +1,12 @@
 import React from 'react'
 
 export default function Footer() {
+
+
+    const JoinNewsletters = (e) =>{
+        e.preventDefault()
+    }
+
     return (
         <React.Fragment>
             <footer className="site-footer with-footer-bg">
@@ -18,7 +24,7 @@ export default function Footer() {
                                         </strong>
                                         <div className="newsletter-form">
                                             <h5 className="form-title">Join Newsletters</h5>
-                                            <form action="#">
+                                            <form onSubmit={JoinNewsletters}>
                                                 <input type="text" placeholder="Email Address" />
                                                 <button type="submit">
                                                     <i className="fas fa-arrow-right" />
@@ -32,24 +38,24 @@ export default function Footer() {
                                         <h4 className="widget-title">Our Projects</h4>
                                         <ul>
                                             <li>
-                                                <a href="project-3.html">Web Development</a>
+                                                <a>Web Development</a>
                                             </li>
                                             <li>
-                                                <a href="project-1.html">Medical &amp; Health</a>
+                                                <a>Medical &amp; Health</a>
                                             </li>
 
 
                                             <li>
-                                                <a href="project-2.html">Food &amp; Clothes</a>
+                                                <a>Food &amp; Clothes</a>
                                             </li>
                                             <li>
-                                                <a href="project-1.html">Video &amp; Movies</a>
+                                                <a>Video &amp; Movies</a>
                                             </li>
                                             <li>
-                                                <a href="project-2.html">Educations</a>
+                                                <a>Educations</a>
                                             </li>
                                             <li>
-                                                <a href="project-1.html">Technology</a>
+                                                <a>Technology</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -59,19 +65,19 @@ export default function Footer() {
                                         <h4 className="widget-title">Support</h4>
                                         <ul>
                                             <li>
-                                                <a href="about.html">Privacy Policy</a>
+                                                <a>Privacy Policy</a>
                                             </li>
                                             <li>
-                                                <a href="contact.html">Conditions</a>
+                                                <a>Conditions</a>
                                             </li>
                                             <li>
-                                                <a href="company-overview.html">Company</a>
+                                                <a>Company</a>
                                             </li>
                                             <li>
-                                                <a href="faq.html">Faq &amp; Terms</a>
+                                                <a>Faq &amp; Terms</a>
                                             </li>
                                             <li>
-                                                <a href="contact.html">Contact Us</a>
+                                                <a>Contact Us</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -86,7 +92,7 @@ export default function Footer() {
                                                 </span>
                                                 <span className="info">
                                                     <span className="info-title">Phone Number</span>
-                                                    <a href="#">71888888</a>
+                                                    <a>71888888</a>
                                                 </span>
                                             </li>
                                             <li>
@@ -95,7 +101,7 @@ export default function Footer() {
                                                 </span>
                                                 <span className="info">
                                                     <span className="info-title">Email Address</span>
-                                                    <a href="#">support@ms.tn</a>
+                                                    <a>support@ms.tn</a>
                                                 </span>
                                             </li>
                                             <li>
@@ -104,7 +110,7 @@ export default function Footer() {
                                                 </span>
                                                 <span className="info">
                                                     <span className="info-title">Locations</span>
-                                                    <a href="#">ESPRIT, TN</a>
+                                                    <a>ESPRIT, TN</a>
                                                 </span>
                                             </li>
                                         </ul>
@@ -117,27 +123,27 @@ export default function Footer() {
                                 <div className="col-md-6">
                                     <ul className="social-icons">
                                         <li>
-                                            <a href="#">
+                                            <a>
                                                 <i className="fab fa-facebook-f" />
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a>
                                                 <i className="fab fa-twitter" />
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a>
                                                 <i className="fab fa-youtube" />
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a>
                                                 <i className="fab fa-behance" />
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a>
                                                 <i className="fab fa-google-plus-g" />
                                             </a>
                                         </li>
@@ -145,7 +151,7 @@ export default function Footer() {
                                 </div>
                                 <div className="col-md-6">
                                     <p className="copyright-text">
-                                        © 2022 <a href="#">MindStake</a>. All Rights Reserved
+                                        © 2022 <a>MindStake</a>. All Rights Reserved
                                     </p>
                                 </div>
                             </div>

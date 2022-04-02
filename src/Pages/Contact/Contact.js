@@ -173,7 +173,7 @@ export default function Contact() {
                                                             className="form-control"
                                                             name="Title" id="Title"
                                                             type="text"
-                                                            placeholder="I would like to"
+                                                            placeholder="Object"
                                                             value={newComplaint.Title} onChange={handleChange}
                                                         />
                                                     </div>
@@ -184,7 +184,7 @@ export default function Contact() {
                                                         <textarea
                                                             name='Description'
                                                             id="Description"
-                                                            placeholder="Hello"
+                                                            placeholder="Description"
                                                             value={newComplaint.Description} onChange={handleChange}
                                                         />
                                                     </div>
@@ -216,7 +216,7 @@ const Facebook = props => (
 );
 
 const Twitter = props => (
-    <a href='#'>
+    <a>
         <i class="fab fa-twitter-square fa-4x icon-twitter"></i>
     </a>
 );

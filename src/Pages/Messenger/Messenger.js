@@ -1,7 +1,9 @@
-import React from 'react';
-import { StreamChat } from 'stream-chat';
-import { Chat, Channel, ChannelHeader, MessageInput, MessageList, Thread, Window, ChannelList, ChannelSearch } from 'stream-chat-react';
-//import 'stream-chat-react/dist/css/index.css';
+
+// import React from 'react';
+// import { StreamChat } from 'stream-chat';
+// import { Chat, Channel, ChannelHeader, MessageInput, MessageList, Thread, Window, ChannelList, ChannelSearch } from 'stream-chat-react';
+// import 'stream-chat-react/dist/css/index.css';
+
 
 // const chatClient = StreamChat.getInstance('dz5f4d5kzrue');
 
@@ -33,30 +35,30 @@ import { Chat, Channel, ChannelHeader, MessageInput, MessageList, Thread, Window
 //     // render custom list item here
 //   };
 
- const App = () => {
-    
-    
-    return  ( <div>a</div>
-    // <Chat client={chatClient}>
-  //   <Channel channel={channel} filters={filters} sort={sort} options={options} List={CustomListContainer} Preview={CustomListItem} showChannelSearch>
-  //   <ChannelList options={options} />
- 
-  //     <Window>
-  //       <ChannelHeader />
-  //       <MessageList />
-  //       <MessageInput />
-  //     </Window>
-  //     <Thread />
-  //   </Channel>
-  // </Chat>
-);
- }
 
 // const App = () => {
-//     console.log(localStorage.getItem('user').user_id);
-//     return (
-//      <>
-     
-//      </>);}
+    
+    
+//    return  ( <Chat client={chatClient}>
+//     <Channel channel={channel} filters={filters} sort={sort} options={options} List={CustomListContainer} Preview={CustomListItem} showChannelSearch>
+//     <ChannelList options={options} />
+ 
+//       <Window>
+//         <ChannelHeader />
+//         <MessageList />
+//         <MessageInput />
+//       </Window>
+//       <Thread />
+//     </Channel>
+//   </Chat>
+// );}
 
-export default App;
+
+// // const App = () => {
+// //     console.log(localStorage.getItem('user').user_id);
+// //     return (
+// //      <>
+     
+// //      </>);}
+
+// export default App;

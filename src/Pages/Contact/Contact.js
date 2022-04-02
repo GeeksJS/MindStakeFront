@@ -1,36 +1,61 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function Contact() {
     const [newComplaint, setNewComplaint] = useState({})
     const Connected = JSON.parse(localStorage.getItem('user'))
-
+    const navigate = useNavigate()
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const CreateComplaint = (e) => {
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, send it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log("hahaa")
+
+                axios.post(`http://localhost:3000/complaints/addcomplaint/`, data)
+                    .then(res => {
+                        console.log("Sent")
+                    })
+                    .catch(err => {
+                        console.error(err);
+                    })
+                Swal.fire(
+                    'Sent!',
+                    'Your complaint has been delivered.',
+                    'success'
+                ).then(
+                    navigate('/contact')
+                )
+            }
+        })
         e.preventDefault()
-        
+
         const data = {
             Description: newComplaint.Description,
             Title: newComplaint.Title,
             User: Connected.userId
         }
 
-       
-        
-        axios.post(`http://localhost:3000/complaints/addcomplaint/`, data)
-            .then(res => {
-                Navigate('/contact')
-                window.location.reload()
-            })
-            .catch(err => {
-                console.error(err);
-            })
+
+
     }
     const handleChange = (e) => {
         e.preventDefault()
         setNewComplaint({ ...newComplaint, [e.target.name]: e.target.value })
     }
-   
+
     return (
         <React.Fragment>
             <>
@@ -140,7 +165,7 @@ export default function Contact() {
                                 </div>
                                 <div className="col-lg-7">
                                     <div className="contact-form">
-                                        <form onSubmit={CreateComplaint}>
+                                        <form onSubmit={handleSubmit(CreateComplaint)}>
                                             <h3 className="form-title">Send Us your complaint</h3>
                                             <div className="row">
                                                 <div className="col-lg-6">
@@ -173,9 +198,11 @@ export default function Contact() {
                                                             className="form-control"
                                                             name="Title" id="Title"
                                                             type="text"
-                                                            placeholder="Object"
+                                                            placeholder="Title"
                                                             value={newComplaint.Title} onChange={handleChange}
+                                                            {...register("Title", { required: 'Title is required' })}
                                                         />
+                                                        {errors.Title?.type === 'required' && !errors.Title.ref.value && <div className='alert-danger'>{errors.Title.message}</div>}
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
@@ -186,7 +213,10 @@ export default function Contact() {
                                                             id="Description"
                                                             placeholder="Description"
                                                             value={newComplaint.Description} onChange={handleChange}
+                                                            {...register("Description", { required: 'Description is required' })}
                                                         />
+                                                        {errors.Description?.type === 'required' && !errors.Description.ref.value && <div className='alert-danger'>{errors.Description.message}</div>}
+
                                                     </div>
                                                 </div>
                                                 <div className="col-12">

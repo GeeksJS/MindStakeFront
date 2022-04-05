@@ -56,15 +56,15 @@ export default function ChangePassword(props) {
                                 <div className="form-row" >
                                     <div className="form-group col-md-12">
                                         <label for="inputPassword4">Old Password</label>
-                                        <input type="text" className="form-control" required id="old_Password" placeholder="old_Password" name="old_Password" value={Pwd.old_Password} onChange={handleChange} />
+                                        <input type="password" className="form-control" required id="old_Password" placeholder="old_Password" name="old_Password" value={Pwd.old_Password} onChange={handleChange} />
                                     </div>
                                     <div className="form-group col-md-12">
                                         <label for="inputPassword4">New  Password</label>
-                                        <input type="text" className="form-control" id="new_Password" required placeholder="new_Password" name="new_Password" value={Pwd.new_Password} onChange={handleChange} />
+                                        <input type="password" className="form-control" id="new_Password" required placeholder="new_Password" name="new_Password" value={Pwd.new_Password} onChange={handleChange} />
                                     </div>
                                     <div className="form-group col-md-12">
                                         <label for="inputPassword4">Confirm Password</label>
-                                        <input type="text" className="form-control" id="confirm_Password" required placeholder="confirm_Password" name="confirm_Password" value={Pwd.confirm_Password} onChange={handleChange} />
+                                        <input type="password" className="form-control" id="confirm_Password" required placeholder="confirm_Password" name="confirm_Password" value={Pwd.confirm_Password} onChange={handleChange} />
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-center">

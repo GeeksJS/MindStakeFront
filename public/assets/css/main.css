@@ -1101,17 +1101,17 @@ a:hover {
 
 /*======= Sticky Header =======*/
 .sticky-header.sticky-on .navbar-wrapper {
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
-	z-index: 999;
-	-webkit-animation: 1.15s ease 0s normal forwards 1 running headerSlideDown;
-	animation: 1.15s ease 0s normal forwards 1 running headerSlideDown;
-	background-color: #fff;
-	-webkit-box-shadow: 0 8px 20px rgb(0 29 35 / 8%);
-	box-shadow: 0 8px 20px rgb(0 29 35 / 8%);
-	border-color: transparent;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+    -webkit-animation: 1.15s ease 0s normal forwards 1 running headerSlideDown;
+    animation: 1.15s ease 0s normal forwards 1 running headerSlideDown;
+    background-color: #fff;
+    -webkit-box-shadow: 0 8px 20px rgb(0 29 35 / 8%);
+    box-shadow: 0 8px 20px rgb(0 29 35 / 8%);
+    border-color: transparent;
 }
 
 .sticky-header.sticky-on.transparent-header .navbar-inner {
@@ -2668,6 +2668,7 @@ a:hover {
 /*======= Project Details =======*/
 .project-summery {
 	padding: 0 30px 0 40px;
+
 }
 
 .cat{
@@ -2684,8 +2685,8 @@ a:hover {
 	font-weight: 700;
 	-webkit-box-shadow: 0px 10px 30px 0px rgba(2, 169, 92, 0.5);
 	box-shadow: 0px 10px 30px 0px rgba(2, 169, 92, 0.5);
-	margin-bottom: 35px;
-	margin-right: 500px;
+	/* margin-bottom: 35px;
+	margin-right: 500px; */
 }
 
 .project-summery .category:hover {
@@ -5691,3 +5692,41 @@ a:hover {
 	width: 600px;
 	height: 650px;
 }
+
+#deleteIcon{
+	font-size: 20px;
+	width:1%;
+	height:1%;
+	color:rgb(197, 38, 38);
+	position: absolute;
+	left: 80%;
+	top: 4px;
+}
+
+#deleteIcon1{
+	font-size: 20px;
+	width:1%;
+	height:1%;
+	color:rgb(197, 38, 38);
+	position: absolute;
+	left: 78%;
+	top: 4px;
+}
+#deleteIcon1:hover{
+	color:rgb(255, 0, 34);
+}
+#deleteIcon:hover{
+	color:rgb(255, 0, 34);
+}
+
+.bookmarkIcon{
+	color: #02a95c;
+	-webkit-box-shadow: 0px 10px 30px 0px rgba(2, 169, 92, 0.5);
+	box-shadow: 0px 10px 30px 0px rgba(2, 169, 92, 0.5);
+
+}
+
+.bookmarkIcon:hover{
+	color: #001d23;
+}
+

@@ -88,6 +88,17 @@ export default function Navbar() {
                                     <li className={(window.location.pathname === "/projects" || window.location.pathname === "/createproject" || window.location.pathname === "/myprojects") && "current"}>
                                         <NavLink to="projects"  >Project </NavLink>
                                         <ul className="submenu">
+<<<<<<< HEAD
+=======
+                                            {User.Role === "Creator" &&
+                                                <div><li>
+                                                    <NavLink to="createproject">Create Project</NavLink>
+                                                </li>
+                                                    <li>
+                                                        <NavLink to="myprojects">My Projects</NavLink>
+                                                    </li></div>
+                                            }
+>>>>>>> e8745854211f882435d495f16ec6128d6ec56e7c
                                             <li>
                                                 <NavLink to="projects">All Projects</NavLink>
                                             </li>

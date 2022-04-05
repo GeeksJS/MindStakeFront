@@ -1,31 +1,17 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Project(props) {
-
-    const Connected = JSON.parse(localStorage.getItem('user'))
+export default function ProjectCard(props) {
+    console.log(props)
     const [project, setProject] = useState(props.project)
-    const [user, setUser] = useState({})
     const date = new Date(project.CreationDate)
 
     const pourcentage = project.Raised / (100 * project.Goal);
 
-    useEffect(() => {
-        axios.get(`http://localhost:3000/users/${project.User}`)
-            .then(res => {
-                setUser(res.data[0]);
-            })
-    }, []);
-
-    const deleteBookmark = (e) =>{
-        props.deleteBookmark(project._id, Connected.userId)  
-    }
-
     return (
         <React.Fragment>
-            <div className="col-lg-4 col-md-6 col-sm-10">
-                <div className="project-item mb-30">
+            <div className="card info-card">
+                <div className="card-body">
                     <div
                         className="thumb"
                         style={{
@@ -35,17 +21,12 @@ export default function Project(props) {
                     <div className="content">
                         <div className="cats">
                             <a href="#">{project.Category}</a>
+                        </div>
 
-                        </div>
-                        {window.location.pathname === "/bookmarks" &&
-                            <i class='fas fa-trash-alt' id='deleteIcon' style={{ marginLeft: '40px' }} onClick={deleteBookmark}></i>
-                        }
-                        <div className="author">
-                            <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Thumb" />
-                            <a href="#">{user.UserName}</a>
-                        </div>
+
                         <h5 className="title">
                             <Link to={"/detailProject/" + project._id}>
+
                                 {project.Title}
                             </Link>
                         </h5>

@@ -19,7 +19,7 @@ import Checkout from './Pages/Checkout/Checkout';
 import useToken from './UseToken';
 import MyProjects from './Pages/Project/MyProjects';
 import Messenger from './Pages/Messenger/Messenger';
-
+import ChatDialog from './Pages/ChatDialog/ChatDialog';
 function App() {
   const [show, setShow] = useState(false)
 
@@ -64,7 +64,9 @@ function App() {
         {window.location.pathname !== "/login" && window.location.pathname !== "/register"  && window.location.pathname !== "/checkout" && <Footer />}
 
       </BrowserRouter>
-
+    <div className='ChatDialog'>
+    <ChatDialog />
+    </div>
     </div>
 
   );

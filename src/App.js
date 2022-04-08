@@ -20,9 +20,6 @@ import useToken from './UseToken';
 import MyProjects from './Pages/Project/MyProjects';
 import Messenger from './Pages/Messenger/Messenger';
 import ChatDialog from './Pages/ChatDialog/ChatDialog';
-import Bookmarks from './Pages/Project/Bookmarks';
-import ScrollToTop from 'react-scroll-to-top';
-
 function App() {
   const [show, setShow] = useState(false)
 
@@ -60,7 +57,6 @@ function App() {
           <Route path='/createproject' element={<CreateProject />}> </Route>
           <Route path='/myprojects' element={<MyProjects />}> </Route>
           <Route path='/messenger' element={<Messenger/>}> </Route>
-          <Route path='/bookmarks' element={<Bookmarks/>}> </Route>
 
         </Routes>
 
@@ -71,8 +67,6 @@ function App() {
     <div className='ChatDialog'>
     <ChatDialog />
     </div>
-
-      <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%' ,marginBottom: '60px',zIndex:'999'}} color='white'></ScrollToTop>
     </div>
 
   );

@@ -10,6 +10,7 @@ import Login from './Pages/Login/Login';
 import Review from './Pages/Chatbot/Review';
 import { useEffect, useState } from 'react';
 import BubbleChatbot from './Pages/BubbleChatbot/BubbleChatbot';
+import ChatDialog from './Pages/ChatDialog/ChatDialog';
 import About from './Pages/About/About';
 import Contact from './Pages/Contact/Contact';
 import Profile from './Pages/Profile/Profile';
@@ -68,6 +69,7 @@ function App() {
 
       </BrowserRouter>
       <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%' ,marginBottom: '60px',zIndex:'999'}} color='white'></ScrollToTop>
+      <ChatDialog />
     </div>
 
   );

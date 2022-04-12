@@ -27,6 +27,7 @@ export default function Register({ setToken }) {
         setUserRole(document.getElementById('select').value)
         setNext(false)
         setBack(true)
+        newuser.Role === "Creator" && setNewUser({ ...newuser, Typecreator: "Individual"})
     }
 
     const handleBackClick = (e) => {

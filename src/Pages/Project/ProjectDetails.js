@@ -257,7 +257,7 @@ export default function ProjectDetails() {
                                                     style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
                                                     Edit <i class='fas fa-edit'></i>
                                                 </a>
-                                                <button type="submit" className="main-btn" onClick={handleDelete}
+                                                <button  className="main-btn" onClick={handleDelete} disabled={project.Raised !== 0}
                                                     style={{ backgroundColor: 'rgba(255, 0, 0, 0.8)', marginLeft: '30px', marginTop: '0px' }}>
                                                     Delete <i class='fas fa-trash-alt' style={{ fontSize: '15px' }}></i>
                                                 </button>

@@ -4,10 +4,23 @@ import './style.css'
 import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 import axios from 'axios';
 import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2';
 
 export default function CreateProject() {
 
     const Navigate = useNavigate()
+
+    const Connected = JSON.parse(localStorage.getItem('user'))
+
+    {!Connected.isActivated && 
+        Swal.fire(
+            'Account activation required!',
+            'Please activate your account!',
+            'warning'
+        ).then(()=>Navigate('/'))
+    }
+
+    
     const [newproject, setNewProject] = useState({})
     const [Picture, setPicture] = useState()
     const [Video, setVideo] = useState()

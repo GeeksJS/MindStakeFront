@@ -81,8 +81,15 @@ export default function Register({ setToken }) {
                 }else{
                     setToken(res.data.token)
                     localStorage.setItem('user' , JSON.stringify(res.data))
-                    navigate('/')
-                    window.location.reload()
+                    Swal.fire(
+                        'Registration done!',
+                        'An activation email has been sent to your email address',
+                        'success'
+                      ).then(()=>{
+                        navigate('/')
+                        window.location.reload()
+                      })
+                    
                 }
                
             })

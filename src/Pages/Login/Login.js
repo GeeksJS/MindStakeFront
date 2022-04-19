@@ -142,7 +142,7 @@ export default function Login({ setToken }) {
                         <label>Password</label>
                         <input placeholder="Enter you password" type="password" onChange={e => setPassword(e.target.value)} />
                     </div>
-                    <a href="#" className='forgotPass'>Forgot password?</a>
+                    <Link to='/forgot-password' className='forgotPass'>Forgot password?</Link>
                     <a href='/' style={{ width: '100%' }}>
                         <div id='button' className='rowLogin'>
                             <button >login</button>

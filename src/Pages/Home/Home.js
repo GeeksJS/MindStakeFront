@@ -4,10 +4,14 @@ import Review from '../Chatbot/Review'
 import Footer from '../Footer/Footer'
 import Navbar from '../NavBar/Navbar'
 import ScrollToTop from "react-scroll-to-top";
+import { Trans, useTranslation } from 'react-i18next';
 
 
 
 export default function Home() {
+    const { t, i18n } = useTranslation();
+
+    const User = JSON.parse(localStorage.getItem('user'))
 
     return (
         <React.Fragment>
@@ -457,6 +461,16 @@ export default function Home() {
 
 
 
+
+            <div class="toast notice" role="alert" >
+                <div class="toast-body">
+                    <p>fdfdfdfdfddfdfdf</p>
+                    fdgdfgfdg
+                    fgddfgfgd
+                    fgdfgd
+
+                </div>
+            </div>
 
 
         </React.Fragment>

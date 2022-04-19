@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Checkout from '../Checkout/Checkout';
+import LocaleContext from '../../LocaleContext';
+import i18n from '../../i18n';
+import { NavDropdown } from 'react-bootstrap';
 
 export default function Navbar() {
     var classNameHome = "site-header sticky-header transparent-header topbar-transparent";
     var classNameOther = "site-header sticky-header other ";
 
+    const { locale } = useContext(LocaleContext);
 
     const [trans, setTrans] = React.useState(false);
     const [active, setActive] = React.useState("");
@@ -20,6 +24,11 @@ export default function Navbar() {
         window.history.replaceState(null, "payment", "localhost:3000/off")
     }
 
+    function changeLocale(l) {
+        if (locale !== l) {
+            i18n.changeLanguage(l);
+        }
+    }
 
     return (
 
@@ -45,7 +54,9 @@ export default function Navbar() {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="col-auto d-none d-md-block">
+                            <a href="#" onClick={changeLocale('en')}>English</a>
+                            <a href="#" onClick={changeLocale('ar')}>العربية</a>
+                            {/* <div className="col-auto d-none d-md-block">
                                 <ul className="social-icons">
                                     <li>
                                         <a>
@@ -68,10 +79,16 @@ export default function Navbar() {
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
+                {/* <div className="header-topbar d-none d-sm-block">
+                    <div class="alert alert-danger border-2 d-flex align-items-center" style={{width:'60%',marginLeft:'20%'}} role="alert">
+                        <div class=" me-3 icon-item" ><span class="fas fa-times-circle text-danger fs-3"></span></div>
+                        <p class="mb-0 flex-1">A simple danger alert—check it out!</p><button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div> */}
                 <div className="navbar-wrapper">
                     <div className="container">
                         <div className="navbar-inner">
@@ -170,7 +187,10 @@ export default function Navbar() {
                         </div>
                     </div>
                 </div>
+
             </header>
+
+
         </React.Fragment>
     )
 }

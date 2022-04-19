@@ -53,6 +53,25 @@ export default function Profile() {
     }, [!openPopup]);
 
 
+    const activateAccount = (e) => {
+        e.preventDefault()
+        const data ={
+            Email: Connected.Email
+        }
+        axios.post(`http://localhost:3000/users/activate-account-email`,data)
+            .then(
+                Swal.fire(
+                    'Done!',
+                    'Activation email sent successfully!',
+                    'success'
+                )
+                
+
+            )
+            .catch(err => {
+            })
+    }
+
     if (Profile) {
         return (
 
@@ -79,6 +98,8 @@ export default function Profile() {
 
                     <div className="card social-prof" style={{ zIndex: '999' }}>
                         <div className="card-body">
+                            
+                            
                             {Profile._id === Connected.userId && <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={() => setOpenPopup(true)}  >
                                 Edit <i className="far fa-edit" />
                             </button>}
@@ -115,6 +136,9 @@ export default function Profile() {
                                 <Facebook />
                                 <Twitter />
                                 <LinkedIn />
+                                {!Connected.isActivated && <button onClick={activateAccount} className="main-btn1" style={{ marginLeft: '950px',backgroundColor:'green',color:'white' }}   >
+                                Activate account 
+                            </button>}
                             </div>
 
                         </div>
@@ -134,9 +158,9 @@ export default function Profile() {
                                         As a simple user, we give you the opportunity to help your best creator by donating their project and encourage our creator with your feedback.
                                     </p>}
                                     {Profile.Cv === "default.pdf" && Profile.Role == "Investor" && <p>
-                                        We would like to take this opportunity to appreciate and thank you for your kind corporation and for trusting our company. 
+                                        We would like to take this opportunity to appreciate and thank you for your kind corporation and for trusting our company.
                                         We would like to apologize if we could not meet up with any of your expectations or give you regular updates.
-                                         We would request you to please keep investing in the future as well.                                    </p>}
+                                        We would request you to please keep investing in the future as well.                                    </p>}
                                     <h4 className="mb-3">
                                         <strong>Personal Info</strong>
                                     </h4>

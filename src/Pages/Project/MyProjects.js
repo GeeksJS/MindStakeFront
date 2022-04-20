@@ -11,7 +11,7 @@ export default function MyProjects() {
     const User = JSON.parse(localStorage.getItem('user'))
     const [visible, setVisible] = useState(1);
     const showMoreProjects = () => {
-        setVisible(prevValue => prevValue+1);
+        setVisible(prevValue => prevValue + 1);
     }
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export default function MyProjects() {
                 <div className="container">
                     <div className="row align-items-center justify-content-between">
                         <div className="col-lg-8">
-                            <h1 className="page-title">{User.UserName.charAt(0).toUpperCase()+ User.UserName.slice(1)}'s projects</h1>
+                            <h1 className="page-title">{User.UserName.charAt(0).toUpperCase() + User.UserName.slice(1)}'s projects</h1>
                         </div>
                         <div className="col-auto">
                             <ul className="page-breadcrumb">
@@ -47,6 +47,7 @@ export default function MyProjects() {
                     </div>
                 </div>
             </section>
+           
             <section className="project-section section-gap-extra-bottom primary-soft-bg">
                 <div className="container">
                     <div className="row project-items justify-content-center project-style-one">

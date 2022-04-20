@@ -24,7 +24,7 @@ export default function Project(props) {
 
     return (
         <React.Fragment>
-            <div className="col-lg-4 col-md-6 col-sm-10">
+            <div id="myProject" className="col-lg-4 col-md-6 col-sm-10">
                 <div className="project-item mb-30">
                     <div
                         className="thumb"
@@ -44,7 +44,7 @@ export default function Project(props) {
                             <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Thumb" />
                             <a href="#">{user.UserName}</a>
                         </div>
-                        <h5 className="title">
+                        <h5 id="myTitle" className="title">
                             <Link to={"/detailProject/" + project._id}>
                                 {project.Title}
                             </Link>

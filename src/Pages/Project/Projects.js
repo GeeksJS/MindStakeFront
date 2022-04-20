@@ -9,11 +9,13 @@ export default function Projects() {
 
 
     const [projects, setProjects] = useState('');
-    const [visible, setVisible] = useState(1);
+    const [visible, setVisible] = useState(2);
+    const [searchTerm, setsearchTerm] = useState('')
+    const [change, setChange] = useState(false);
     const showMoreProjects = () => {
-        setVisible(prevValue => prevValue+1);
+        setVisible(prevValue => prevValue + 1);
     }
-
+    const keys = ["Category", "Title"];
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -47,14 +49,31 @@ export default function Projects() {
                         </div>
                     </div>
                 </div>
+
             </section>
             <section className="project-section section-gap-extra-bottom primary-soft-bg">
+                {/* search */}
+         
+
+                        <input type="search" id="myInput" className='search' placeholder='search' onChange={event => setsearchTerm(event.target.value)} />
+
+                    
+                {/* end search */}
+
                 <div className="container">
+
                     <div className="row project-items justify-content-center project-style-one">
 
                         {projects &&
-                            projects.slice(0, visible).map((project, index) => (
-                                <Project key={index} project={project} />
+                            projects.filter(((project) => {
+                               if (keys.some((key) => project[key].toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                    console.log(project)
+                                    console.log(searchTerm)
+                                    return project
+                                }
+                            })).slice(0, visible).map((project, index) => (
+                               <Project key={index} project={project}/>
+                               
                             ))
                         }
 

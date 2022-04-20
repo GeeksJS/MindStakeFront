@@ -9,6 +9,10 @@ export default function MyProjects() {
 
     const [Myprojects, setMyprojects] = useState('')
     const User = JSON.parse(localStorage.getItem('user'))
+    const [visible, setVisible] = useState(1);
+    const showMoreProjects = () => {
+        setVisible(prevValue => prevValue+1);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,14 +52,14 @@ export default function MyProjects() {
                     <div className="row project-items justify-content-center project-style-one">
 
                         {Myprojects &&
-                            Myprojects.map((project, index) => (
+                            Myprojects.slice(0, visible).map((project, index) => (
                                 <Project key={index} project={project} />
                             ))
                         }
 
                         <div className="col-12">
                             <div className="view-more-btn text-center mt-40">
-                                <a className="main-btn bordered-btn">
+                                <a className="main-btn bordered-btn" onClick={showMoreProjects}>
                                     View More Project <i className="fas fa-arrow-right" />
                                 </a>
                             </div>

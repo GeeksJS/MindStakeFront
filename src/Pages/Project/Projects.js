@@ -7,8 +7,12 @@ import axios from 'axios'
 
 export default function Projects() {
 
-    
-    const [projects, setProjects] = useState('')
+
+    const [projects, setProjects] = useState('');
+    const [visible, setVisible] = useState(1);
+    const showMoreProjects = () => {
+        setVisible(prevValue => prevValue+1);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,14 +53,14 @@ export default function Projects() {
                     <div className="row project-items justify-content-center project-style-one">
 
                         {projects &&
-                            projects.map((project, index) => (
+                            projects.slice(0, visible).map((project, index) => (
                                 <Project key={index} project={project} />
                             ))
                         }
 
                         <div className="col-12">
                             <div className="view-more-btn text-center mt-40">
-                                <a className="main-btn bordered-btn">
+                                <a className="main-btn bordered-btn" onClick={showMoreProjects}>
                                     View More Project <i className="fas fa-arrow-right" />
                                 </a>
                             </div>

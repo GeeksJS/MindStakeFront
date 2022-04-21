@@ -7,9 +7,15 @@ import axios from 'axios'
 
 export default function Projects() {
 
-    
-    const [projects, setProjects] = useState('')
 
+    const [projects, setProjects] = useState('');
+    const [visible, setVisible] = useState(2);
+    const [searchTerm, setsearchTerm] = useState('')
+    const [change, setChange] = useState(false);
+    const showMoreProjects = () => {
+        setVisible(prevValue => prevValue + 1);
+    }
+    const keys = ["Category", "Title"];
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -22,6 +28,9 @@ export default function Projects() {
         fetchData().then(projects);
 
     }, []);
+    const search = (e) => {
+        setsearchTerm(e.target.value)
+    }
 
     return (
         <React.Fragment>
@@ -43,20 +52,39 @@ export default function Projects() {
                         </div>
                     </div>
                 </div>
+
             </section>
             <section className="project-section section-gap-extra-bottom primary-soft-bg">
+               
+
                 <div className="container">
+                  
+                    <div class="d-flex justify-content-end h-100">
+                        <div class="searchbar">
+                            <input class="search_input" type="text" name="" placeholder="Search..."  onChange={search} />
+                                <a  class="search_icon"><i class="fas fa-search" style={{color:"#14b761"}}></i></a>
+                        </div>
+                    </div>
+                    <br></br>
                     <div className="row project-items justify-content-center project-style-one">
 
                         {projects &&
-                            projects.map((project, index) => (
-                                <Project key={index} project={project} />
+                            projects.filter(((project) => {
+                                if (keys.some((key) => project[key].toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                    console.log(project)
+                                    console.log(searchTerm)
+                                    return project
+                                }
+                            })).slice(0, visible).map((project, index) => (
+                                console.log("hetha li bech yetb3ath", project),
+                                <Project key={project._id} project={project} />
+
                             ))
                         }
 
                         <div className="col-12">
                             <div className="view-more-btn text-center mt-40">
-                                <a className="main-btn bordered-btn">
+                                <a className="main-btn bordered-btn" onClick={showMoreProjects}>
                                     View More Project <i className="fas fa-arrow-right" />
                                 </a>
                             </div>

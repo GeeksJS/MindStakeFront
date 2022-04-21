@@ -151,13 +151,13 @@ export default function Profile() {
                                     <h4>
                                         <strong>About Me</strong>
                                     </h4>
-                                    {Profile.Cv !== "default.pdf" && <p>
+                                    {Profile.Cv !== "default.pdf" && Profile.Cv.endsWith("f") && <p>
                                         <embed src={`http://localhost:3000/uploads/cv/${Profile.Cv}`} type="application/pdf" width="100%" height="600px" />
                                     </p>}
-                                    {Profile.Cv === "default.pdf" && Profile.Role == "SimpleUser" && <p>
+                                    {(Profile.Cv === "default.pdf" || !(Profile.Cv.endsWith("f"))) && Profile.Role == "SimpleUser" && <p>
                                         As a simple user, we give you the opportunity to help your best creator by donating their project and encourage our creator with your feedback.
                                     </p>}
-                                    {Profile.Cv === "default.pdf" && Profile.Role == "Investor" && <p>
+                                    {(Profile.Cv === "default.pdf" || !(Profile.Cv.endsWith("f"))) && Profile.Role == "Investor" && <p>
                                         We would like to take this opportunity to appreciate and thank you for your kind corporation and for trusting our company.
                                         We would like to apologize if we could not meet up with any of your expectations or give you regular updates.
                                         We would request you to please keep investing in the future as well.                                    </p>}

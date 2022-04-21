@@ -8,7 +8,7 @@ export default function Project(props) {
     const [project, setProject] = useState(props.project)
     const [user, setUser] = useState({})
     const date = new Date(project.CreationDate)
-
+    console.log("project", project)
     const pourcentage = project.Raised / (100 * project.Goal);
 
     useEffect(() => {
@@ -17,14 +17,14 @@ export default function Project(props) {
                 setUser(res.data[0]);
             })
     }, []);
-
-    const deleteBookmark = (e) =>{
-        props.deleteBookmark(project._id, Connected.userId)  
+  
+    const deleteBookmark = (e) => {
+        props.deleteBookmark(project._id, Connected.userId)
     }
 
     return (
         <React.Fragment>
-            <div className="col-lg-4 col-md-6 col-sm-10">
+            <div id="myProject" className="col-lg-4 col-md-6 col-sm-10">
                 <div className="project-item mb-30">
                     <div
                         className="thumb"
@@ -44,7 +44,7 @@ export default function Project(props) {
                             <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Thumb" />
                             <a href="#">{user.UserName}</a>
                         </div>
-                        <h5 className="title">
+                        <h5 id="myTitle" className="title">
                             <Link to={"/detailProject/" + project._id}>
                                 {project.Title}
                             </Link>

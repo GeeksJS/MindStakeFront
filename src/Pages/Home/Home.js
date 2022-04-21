@@ -9,7 +9,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 
 export default function Home() {
-    const { t, i18n } = useTranslation();
+   // const { t, i18n } = useTranslation();
 
     const User = JSON.parse(localStorage.getItem('user'))
 

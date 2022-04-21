@@ -7,7 +7,6 @@ import axios from 'axios'
 
 export default function Projects() {
 
-    
     const [projects, setProjects] = useState('')
 
     useEffect(() => {

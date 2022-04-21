@@ -24,11 +24,11 @@ export default function Navbar() {
         window.history.replaceState(null, "payment", "localhost:3000/off")
     }
 
-    function changeLocale(l) {
-        if (locale !== l) {
-            i18n.changeLanguage(l);
-        }
-    }
+    // function changeLocale(l) {
+    //     if (locale !== l) {
+    //         i18n.changeLanguage(l);
+    //     }
+    // }
 
     return (
 
@@ -54,8 +54,8 @@ export default function Navbar() {
                                     </li>
                                 </ul>
                             </div>
-                            <a href="#" onClick={changeLocale('en')}>English</a>
-                            <a href="#" onClick={changeLocale('ar')}>العربية</a>
+                            {/* <a href="#" onClick={changeLocale('en')}>English</a>
+                            <a href="#" onClick={changeLocale('ar')}>العربية</a> */}
                             {/* <div className="col-auto d-none d-md-block">
                                 <ul className="social-icons">
                                     <li>

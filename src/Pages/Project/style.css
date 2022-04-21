@@ -168,7 +168,7 @@
   display: none !important;
 }
 
-.tp-payment-area .form-style input{
+.tp-payment-area .form-style input {
   width: 100%;
   margin-bottom: 15px;
   padding-left: 20px;
@@ -178,8 +178,9 @@
   border: none;
   border: 1px solid #ebebeb;
 }
-.tp-payment-area .form-style input:focus{
-  border:1px solid #14b761;
+
+.tp-payment-area .form-style input:focus {
+  border: 1px solid #14b761;
 }
 
 .tp-payment-area .contact-form {
@@ -199,48 +200,52 @@
 
 @media(max-width: 992px) {
   .tp-event-details-wrap {
-      margin-bottom: 30px;
+    margin-bottom: 30px;
   }
 }
+
 @media(max-width: 767px) {
-  .tp-donations-amount, .tp-donations-details, .tp-doanation-payment {
-      padding: 20px;
+
+  .tp-donations-amount,
+  .tp-donations-details,
+  .tp-doanation-payment {
+    padding: 20px;
   }
 
-  #Description{
+  #Description {
     padding: 15px;
   }
 }
 
 @media(max-width: 590px) {
   .tp-case-details-text .tp-case-content h2 {
-      font-size: 22px;
+    font-size: 22px;
   }
 
   .tp-case-details-tab .nav li a {
-      margin-bottom: 20px;
+    margin-bottom: 20px;
   }
 
   .tp-case-details-tab .nav li:last-child a {
-      margin-bottom: 0;
+    margin-bottom: 0;
   }
 
   .tp-case-details-text .tp-case-text-top {
-      padding: 8px;
+    padding: 8px;
   }
 
   .tp-payment-select ul {
-      display: flex;
-      flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .tp-doanation-payment {
-      padding: 20px 10px;
+    padding: 20px 10px;
   }
 
 }
 
-.tp-donate-header h2{
+.tp-donate-header h2 {
   margin-bottom: 50px;
   text-align: center;
   font-size: 36px;
@@ -249,61 +254,111 @@
 }
 
 .form-control1 {
-    display: block;
-    width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: 0.25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
+
 .form-control1[type=file]:not(:disabled):not([readonly]) {
-    cursor: pointer;
+  cursor: pointer;
 }
+
 .form-control1[type=file] {
-    overflow: hidden;
+  overflow: hidden;
 }
-input[type="file" i] {
-    appearance: none;
-    background-color: initial;
-    cursor: default;
-    align-items: baseline;
-    color: inherit;
-    text-overflow: ellipsis;
-    white-space: pre;
-    text-align: start !important;
-    padding: initial;
-    border: initial;
-    overflow: hidden !important;
+
+input[type="file"i] {
+  appearance: none;
+  background-color: initial;
+  cursor: default;
+  align-items: baseline;
+  color: inherit;
+  text-overflow: ellipsis;
+  white-space: pre;
+  text-align: start !important;
+  padding: initial;
+  border: initial;
+  overflow: hidden !important;
 }
+
 input {
-    -webkit-writing-mode: horizontal-tb !important;
-    text-rendering: auto;
-    color: -internal-light-dark(black, white);
-    letter-spacing: normal;
-    word-spacing: normal;
-    line-height: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: start;
-    appearance: auto;
-    -webkit-rtl-ordering: logical;
-    cursor: text;
-    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
-    margin: 0em;
-    padding: 1px 2px;
-    border-width: 2px;
-    border-style: inset;
-    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
-    border-image: initial;
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  color: -internal-light-dark(black, white);
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  appearance: auto;
+  -webkit-rtl-ordering: logical;
+  cursor: text;
+  background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+  margin: 0em;
+  padding: 1px 2px;
+  border-width: 2px;
+  border-style: inset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
 }
+
+
+.searchbar{
+  margin-bottom: auto;
+  margin-top: auto;
+  height: 60px;
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 10px;
+  border: 1px solid #14b761;
+  }
+
+  .search_input{
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color:transparent;
+  line-height: 40px;
+  transition: width 0.4s linear;
+  }
+ 
+  .searchbar:hover > .search_input{
+  padding: 0 10px;
+  width: 300px;
+  caret-color:#14b761;
+  transition: width 0.4s linear;
+  }
+
+  .searchbar:hover > .search_icon{
+  background: white;
+  color: #14b761;
+  }
+
+  .search_icon{
+  height: 40px;
+  width: 40px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color:#14b761;
+  text-decoration:none;
+  }

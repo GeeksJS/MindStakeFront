@@ -24,6 +24,7 @@ import Messenger from './Pages/Messenger/Messenger';
 import Bookmarks from './Pages/Project/Bookmarks';
 import ScrollToTop from 'react-scroll-to-top';
 import ResetPassword from './Pages/ResetPassword/ResetPassword';
+import { LinkedInCallback } from 'react-linkedin-login-oauth2';
 
 import i18n from './i18n';
 import LocaleContext from './LocaleContext';
@@ -35,21 +36,29 @@ function App() {
 
   const { token, setToken } = useToken();
 
-  const [locale, setLocale] = useState(i18n.language);
+  //const [locale, setLocale] = useState(i18n.language);
 
-  i18n.on('languageChanged', (lng) => setLocale(i18n.language));
+  //i18n.on('languageChanged', (lng) => setLocale(i18n.language));
 
 
   return (
     <div className='App'>
       <BrowserRouter>
-        {(window.location.pathname !== "/login" && window.location.pathname !== "/forgot-password" && window.location.pathname !== "/reset-password" && window.location.pathname !== "/register" && window.location.pathname !== "/activate-account" && window.location.pathname !== "/checkout") && <Navbar />}
+        {(window.location.pathname !== "/login" && window.location.pathname !== "/linkedin" && window.location.pathname !== "/forgot-password" && window.location.pathname !== "/reset-password" && window.location.pathname !== "/register" && window.location.pathname !== "/activate-account" && window.location.pathname !== "/checkout") && <Navbar />}
 
         <Routes>
           <Route exact path='/login' element={
             <div className='bodyLogin'>
               <div className='container ' >
                 <Login setToken={setToken} />
+              </div>
+            </div>
+          }></Route>
+          <Route exact path='/linkedin' element={
+            <div className='bodyLogin'>
+              <div className='container ' >
+                <LinkedInCallback />
+                
               </div>
             </div>
           }></Route>
@@ -83,11 +92,9 @@ function App() {
           }></Route>
 
           <Route exact path='/*' element={
-            <LocaleContext.Provider value={{ locale, setLocale }}>
-              <Suspense fallback={<Loading />}>
+            
                 <Home />
-              </Suspense>
-            </LocaleContext.Provider>
+             
           }></Route>
           <Route path='/projects' element={<Projects />}></Route>
           <Route exact path='/detailProject/:id/*' element={<ProjectDetails />}></Route>
@@ -95,22 +102,20 @@ function App() {
           <Route path='/contact' element={<Contact />}></Route>
           <Route path='/profile/:id' element={<Profile />}></Route>
           <Route path='/pricing' element={
-            <LocaleContext.Provider value={{ locale, setLocale }}>
-              <Suspense fallback={<Loading />}>
+           
                 <Pricing />
-              </Suspense>
-            </LocaleContext.Provider>
+            
           }></Route>
           <Route path='/checkout' element={<Checkout />} ></Route>
           <Route path='/createproject' element={<CreateProject />}> </Route>
           <Route path='/myprojects' element={<MyProjects />}> </Route>
           <Route path='/messenger' element={<Messenger />}> </Route>
           <Route path='/bookmarks' element={<Bookmarks />}> </Route>
-
+          
         </Routes>
 
 
-        {window.location.pathname !== "/login" && window.location.pathname !== "/forgot-password" && window.location.pathname !== "/reset-password" && window.location.pathname !== "/register" && window.location.pathname !== "/activate-account" && window.location.pathname !== "/checkout" && <Footer />}
+        {window.location.pathname !== "/login" && window.location.pathname !== "/linkedin" &&  window.location.pathname !== "/forgot-password" && window.location.pathname !== "/reset-password" && window.location.pathname !== "/register" && window.location.pathname !== "/activate-account" && window.location.pathname !== "/checkout" && <Footer />}
 
       </BrowserRouter >
       <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%', marginBottom: '60px', zIndex: '999' }} color='white'></ScrollToTop>

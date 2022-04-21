@@ -8,6 +8,7 @@ import axios from 'axios'
 export default function Projects() {
 
 
+
     const [projects, setProjects] = useState('');
     const [visible, setVisible] = useState(2);
     const [searchTerm, setsearchTerm] = useState('')

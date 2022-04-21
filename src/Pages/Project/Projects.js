@@ -28,6 +28,9 @@ export default function Projects() {
         fetchData().then(projects);
 
     }, []);
+    const search = (e) => {
+        setsearchTerm(e.target.value)
+    }
 
     return (
         <React.Fragment>
@@ -52,28 +55,30 @@ export default function Projects() {
 
             </section>
             <section className="project-section section-gap-extra-bottom primary-soft-bg">
-                {/* search */}
-         
-
-                        <input type="search" id="myInput" className='search' placeholder='search' onChange={event => setsearchTerm(event.target.value)} />
-
-                    
-                {/* end search */}
+               
 
                 <div className="container">
-
+                  
+                    <div class="d-flex justify-content-end h-100">
+                        <div class="searchbar">
+                            <input class="search_input" type="text" name="" placeholder="Search..."  onChange={search} />
+                                <a  class="search_icon"><i class="fas fa-search" style={{color:"#14b761"}}></i></a>
+                        </div>
+                    </div>
+                    <br></br>
                     <div className="row project-items justify-content-center project-style-one">
 
                         {projects &&
                             projects.filter(((project) => {
-                               if (keys.some((key) => project[key].toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                if (keys.some((key) => project[key].toLowerCase().includes(searchTerm.toLowerCase()))) {
                                     console.log(project)
                                     console.log(searchTerm)
                                     return project
                                 }
                             })).slice(0, visible).map((project, index) => (
-                               <Project key={index} project={project}/>
-                               
+                                console.log("hetha li bech yetb3ath", project),
+                                <Project key={project._id} project={project} />
+
                             ))
                         }
 

@@ -8,7 +8,7 @@ export default function Project(props) {
     const [project, setProject] = useState(props.project)
     const [user, setUser] = useState({})
     const date = new Date(project.CreationDate)
-
+    console.log("project", project)
     const pourcentage = project.Raised / (100 * project.Goal);
 
     useEffect(() => {
@@ -17,9 +17,9 @@ export default function Project(props) {
                 setUser(res.data[0]);
             })
     }, []);
-
-    const deleteBookmark = (e) =>{
-        props.deleteBookmark(project._id, Connected.userId)  
+  
+    const deleteBookmark = (e) => {
+        props.deleteBookmark(project._id, Connected.userId)
     }
 
     return (

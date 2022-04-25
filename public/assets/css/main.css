@@ -2334,12 +2334,12 @@ a:hover {
 	position: absolute;
 	left: 0;
 	top: 0;
-	width: 0;
+	width: 50%;
 	height: 100%;
 	-webkit-transition: width 2s ease-in-out;
 	-o-transition: width 2s ease-in-out;
 	transition: width 2s ease-in-out;
-	background-color: var(--primary-color);
+	background-color: green;
 }
 
 .project-items .project-item .date {

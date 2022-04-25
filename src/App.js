@@ -30,6 +30,8 @@ import i18n from './i18n';
 import LocaleContext from './LocaleContext';
 import Loading from './Pages/Loading';
 import ActivateAccount from './Pages/Register/ActivateAccount';
+import InvestProcess from './Pages/InvestProcess/InvestProcess';
+import Wallet from './Pages/Wallet/Wallet';
 
 function App() {
   const [show, setShow] = useState(false)
@@ -106,11 +108,16 @@ function App() {
                 <Pricing />
             
           }></Route>
-          <Route path='/checkout' element={<Checkout />} ></Route>
+          <Route path='/confirm-payment' element={<Checkout />} ></Route>
           <Route path='/createproject' element={<CreateProject />}> </Route>
           <Route path='/myprojects' element={<MyProjects />}> </Route>
           <Route path='/messenger' element={<Messenger />}> </Route>
           <Route path='/bookmarks' element={<Bookmarks />}> </Route>
+          <Route path='/invest-process' element={<InvestProcess />}> </Route>
+          <Route path='/wallet' element={<Wallet />}> </Route>
+
+
+
           
         </Routes>
 
@@ -119,7 +126,7 @@ function App() {
 
       </BrowserRouter >
       <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%', marginBottom: '60px', zIndex: '999' }} color='white'></ScrollToTop>
-      <ChatDialog />
+      <ChatDialog style={{ backgroundColor: '#02a95c', borderRadius: '50%', zIndex: '999' }}/>
     </div >
 
   );

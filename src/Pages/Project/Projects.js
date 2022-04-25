@@ -10,11 +10,10 @@ export default function Projects() {
 
 
     const [projects, setProjects] = useState('');
-    const [visible, setVisible] = useState(2);
+    const [visible, setVisible] = useState(6);
     const [searchTerm, setsearchTerm] = useState('')
-    const [change, setChange] = useState(false);
     const showMoreProjects = () => {
-        setVisible(prevValue => prevValue + 1);
+        setVisible(prevValue => prevValue + 3);
     }
     const keys = ["Category", "Title"];
     useEffect(() => {
@@ -56,29 +55,47 @@ export default function Projects() {
 
             </section>
             <section className="project-section section-gap-extra-bottom primary-soft-bg">
-               
+
 
                 <div className="container">
-                  
-                    <div class="d-flex justify-content-end h-100">
+
+
+                    <div class="d-flex justify-content-between h-100">
+
+                        <select name="orderby" class="orderby" style={{ width: '300px' }} onChange={search}>
+                            
+                            <option value="All categories" selected="selected">All categories</option>
+                            <option >Art</option>
+                            <option >Illustrations</option>
+                            <option >Technology</option>
+                            <option >Cinema</option>
+                            <option >Creation</option>
+                            <option >Gaming</option>
+                            <option >Music</option>
+                            <option >Other</option>
+                        </select>
+
                         <div class="searchbar">
-                            <input class="search_input" type="text" name="" placeholder="Search..."  onChange={search} />
-                                <a  class="search_icon"><i class="fas fa-search" style={{color:"#14b761"}}></i></a>
+                            <input class="search_input" type="text" name="" placeholder="Search..." onChange={search} />
+                            <a class="search_icon"><i class="fas fa-search" style={{ color: "#14b761" }}></i></a>
                         </div>
                     </div>
+
                     <br></br>
                     <div className="row project-items justify-content-center project-style-one">
 
                         {projects &&
                             projects.filter(((project) => {
+                                if(searchTerm ==="All categories"){
+                                    return project
+                                }
                                 if (keys.some((key) => project[key].toLowerCase().includes(searchTerm.toLowerCase()))) {
-                                    console.log(project)
-                                    console.log(searchTerm)
+
                                     return project
                                 }
                             })).slice(0, visible).map((project, index) => (
-                                console.log("hetha li bech yetb3ath", project),
-                                <Project key={project._id} project={project} />
+
+                                <Project key={project._id} project={project} style={{ height:'700px'}}/>
 
                             ))
                         }

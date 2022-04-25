@@ -1,10 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Checkout from '../Checkout/Checkout';
 import LocaleContext from '../../LocaleContext';
 import i18n from '../../i18n';
 import { NavDropdown } from 'react-bootstrap';
+import './style.css'
+import axios from 'axios';
 
 export default function Navbar() {
     var classNameHome = "site-header sticky-header transparent-header topbar-transparent";
@@ -29,6 +31,22 @@ export default function Navbar() {
     //         i18n.changeLanguage(l);
     //     }
     // }
+
+    const [walletInfo, setWalletInfo] = useState({});
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios.get(`http://localhost:3000/blockchain/wallet/${User.userId}`)
+                .then(res => {
+                    console.log(res.data)
+                    setWalletInfo(res.data)
+                
+                })
+           
+        }
+        fetchData().then()
+    }, []);
 
     return (
 
@@ -107,7 +125,7 @@ export default function Navbar() {
                                         <ul className="submenu">
                                             {User.Role === "Creator" &&
                                                 <div><li>
-                                                    <NavLink to="createproject">Create Project</NavLink>
+                                                    <a href="/createproject">Create Project</a>
                                                 </li>
                                                     <li>
                                                         <NavLink to="myprojects">My Projects</NavLink>
@@ -135,7 +153,7 @@ export default function Navbar() {
                                         <div className="icon0 text-amount">
 
                                             <i className="fab fa-gg-circle fa-2x fa-spin"></i>
-                                            <span className='mr-30'>88</span>
+                                            <span className='mr-30'>{walletInfo.balance}</span>
 
                                         </div>
                                         <div className="btn-buy text-amount">
@@ -145,52 +163,81 @@ export default function Navbar() {
                                         </div>
                                     </div>
 
-                                    <div className="footer-widgets widget contact-widget li ml-30 mr--30">
 
-                                        <li>
-                                            <Link to='/pricing'>
-                                                <span className="icon1">
-                                                    <i className="fas fa-rocket"></i>
-                                                </span>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <a>
-                                                <span className="icon1">
-                                                    <i className="far fa-bell" ></i>
-                                                </span>
-                                            </a>
-                                        </li>
 
-                                        <li>
-                                            <a>
-                                                <span className="icon1">
-                                                    <i className="far fa-user" ></i>
-                                                </span>
-                                            </a>
-                                            <ul className="submenu">
-                                                <li key={User.userId}>
-                                                    <NavLink hidden={!localStorage.getItem("token")} to={'/profile/' + User.userId}>Profile</NavLink>
-                                                </li>
-                                                <li key={User.userId}>
-                                                    <NavLink hidden={!localStorage.getItem("token")} to={'/bookmarks'}>My Bookmarks</NavLink>
-                                                </li>
+
+                                   
+
+
+
+                                        <div className="footer-widgets widget contact-widget li ml-30 mr--30">
+
+                                            <div class="main-search gva-search open">
                                                 <li>
-                                                    <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
-                                                    <a href='/login' hidden={!localStorage.getItem("token")} onClick={() => localStorage.clear()} >Logout</a>
+                                                    <a>
+                                                        <span className="icon1">
+                                                            <i className="far fa-search" ></i>
+                                                        </span>
+                                                    </a>
+                                                    <ul className="submenu">
+                                                        <div class="gva-search-content search-content" style={{marginTop:'-2px'}}>
+                                                            <div class="search-content-inner">
+                                                                <div class="content-inner"><form method="get" class="searchform gva-main-search" >
+                                                                    <div class="gva-search">
+                                                                        <input name="s" maxlength="40" class="form-control input-large input-search" type="text" size="20" placeholder="Search..." />
+                                                                        <span class="input-group-addon input-large btn-search" style={{ marginTop:'-10px'}}>
+                                                                            <i className="far fa-search" style={{ marginRight: '20px', color: '#14b761' }} ></i>
+
+                                                                        </span>
+                                                                    </div>
+                                                                </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ul>
                                                 </li>
-                                            </ul>
-                                        </li>
-                                    </div>
+                                            </div>
+                                            <li>
+                                                <Link to='/pricing'>
+                                                    <span className="icon1">
+                                                        <i className="fas fa-rocket"></i>
+                                                    </span>
+                                                </Link>
+                                            </li>
+
+
+                                            <li>
+                                                <a>
+                                                    <span className="icon1">
+                                                        <i className="far fa-user" ></i>
+                                                    </span>
+                                                </a>
+                                                <ul className="submenu">
+                                                    <li key={User.userId}>
+                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/profile/' + User.userId}>Profile</NavLink>
+                                                    </li>
+                                                    <li key={User.userId}>
+                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/wallet'}>My Wallet</NavLink>
+                                                    </li>
+                                                    <li key={User.userId}>
+                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/bookmarks'}>My Bookmarks</NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
+                                                        <a href='/login' hidden={!localStorage.getItem("token")} onClick={() => localStorage.clear()} >Logout</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </div>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </header>
+            </header >
 
 
-        </React.Fragment>
+        </React.Fragment >
     )
 }

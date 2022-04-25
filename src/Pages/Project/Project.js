@@ -8,8 +8,7 @@ export default function Project(props) {
     const [project, setProject] = useState(props.project)
     const [user, setUser] = useState({})
     const date = new Date(project.CreationDate)
-    console.log("project", project)
-    const pourcentage = project.Raised / (100 * project.Goal);
+    const pourcentage = (project.Raised * 100) / project.Goal;
 
     useEffect(() => {
         axios.get(`http://localhost:3000/users/${project.User}`)
@@ -24,7 +23,7 @@ export default function Project(props) {
 
     return (
         <React.Fragment>
-            <div id="myProject" className="col-lg-4 col-md-6 col-sm-10">
+            <div id="myProject" className="col-lg-4 col-md-6 col-sm-10" >
                 <div className="project-item mb-30">
                     <div
                         className="thumb"
@@ -54,10 +53,10 @@ export default function Project(props) {
                                 <span className="value-title">
                                     Raised of <span className="value">${project.Raised}</span>
                                 </span>
-                                <span className="stats-percentage">{pourcentage}%</span>
+                                <span className="stats-percentage">{pourcentage.toFixed(2)}%</span>
                             </div>
                             <div className="stats-bar" data-value={79}>
-                                <div className="bar-line" />
+                                <div className="bar-line" style={{ width: `${pourcentage}%` }}/>
                             </div>
                         </div>
                         <span className="date">

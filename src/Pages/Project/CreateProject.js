@@ -5,6 +5,8 @@ import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 import axios from 'axios';
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2';
+import './index'
+import './style.css'
 
 export default function CreateProject() {
 
@@ -12,17 +14,20 @@ export default function CreateProject() {
 
     const Connected = JSON.parse(localStorage.getItem('user'))
 
-    {!Connected.isActivated && 
-        Swal.fire(
-            'Account activation required!',
-            'Please activate your account!',
-            'warning'
-        ).then(()=>Navigate('/'))
+    {
+        !Connected.isActivated &&
+            Swal.fire(
+                'Account activation required!',
+                'Please activate your account!',
+                'warning'
+            ).then(() => Navigate('/'))
     }
 
-    
+
     const [newproject, setNewProject] = useState({})
     const [Picture, setPicture] = useState()
+    const [location, setLocation] = useState()
+
     const [Video, setVideo] = useState()
     const User = JSON.parse(localStorage.getItem('user'))
     const { register, formState: { errors }, handleSubmit } = useForm();
@@ -39,7 +44,7 @@ export default function CreateProject() {
         data.append("file", Picture)
         data.append("file", Video)
         // data.append("SocialMedia", newproject.SocialMedia)
-        // data.append("Approved", newproject.Approved)
+        data.append("Location", location)
 
         axios.post(`http://localhost:3000/projects/addproject/` + User.userId, data)
             .then(res => {
@@ -68,6 +73,7 @@ export default function CreateProject() {
         setVideo(e.target.files[0])
     }
 
+    
     return (
         <React.Fragment>
             <section className="page-title-area">
@@ -155,6 +161,22 @@ export default function CreateProject() {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="tp-donations-details">
+                                    <h2>Project location</h2> 
+                                    <input
+                                        id="pac-input"
+                                        class="controls"
+                                        type="text"
+                                        placeholder="Search your project location"
+                                        name='Location'
+                                        value={location}
+                                        onBlur={e=>setLocation(e.target.value)}
+                                    />
+                                    <p id="values"></p>
+                                    <div id="map" style={{ width: '710px', height: '500px' }}></div>
+                                </div>
+                                <br />
+
                                 <button class="main-btn" type='submit'>Create <i class="fas fa-arrow-right"></i></button>
                             </form>
                         </div>

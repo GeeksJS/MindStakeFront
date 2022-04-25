@@ -38,11 +38,11 @@ export default function Description() {
                                     <br />
 
                                     {project.Video !== "video.mp4" ?
-                                        <video controls width="700">
+                                        <video controls width="700" >
                                             <source src={`http://localhost:3000/uploads/video/${project.Video}`}
                                                 type="video/mp4"></source>
                                             salem</video> :
-                                        <img controls width="700"
+                                        <img controls width="700" height='500px'
                                             src={`http://localhost:3000/uploads/images/${project.Picture}`}
                                             alt="Image"
                                         />
@@ -128,7 +128,17 @@ export default function Description() {
                                     </ul>
 
                                 </div>
+                                <br />
+                                <div className="rewards-box mt-md-50">
+                                    <h4 className="title">Project location</h4>
+
+                                    <div className="contact-maps" style={{ height: '500px' }}>
+                                        <iframe loading="lazy" allowfullscreen src={`https://www.google.com/maps/embed/v1/search?key=AIzaSyAdU7HD7d8B2G91q8eTEVRq42jvGyPE2n0&q=${project.Location}`}></iframe>
+                                    </div>
+
+                                </div>
                             </div>
+
                         </div>
                     </div>
                     <div className="tab-pane fade" id="update" role="tabpanel">

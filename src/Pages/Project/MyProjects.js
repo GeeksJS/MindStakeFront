@@ -9,10 +9,13 @@ export default function MyProjects() {
 
     const [Myprojects, setMyprojects] = useState('')
     const User = JSON.parse(localStorage.getItem('user'))
-    const [visible, setVisible] = useState(1);
+    const [searchTerm, setsearchTerm] = useState('')
+
+    const [visible, setVisible] = useState(3);
     const showMoreProjects = () => {
-        setVisible(prevValue => prevValue + 1);
+        setVisible(prevValue => prevValue + 3);
     }
+    const keys = ["Category", "Title"];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +29,9 @@ export default function MyProjects() {
         fetchData().then(Myprojects);
     }, []);
 
+    const search = (e) => {
+        setsearchTerm(e.target.value)
+    }
     return (
         <React.Fragment>
 
@@ -47,14 +53,45 @@ export default function MyProjects() {
                     </div>
                 </div>
             </section>
-           
+
             <section className="project-section section-gap-extra-bottom primary-soft-bg">
                 <div className="container">
+
+                    <div class="d-flex justify-content-between h-100">
+
+                        <select name="orderby" class="orderby" style={{ width: '300px' }} onChange={search}>
+
+                            <option value="All categories" selected="selected">All categories</option>
+                            <option >Art</option>
+                            <option >Illustrations</option>
+                            <option >Technology</option>
+                            <option >Cinema</option>
+                            <option >Creation</option>
+                            <option >Gaming</option>
+                            <option >Music</option>
+                            <option >Other</option>
+                        </select>
+
+                        <div class="searchbar">
+                            <input class="search_input" type="text" name="" placeholder="Search..." onChange={search} />
+                            <a class="search_icon"><i class="fas fa-search" style={{ color: "#14b761" }}></i></a>
+                        </div>
+                    </div>
+
+                    <br></br>
                     <div className="row project-items justify-content-center project-style-one">
 
                         {Myprojects &&
-                            Myprojects.slice(0, visible).map((project, index) => (
-                                <Project key={index} project={project} />
+                            Myprojects.filter(((project) => {
+                                if(searchTerm ==="All categories"){
+                                    return project
+                                }
+                                if (keys.some((key) => project[key].toLowerCase().includes(searchTerm.toLowerCase()))) {
+
+                                    return project
+                                }
+                            })).slice(0, visible).map((project, index) => (
+                                <Project key={project._id} project={project} />
                             ))
                         }
 

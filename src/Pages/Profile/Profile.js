@@ -100,11 +100,11 @@ export default function Profile() {
                         <div className="card-body">
                             
                             
-                            {Profile._id === Connected.userId && <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={() => setOpenPopup(true)}  >
+                            {Profile._id === Connected.userId && <button className="main-btn1" style={{ marginLeft: '900px' }} onClick={() => setOpenPopup(true)}  >
                                 Edit <i className="far fa-edit" />
                             </button>}
 
-                            {Profile._id === Connected.userId && <button class="btn" onClick={() => setOpenPopupPW(true)}> <i class="fas fa-cog" style={{ marginLeft: '10px' }} ></i></button>}
+                            {Profile._id === Connected.userId && <button class="main-btn1" onClick={() => setOpenPopupPW(true)}> <i class="fas fa-cog" style={{ marginLeft: '0px' }} ></i></button>}
 
                             <div className="wrapper" >
                                 <img

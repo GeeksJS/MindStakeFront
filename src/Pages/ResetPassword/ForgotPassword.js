@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 export default function ForgotPassword() {
@@ -42,7 +43,7 @@ export default function ForgotPassword() {
                             <br />
 
                         </div>
-                        <a href="#" className='forgotPass'><u>Back to sign in</u></a>
+                        <Link to='/login' className='forgotPass'><u>Back to sign in</u></Link>
                         <a href='/' style={{ width: '100%' }}>
                             <div id='button' className='rowLogin'>
                                 <button >Reset password</button>

@@ -32,7 +32,8 @@ export default function Checkout() {
 
         console.log(date)
 
-        setCoins((res.data.data[0].amount / 100) / 0.6)
+        //setCoins((res.data.data[0].amount / 100) / 0.6)
+        const qte = (res.data.data[0].amount / 100) / 0.6
 
         const data = {
           amount: res.data.data[0].amount / 100,
@@ -46,13 +47,14 @@ export default function Checkout() {
           .then(async () => {
             await axios.get(`http://localhost:3000/blockchain/wallet/${Connected.userId}`)
               .then(async (res1) => {
+                
 
                 //setAddress(res1.data.address)
                 console.log(res1.data.address)
 
                 const data = {
                   recipient: res1.data.address,
-                  amount: coins,
+                  amount: qte,
                   senderWalletAddress: "044b2bae1bb11aef295db332b35ffbc36bfb3a7c375eda12d3fd15b1fb15f945c24a1b691301fb6d6b3e655ca87a691159d7f075fddddaf590f1ce0cfbf6554d13"
                 }
 
@@ -61,9 +63,10 @@ export default function Checkout() {
                     await axios.get(`http://localhost:3000/blockchain/mine-transactions`)
                       .then(async () => {
                         const data = {
-                          coins: coins
+                          coins: qte
                         }
                         await axios.put(`http://localhost:3000/blockchain/update-wallet/${Connected.userId}`, data)
+                        .then( window.location.href = '/wallet')
                         
                         
                       })
@@ -77,7 +80,7 @@ export default function Checkout() {
       .catch(err => {
         console.error(err);
       })
-      window.location.href = '/wallet'
+     
     
   })
 

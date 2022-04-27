@@ -10,6 +10,10 @@ export default function Wallet() {
     const Connected = JSON.parse(localStorage.getItem('user'))
 
     const [walletInfo, setWalletInfo] = useState({});
+    const [transactions, setTransactions] = useState('');
+    const [donations, setDonations] = useState('');
+
+
 
 
     useEffect(() => {
@@ -24,6 +28,45 @@ export default function Wallet() {
         }
         fetchData().then()
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios.get(`http://localhost:3000/payment/transactions/${Connected.userId}`)
+                .then(res => {
+                    console.log(res.data)
+                    setTransactions(res.data)
+
+                })
+
+        }
+        fetchData().then()
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (Connected.Role === "Creator") {
+                await axios.get(`http://localhost:3000/payment/donations-creator/${Connected.userId}`)
+                    .then(res => {
+                        console.log(res.data)
+                        setDonations(res.data)
+
+                    })
+            }
+            else {
+                await axios.get(`http://localhost:3000/payment/donations-user/${Connected.userId}`)
+                    .then(res => {
+                        console.log(res.data)
+                        setDonations(res.data)
+
+                    })
+            }
+
+
+        }
+        fetchData().then()
+    }, []);
+
+
 
     return (
         <React.Fragment>
@@ -64,9 +107,9 @@ export default function Wallet() {
 
 
                                 </div>
-                                <div style={{ marginTop: '-40px', marginLeft: '330px',position:'absolute'}}>
+                                <div style={{ marginTop: '-40px', marginLeft: '330px', position: 'absolute' }}>
                                     <a href='https://buy.stripe.com/test_6oE9Ev0l2c6jepacMT'>
-                                        <h6 style={{color:'white'}}> <i class="fas fa-arrow-right"></i> Buy</h6>
+                                        <h6 style={{ color: 'white' }}> <i class="fas fa-arrow-right"></i> Buy</h6>
                                     </a>
                                 </div>
 
@@ -75,7 +118,90 @@ export default function Wallet() {
 
 
                     </div>
+
+
+                    <div className="card">
+                        <div className="card-body">
+                            <h2 >Transactions history</h2>
+                            <br />
+                            <div className="table-responsive">
+                                <table className="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Amount</th>
+                                            <th>Currency</th>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {transactions && transactions.map((transaction, index) => (
+                                            <tr>
+                                                <td>{transaction.amount}$</td>
+                                                <td>{transaction.currency}</td>
+                                                <td className="">
+                                                    {" "}
+                                                    {transaction.created}
+                                                </td>
+                                                <td className="text-success">
+
+                                                    Income <i className="fa fa-arrow-up" />
+                                                </td>
+                                                <td>
+                                                    <label className="badge badge-success">{transaction.status}</label>
+                                                </td>
+                                            </tr>
+                                        ))
+                                        }
+                                        {donations && donations.map((donation, index) => (
+                                            <tr>
+                                                <td>{donation.amount}<small>Gc</small></td>
+                                                <td>GeekCoin</td>
+                                                <td className="">
+
+                                                    {donation.created}
+                                                </td>
+                                                {Connected.Role === "Creator" ?
+                                                    <td className="text-success">
+
+                                                        Income <i className="fa fa-arrow-up" />
+                                                    </td>
+                                                    : <td className="text-danger">
+
+                                                        Expense <i className="fa fa-arrow-down" />
+                                                    </td>
+                                                }
+                                                <td>
+                                                    <label className="badge badge-success">succeded</label>
+                                                </td>
+                                            </tr>
+                                        ))
+                                        }
+
+
+                                        {/* <tr>
+                                            <td>Pter parker</td>
+                                            <td>Head light</td>
+                                            <td className="text-success">
+                                                {" "}
+                                                22.00% <i className="fa fa-arrow-up" />
+                                            </td>
+                                            <td>
+                                                <label className="badge badge-success">Completed</label>
+                                            </td>
+                                        </tr> */}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
+
+
 
             </div>
 

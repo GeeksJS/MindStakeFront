@@ -10,7 +10,7 @@ export default function ProjectCard(props) {
 
     return (
         <React.Fragment>
-            <div className="card info-card">
+            <div className="card info-card cp ">
                 <div className="card-body">
                     <div
                         className="thumb"

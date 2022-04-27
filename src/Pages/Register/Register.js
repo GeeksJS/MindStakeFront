@@ -4,8 +4,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../Login/login.css'
 import axios from "axios";
 import Swal from 'sweetalert2'
+import { useForm } from 'react-hook-form';
 
 export default function Register({ setToken }) {
+
+    const { register, formState: { errors }, handleSubmit } = useForm();
+
     localStorage.clear()
     const navigate = useNavigate()
     const [next, setNext] = useState(false)
@@ -27,29 +31,29 @@ export default function Register({ setToken }) {
         setUserRole(document.getElementById('select').value)
         setNext(false)
         setBack(true)
-        newuser.Role === "Creator" && setNewUser({ ...newuser, Typecreator: "Individual"})
+        newuser.Role === "Creator" && setNewUser({ ...newuser, Typecreator: "Individual" })
     }
 
     const handleBackClick = (e) => {
         e.preventDefault();
-        
+
         setBack(false)
         setUserRole("SimpleUser")
         setNewUser({
             ...newuser,
-            Role:"SimpleUser",
-           CompanyName: "",
-           StartupName:"",
-           Address:"",
-           Typecreator: ""
-          
+            Role: "SimpleUser",
+            CompanyName: "",
+            StartupName: "",
+            Address: "",
+            Typecreator: ""
+
         })
         setCvP()
-      
+
     }
 
     const doRegister = (e) => {
-        e.preventDefault()
+        //e.preventDefault()
         const dataI = new FormData();
         dataI.append("file", imageP)
         dataI.append("UserName", newuser.UserName)
@@ -71,27 +75,33 @@ export default function Register({ setToken }) {
 
 
         axios.post(`http://localhost:3000/users/signup`, dataI)
-            .then(res => { 
-                if(res.data == null){
+            .then(async res => {
+                if (res.data == null) {
                     Swal.fire(
                         'This email already exist!',
                         '',
                         'warning'
-                      )
-                }else{
+                    )
+                } else {
                     setToken(res.data.token)
-                    localStorage.setItem('user' , JSON.stringify(res.data))
-                    Swal.fire(
-                        'Registration done!',
-                        'An activation email has been sent to your email address',
-                        'success'
-                      ).then(()=>{
-                        navigate('/')
-                        window.location.reload()
-                      })
-                    
+                    localStorage.setItem('user', JSON.stringify(res.data))
+                    const id = res.data.userId
+                    await axios.post(`http://localhost:3000/blockchain/create-wallet/${id}`)
+                        .then(() => {
+                            Swal.fire(
+                                'Registration done!',
+                                'An activation email has been sent to your email address',
+                                'success'
+                            ).then(() => {
+                                navigate('/')
+                                window.location.reload()
+                            })
+                        })
+
+
+
                 }
-               
+
             })
             .catch(err => {
                 console.error(err);
@@ -123,27 +133,63 @@ export default function Register({ setToken }) {
             </a>
             <img src='assets/img/logo.png' alt="logo" className='logo' />
             <div>
-                <form onSubmit={doRegister}>
+                <form onSubmit={handleSubmit(doRegister)}>
                     <div className='rowLogin' hidden={userRole !== "SimpleUser"}>
                         <label>UserName</label>
-                        <input placeholder="Enter you userName" type="text" name='UserName' value={newuser.UserName} onChange={handleChange} />
+                        <input placeholder="Enter you userName" type="text" name='UserName'
+                            {...register("UserName", { required: 'Field Username is required' })}
+                            value={newuser.UserName} onChange={handleChange} />
+                        {errors.UserName?.type === 'required' && !errors.UserName.ref.value &&
+                            <div className='text-danger' style={{ marginRight: '40%' }}>*{errors.UserName.message}</div>}
                         <br />
                         <label>FirstName</label>
-                        <input placeholder="Enter you FirstName" type="text" name='FirstName' value={newuser.FirstName} onChange={handleChange} />
+                        <input placeholder="Enter you FirstName" type="text" name='FirstName'
+                            {...register("FirstName", { required: 'Field Firstname is required' })}
+                            value={newuser.FirstName} onChange={handleChange} />
+                        {errors.FirstName?.type === 'required' && !errors.FirstName.ref.value &&
+                            <div className='text-danger' style={{ marginRight: '40%' }}>*{errors.FirstName.message}</div>}
                         <br />
                         <label>LastName</label>
-                        <input placeholder="Enter you LastName" type="text" name='LastName' value={newuser.LastName} onChange={handleChange} />
+                        <input placeholder="Enter you LastName" type="text" name='LastName'
+                            {...register("LastName", { required: 'Field Lastname is required' })}
+                            value={newuser.LastName} onChange={handleChange} />
+                        {errors.LastName?.type === 'required' && !errors.LastName.ref.value &&
+                            <div className='text-danger' style={{ marginRight: '40%' }}>*{errors.LastName.message}</div>}
                         <br />
                         <label>Email</label>
-                        <input placeholder="Enter you email" type="email" name='Email' value={newuser.Email} onChange={handleChange} />
+                        <input placeholder="Enter you email" type="text" name='Email'
+                            {...register("Email", {
+                                required: 'Field Email is required',
+                                pattern: {
+                                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                    message: "Invalid email pattern ",
+                                }
+                            })}
+                            value={newuser.Email} onChange={handleChange} />
+                        {errors.Email?.type === 'required' && !errors.Email.ref.value &&
+                            <div className='text-danger' style={{ marginRight: '40%' }}>*{errors.Email.message}</div>}
+                        {errors.Email?.type === 'pattern' &&
+                            <div className='text-danger' style={{ marginRight: '45%' }}>*{errors.Email.message}</div>}
                         <br />
                         <label>Password</label>
-                        <input placeholder="Enter you password" type="password" name='Password' value={newuser.Password} onChange={handleChange} />
+                        <input placeholder="Enter you password" type="password" name='Password'
+                            {...register("Password", {
+                                required: 'Field Password is required', minLength: {
+                                    value: 8,
+                                    message: "Password must have at least 8 caracters",
+                                }
+                            })}
+                            value={newuser.Password} onChange={handleChange} />
+                        {console.log(errors)}
+                        {errors.Password?.type === 'required' && !errors.Password.ref.value &&
+                            <div className='text-danger' style={{ marginRight: '40%' }}>*{errors.Password.message}</div>}
+                        {errors.Password?.type === 'minLength' &&
+                            <div className='text-danger' style={{ marginRight: '20%' }}>*{errors.Password.message}</div>}
                         <br />
                         <label>Phone number</label>
                         <input placeholder="Enter you phone number" type="number" name='Phone' value={newuser.Phone} onChange={handleChange} />
                         <br />
-                        
+
                         <input id="filee" placeholder="Enter you profile picture" type="file" name='ImageProfile' onChange={changeImage}
                         />
 
@@ -158,7 +204,7 @@ export default function Register({ setToken }) {
                     </div>
                     <div id='creator' className='rowLogin' hidden={userRole !== "Creator"}>
                         <label>CV</label>
-                        <input id='cv' placeholder="Enter you Curriculum Vitae" type="file" name='Cv'  onChange={changePdf} />
+                        <input id='cv' placeholder="Enter you Curriculum Vitae" type="file" name='Cv' onChange={changePdf} />
                         <br />
                         <label >Creator Type</label>
                         <select id='selectCreator' className='select' name='Typecreator' value={newuser.Typecreator} onChange={handleChange} >

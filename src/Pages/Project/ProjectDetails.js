@@ -7,6 +7,7 @@ import Description from './Description'
 import EditProject from './EditProject'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkAdd';
 import { green } from '@material-ui/core/colors'
+import Proposal from '../Proposal/Proposal'
 
 
 export default function ProjectDetails() {
@@ -30,6 +31,8 @@ export default function ProjectDetails() {
     const [endDate, setEndDate] = useState()
     const [startDate, setStartDate] = useState()
     const [showEdit, setShowEdit] = useState(false)
+    const [openPopup, setOpenPopup] = useState(false)
+    const [openPopupPW, setOpenPopupPW] = useState(false)
     let { id } = useParams();
     const navigate = useNavigate()
 
@@ -38,6 +41,7 @@ export default function ProjectDetails() {
             await axios.get(`http://localhost:3000/projects/getproject/${id}`)
                 .then(res => {
                     setProject(res.data[0])
+                  
                     if (!author) {
                         author = res.data[0].User
                     }
@@ -346,8 +350,8 @@ export default function ProjectDetails() {
                                                 <a type="submit" className="main-btn" >
                                                     Donate Now <i className="fas fa-arrow-right" />
                                                 </a>
-                                                <button type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
-                                                    Contact <i class="fab fa-facebook-messenger"></i>
+                                                <button type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}onClick={() => setOpenPopup(true)}>
+                                                    Propose to cantact <i class="fab fa-facebook-messenger"></i>
                                                 </button>
                                             </div>
                                         }
@@ -386,6 +390,14 @@ export default function ProjectDetails() {
                     </div>
                 </div>
             </section>
+            {
+                    Connected.Role === "Investor" && openPopup && <Proposal
+                        project_id={id}
+                        owner={project.User}
+                        openPopup={openPopup}
+                        setOpenPopup={setOpenPopup}
+                    ></Proposal>
+                }
         </React.Fragment>
     )
 }

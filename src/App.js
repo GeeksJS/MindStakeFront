@@ -25,13 +25,14 @@ import Bookmarks from './Pages/Project/Bookmarks';
 import ScrollToTop from 'react-scroll-to-top';
 import ResetPassword from './Pages/ResetPassword/ResetPassword';
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
-
+import Proposal from './Pages/Proposal/Proposal';
 import i18n from './i18n';
 import LocaleContext from './LocaleContext';
 import Loading from './Pages/Loading';
 import ActivateAccount from './Pages/Register/ActivateAccount';
 import InvestProcess from './Pages/InvestProcess/InvestProcess';
 import Wallet from './Pages/Wallet/Wallet';
+import ListProposal from './Pages/Proposal/ListProposal';
 
 function App() {
   const [show, setShow] = useState(false)
@@ -115,9 +116,8 @@ function App() {
           <Route path='/bookmarks' element={<Bookmarks />}> </Route>
           <Route path='/invest-process' element={<InvestProcess />}> </Route>
           <Route path='/wallet' element={<Wallet />}> </Route>
-
-
-
+          <Route path='/proposal' element={<Proposal/>} ></Route>
+          <Route exact path='/listproposal/:id' element={<ListProposal/>}></Route>
           
         </Routes>
 

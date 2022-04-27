@@ -222,6 +222,10 @@ export default function Navbar() {
                                                     <li key={User.userId}>
                                                         <NavLink hidden={!localStorage.getItem("token")} to={'/bookmarks'}>My Bookmarks</NavLink>
                                                     </li>
+                                                   {User.Role ==="Creator" && 
+                                                   <li key={User.userId}>
+                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/listproposal/'+ User.userId}>List Proposal</NavLink>
+                                                    </li>}
                                                     <li>
                                                         <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
                                                         <a href='/login' hidden={!localStorage.getItem("token")} onClick={() => localStorage.clear()} >Logout</a>

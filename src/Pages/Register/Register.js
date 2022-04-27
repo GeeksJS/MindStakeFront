@@ -86,6 +86,7 @@ export default function Register({ setToken }) {
                         'An activation email has been sent to your email address',
                         'success'
                       ).then(()=>{
+                        axios.post(`http://localhost:3000/blockchain/create-wallet/${res.data.userId}`)
                         navigate('/')
                         window.location.reload()
                       })

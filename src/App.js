@@ -26,6 +26,9 @@ import ScrollToTop from 'react-scroll-to-top';
 import ResetPassword from './Pages/ResetPassword/ResetPassword';
 import { LinkedInCallback } from 'react-linkedin-login-oauth2';
 
+import VideoCall from "./Pages/VideoChat/meeting";
+import JoinMeeting from "./Pages/VideoChat/join";
+
 import i18n from './i18n';
 import LocaleContext from './LocaleContext';
 import Loading from './Pages/Loading';
@@ -60,7 +63,7 @@ function App() {
             <div className='bodyLogin'>
               <div className='container ' >
                 <LinkedInCallback />
-                
+
               </div>
             </div>
           }></Route>
@@ -94,9 +97,9 @@ function App() {
           }></Route>
 
           <Route exact path='/*' element={
-            
-                <Home />
-             
+
+            <Home />
+
           }></Route>
           <Route path='/projects' element={<Projects />}></Route>
           <Route exact path='/detailProject/:id/*' element={<ProjectDetails />}></Route>
@@ -104,9 +107,9 @@ function App() {
           <Route path='/contact' element={<Contact />}></Route>
           <Route path='/profile/:id' element={<Profile />}></Route>
           <Route path='/pricing' element={
-           
-                <Pricing />
-            
+
+            <Pricing />
+
           }></Route>
           <Route path='/confirm-payment' element={<Checkout />} ></Route>
           <Route path='/createproject' element={<CreateProject />}> </Route>
@@ -116,17 +119,20 @@ function App() {
           <Route path='/invest-process' element={<InvestProcess />}> </Route>
           <Route path='/wallet' element={<Wallet />}> </Route>
 
+          <Route exact path="/join" element={<JoinMeeting/>} />
+          <Route exact path="/video/:id" element={<VideoCall/>} />
 
 
-          
+
+
         </Routes>
 
 
-        {window.location.pathname !== "/login" && window.location.pathname !== "/linkedin" &&  window.location.pathname !== "/forgot-password" && window.location.pathname !== "/reset-password" && window.location.pathname !== "/register" && window.location.pathname !== "/activate-account" && window.location.pathname !== "/checkout" && <Footer />}
+        {window.location.pathname !== "/login" && window.location.pathname !== "/linkedin" && window.location.pathname !== "/forgot-password" && window.location.pathname !== "/reset-password" && window.location.pathname !== "/register" && window.location.pathname !== "/activate-account" && window.location.pathname !== "/checkout" && <Footer />}
 
       </BrowserRouter >
       <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%', marginBottom: '60px', zIndex: '999' }} color='white'></ScrollToTop>
-      <ChatDialog style={{ backgroundColor: '#02a95c', borderRadius: '50%', zIndex: '999' }}/>
+      <ChatDialog style={{ backgroundColor: '#02a95c', borderRadius: '50%', zIndex: '999' }} />
     </div >
 
   );

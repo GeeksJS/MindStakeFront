@@ -27,17 +27,30 @@ export default function Login({ setToken }) {
                 console.log(res.data)
                 setToken(res.data.token)
 
-                localStorage.setItem('user', JSON.stringify(res.data))
+                if (res.data.token) {
+                    localStorage.setItem('user', JSON.stringify(res.data))
+                    navigate('/')
+                    window.location.reload()
+                } else {
+                    Swal.fire(
+                        'Invalid credentials!',
+                        '',
+                        'warning'
+                    )
+                }
 
 
-                navigate('/')
-                window.location.reload()
 
                 console.log(localStorage.getItem('token'))
                 console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
+                Swal.fire(
+                    'Invalid credentials!',
+                    '',
+                    'warning'
+                )
             })
     }
 
@@ -51,7 +64,7 @@ export default function Login({ setToken }) {
                 <br />
 
             </div>
-            <div className='iconGroup' style={{height:'50px'}}>
+            <div className='iconGroup' style={{ height: '50px' }}>
                 <LinkedIn
                     clientId="778pwi5gutqz7v"
                     redirectUri={`http://localhost:3002/`}
@@ -154,7 +167,16 @@ export default function Login({ setToken }) {
 
     );
     //------------------- End Login with facebook Api consumer--------------
+    const [type, setType] = useState("password")
 
+    const showPasswd = () => {
+        if (type === "password") {
+            setType("text")
+        }
+        if (type === "text") {
+            setType("password")
+        }
+    }
 
     return (
         <div id="loginform" >
@@ -166,7 +188,13 @@ export default function Login({ setToken }) {
                         <input placeholder="Enter you email" type="email" onChange={e => setEmail(e.target.value)} />
                         <br />
                         <label>Password</label>
-                        <input placeholder="Enter you password" type="password" onChange={e => setPassword(e.target.value)} />
+                        <input placeholder="Enter you password" type={type} id="myPasswd" onChange={e => setPassword(e.target.value)} />
+                        <br />
+
+                    </div>
+                    <div className='row' style={{marginLeft:'70px',marginBottom:'10px'}}>
+                        <input style={{ width: '20px', height: '20px' }} type="checkbox" onClick={() => showPasswd()} />
+                        &nbsp;&nbsp;<p>Show Password</p>
                     </div>
                     <Link to='/forgot-password' className='forgotPass'>Forgot password?</Link>
                     <a href='/' style={{ width: '100%' }}>

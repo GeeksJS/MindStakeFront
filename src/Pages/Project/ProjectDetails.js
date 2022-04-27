@@ -167,10 +167,11 @@ export default function ProjectDetails() {
         if (dollar100) {
             qte = 100
         }
+        const date = new Date(Date.now() ).toLocaleDateString()
 
         const data = {
             amount: qte,
-            created: Date.now().toString(),
+            created: date,
             Sender: Connected.userId,
             Receiver: user._id
         }
@@ -343,7 +344,7 @@ export default function ProjectDetails() {
                                         }
                                         {Connected.Role === 'Investor' &&
                                             <div >
-                                                <a type="submit" className="main-btn" >
+                                                <a type="submit" className="main-btn" onClick={donation}>
                                                     Donate Now <i className="fas fa-arrow-right" />
                                                 </a>
                                                 <button type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>

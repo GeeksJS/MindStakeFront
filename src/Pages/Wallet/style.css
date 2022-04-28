@@ -393,3 +393,12 @@ p {
   padding: .375rem .5625rem;
   font-weight: normal
 }
+
+.nav-transaction{
+
+}
+
+.nav-transaction :hover {
+  color:white;
+  background-color: #14b761;
+}

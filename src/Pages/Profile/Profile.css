@@ -94,11 +94,11 @@
     border-radius: 4px;
 }
 
-.card .nav>li>a:focus,
+/* .card .nav>li>a:focus,
 .card .nav>li>a:hover {
     text-decoration: none;
     background-color: #eee;
-}
+} */
 
 .card .s-nav>li>a.active {
     text-decoration: none;
@@ -121,10 +121,10 @@ ul.friend-list li {
     align-items: center;
 }
 
-ul.friend-list li:hover {
+/* ul.friend-list li:hover {
     background: rgba(0, 0, 0, .1);
     cursor: pointer;
-}
+} */
 
 ul.friend-list .left img {
     width: 45px;
@@ -276,9 +276,9 @@ ul.friend-list .right p {
     color: #c8c;
 }
 
-.card-one .contacts a:hover {
+/* .card-one .contacts a:hover {
     color: #333;
-}
+} */
 
 .card-one .contacts a:hover .fa::before {
     color: #fff;

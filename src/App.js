@@ -123,7 +123,7 @@ function App() {
           <Route path='/invest-process' element={<ProposalForm />}> </Route>
           
           <Route path='/wallet/*' element={<Wallet />}> </Route>
-          <Route path='/proposal' element={<Proposal/>} ></Route>
+          <Route path='/proposal/:id' element={<ProposalForm/>} ></Route>
           <Route exact path='/listproposal/:id' element={<ListProposal/>}></Route>
           
 

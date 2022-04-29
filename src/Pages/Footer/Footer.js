@@ -17,7 +17,7 @@ export default function Footer() {
                                 <div className="col-xl-3 col-lg-4 col-md-6">
                                     <div className="widget about-widget">
                                         <div className="footer-logo logo2">
-                                            <img src="assets/img/logo.png" alt="MindStake" />
+                                            <img src="/assets/img/logo.png" alt="MindStake" />
                                         </div>
                                         <strong>
                                             Let's Bring Your Ideas To Life

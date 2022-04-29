@@ -351,9 +351,10 @@ export default function ProjectDetails() {
                                                 <a type="submit" className="main-btn" onClick={donation}>
                                                     Donate Now <i className="fas fa-arrow-right" />
                                                 </a>
-                                                <button type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}onClick={(e) => {e.preventDefault(); setOpenPopup(true)}}>
+                                                
+                                                <Link to={`/proposal/${id}`} type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
                                                     Propose to cantact <i class="fab fa-facebook-messenger"></i>
-                                                </button>
+                                                </Link>
                                             </div>
                                         }
                                         {Connected.Role === 'Creator' && Connected.userId === user._id &&

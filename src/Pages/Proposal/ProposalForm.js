@@ -26,9 +26,8 @@ export default function ProposalForm() {
     amount: 1000,
     body: ""
   });
-  const [St, setSt]= useState("")
+  const [St, setSt] = useState("")
   const [proposalverif, setProposalverif] = useState();
-
   useEffect(async () => {
     await axios.get(`http://localhost:3000/projects/getproject/${id}`)
       .then(async (res) => {
@@ -37,11 +36,13 @@ export default function ProposalForm() {
           setProposalverif(res.data)
           console.log(proposalverif)
           if (res.data.state === "Waiting") {
+            setSt("Waiting")
             setActiveStep(1)
           }
           else if (res.data.state === "Approved") {
             setActiveStep(2)
           } else if (res.data.state === "Rejected") {
+            setSt("Rejected")
             setActiveStep(1)
           }
         }
@@ -49,7 +50,7 @@ export default function ProposalForm() {
       }
 
       );
-  }, [setProposalverif]);
+  }, [activeStep]);
   const totalSteps = () => {
     return steps.length;
   };
@@ -101,7 +102,7 @@ export default function ProposalForm() {
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
         handleNext();
-        
+
       }
 
       )
@@ -117,9 +118,9 @@ export default function ProposalForm() {
   }
   const handleDelete = (e) => {
     e.preventDefault()
-     axios.delete(`http://localhost:3000/proposal/${id}/${Connected.userId}`).then(
-       setActiveStep(0)
-     )
+    axios.delete(`http://localhost:3000/proposal/${id}/${Connected.userId}`).then(
+      setActiveStep(0)
+    )
   }
 
   return (
@@ -155,65 +156,63 @@ export default function ProposalForm() {
               ))}
             </Stepper>
             <div>
-             
+              <div>
+                {activeStep === 0 &&
 
-                <div>
-                  {activeStep === 0 && 
+                  <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
 
-                    <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
-
-                      <form onSubmit={handleComplete}>
-                        <label class="form-label " style={{ display: 'flex', justifyContent: 'start' }} >Object</label>
-                        <input type="text" class="form-control" name="object" style={{ width: '1000px' }} value={proposal.object} onChange={handleChange} required />
-                        <label class="form-label" style={{ paddingTop: '30px', display: 'flex', justifyContent: 'start' }} >Body</label>
-                        <textarea type="text" class="form-control" name="body" style={{ width: '1000px', marginRight: '35px' }} value={proposal.body} onChange={handleChange} required></textarea>
-                        <label class="form-label " style={{ paddingTop: '30px', display: 'flex', justifyContent: 'start' }} >Amount</label>
-                        <div>
-                          <Slider
-                            name="amount"
-                            value={val}
-                            onChange={handleChange}
-                            min={1000}
-                            max={project.Goal}
-                            style={{ color: "#14b761", height: "20px" }}
-                          />
-                          <label class="form-label" style={{ display: 'flex', justifyContent: 'end' }} >{val}</label>
-                        </div>
-                        <button class="main-btn" type='submit'>Send Your Proposal<i class="fas fa-arrow-right"></i></button>
-                      </form>
-                      {/* {activeStep + 1} */}
-                    </Typography>
-                  }
-
-                  { activeStep === 1 && (proposal.state ==="Waiting" || proposalverif.state === "Waiting") &&
-
-                    <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
-                      <div style={{ paddingBottom: "150px" }}>
-                        <img src="/assets/img/hourglass.gif" alt="MindStake" />
-                        <h4>Your proposal has been sent succefully</h4>
-                        <h4>Waiting for creator's Approval</h4>
-                        <br /><br />
-                        <p>You will get notification once the creator accept or reject your proposal</p>
+                    <form onSubmit={handleComplete}>
+                      <label class="form-label " style={{ display: 'flex', justifyContent: 'start' }} >Object</label>
+                      <input type="text" class="form-control" name="object" style={{ width: '1000px' }} value={proposal.object} onChange={handleChange} required />
+                      <label class="form-label" style={{ paddingTop: '30px', display: 'flex', justifyContent: 'start' }} >Body</label>
+                      <textarea type="text" class="form-control" name="body" style={{ width: '1000px', marginRight: '35px' }} value={proposal.body} onChange={handleChange} required></textarea>
+                      <label class="form-label " style={{ paddingTop: '30px', display: 'flex', justifyContent: 'start' }} >Amount</label>
+                      <div>
+                        <Slider
+                          name="amount"
+                          value={val}
+                          onChange={handleChange}
+                          min={1000}
+                          max={project.Goal}
+                          style={{ color: "#14b761", height: "20px" }}
+                        />
+                        <label class="form-label" style={{ display: 'flex', justifyContent: 'end' }} >{val}</label>
                       </div>
+                      <button class="main-btn" type='submit'>Send Your Proposal<i class="fas fa-arrow-right"></i></button>
+                    </form>
+                    {/* {activeStep + 1} */}
+                  </Typography>
+                }
 
-                    </Typography>
-                  }
-                  {activeStep === 1 && (proposal.state ==="Rejected" || proposalverif.state === "Rejected" ) &&
+                {activeStep === 1 && St==="Waiting" &&
 
-                    <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
-                      <div style={{ paddingBottom: "150px" }}>
-                        <img src="/assets/img/Rejected.gif" alt="MindStake" />
-                        <h4>Your proposal has been Rejected</h4>
-                        <h4>You can try again</h4>
-                        <br /><br />
-                  
-                      </div>
+                  <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
+                    <div style={{ paddingBottom: "150px" }}>
+                      <img src="/assets/img/hourglass.gif" alt="MindStake" />
+                      <h4>Your proposal has been sent succefully</h4>
+                      <h4>Waiting for creator's Approval</h4>
+                      <br /><br />
+                      <p>You will get notification once the creator accept or reject your proposal</p>
+                    </div>
 
-                    </Typography>
-                  }
+                  </Typography>
+                }
+                {activeStep === 1 &&  St==="Rejected" &&
 
-                </div>
-            
+                  <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
+                    <div style={{ paddingBottom: "150px" }}>
+                      <img src="/assets/img/Rejected.gif" alt="MindStake" />
+                      <h4>Your proposal has been Rejected</h4>
+                      <h4>You can try again</h4>
+                      <br /><br />
+
+                    </div>
+
+                  </Typography>
+                }
+
+              </div>
+
             </div>
           </Box>
         </div>

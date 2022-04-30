@@ -33,15 +33,16 @@ export default function ProjectDetails() {
     const [showEdit, setShowEdit] = useState(false)
     const [openPopup, setOpenPopup] = useState(false)
     const [openPopupPW, setOpenPopupPW] = useState(false)
+  
     let { id } = useParams();
     const navigate = useNavigate()
-
+   
     useEffect(() => {
         const fetchData = async () => {
             await axios.get(`http://localhost:3000/projects/getproject/${id}`)
                 .then(res => {
                     setProject(res.data[0])
-                  
+
                     if (!author) {
                         author = res.data[0].User
                     }
@@ -171,13 +172,14 @@ export default function ProjectDetails() {
         if (dollar100) {
             qte = 100
         }
-        const date = new Date(Date.now() ).toLocaleDateString()
+        const date = new Date(Date.now()).toLocaleDateString()
 
         const data = {
             amount: qte,
             created: date,
             Sender: Connected.userId,
-            Receiver: user._id
+            Receiver: user._id,
+            Project: id
         }
 
         Swal.fire({
@@ -215,7 +217,7 @@ export default function ProjectDetails() {
                                                         }
                                                         await axios.put(`http://localhost:3000/blockchain/update-wallet-minus/${Connected.userId}`, data)
                                                         await axios.put(`http://localhost:3000/blockchain/update-wallet/${user._id}`, data)
-                                                            .then(async() => {
+                                                            .then(async () => {
                                                                 const raised = project.Raised + (qte * 0.5)
                                                                 const data = {
                                                                     Raised: raised
@@ -228,7 +230,7 @@ export default function ProjectDetails() {
                                                                             'success'
                                                                         )
                                                                     })
-                                                                    window.location.reload()
+                                                                window.location.reload()
 
 
                                                             })
@@ -351,8 +353,8 @@ export default function ProjectDetails() {
                                                 <a type="submit" className="main-btn" onClick={donation}>
                                                     Donate Now <i className="fas fa-arrow-right" />
                                                 </a>
-                                                
-                                                <Link to={`/proposal/${id}`} type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
+
+                                                <Link to={`/proposal/${id}/${project.User}`} type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
                                                     Propose to cantact <i class="fab fa-facebook-messenger"></i>
                                                 </Link>
                                             </div>
@@ -393,13 +395,13 @@ export default function ProjectDetails() {
                 </div>
             </section>
             {
-                    Connected.Role === "Investor" && openPopup && <Proposal
-                        project_id={id}
-                        owner={project.User}
-                        openPopup={openPopup}
-                        setOpenPopup={setOpenPopup}
-                    ></Proposal>
-                }
+                Connected.Role === "Investor" && openPopup && <Proposal
+                    project_id={id}
+                    owner={project.User}
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                ></Proposal>
+            }
         </React.Fragment>
     )
 }

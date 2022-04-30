@@ -123,11 +123,11 @@ function App() {
           <Route path='/invest-process' element={<ProposalForm />}> </Route>
           
           <Route path='/wallet/*' element={<Wallet />}> </Route>
-          <Route path='/proposal/:id' element={<ProposalForm/>} ></Route>
+          <Route path='/proposal/:id/:idOwner' element={<ProposalForm/>} ></Route>
           <Route exact path='/listproposal/:id' element={<ListProposal/>}></Route>
           
 
-          <Route exact path="/join" element={<JoinMeeting/>} />
+          <Route exact path="/join/:id" element={<JoinMeeting/>} />
           <Route exact path="/video/:id" element={<VideoCall/>} />
 
 

@@ -1,48 +1,49 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import DonnationCard from './DonnationCard';
 
 export default function Description() {
     let { id } = useParams();
     const [project, setProject] = useState({})
     const [latestDon, setLatestDon] = useState();
     const [user1, setUser1] = useState();
-    const [user2, setUser2] = useState();
-    const [user3, setUser3] = useState();
-    const [user, setUser] = useState([...Array(3)]);
+    // const [user2, setUser2] = useState();
+    // const [user3, setUser3] = useState();
+    // const [user, setUser] = useState([...Array(3)]);
 
     useEffect(async () => {
         await axios.get(`http://localhost:3000/payment/donations-byProject/${id}`).then((res) => {
             setLatestDon(res.data)
-            axios.get(`http://localhost:3000/users/${res.data[0].Sender}`)
-                .then((res) => {
-                    setUser1(res.data[0])
-                    setUser((prev)=>{
-                        let newUser = [...prev]
-                        newUser[0] = res.data[0]
-                        return newUser
-                       })
-                       console.log(user)
+        //     axios.get(`http://localhost:3000/users/${res.data[0].Sender}`)
+        //         .then((res) => {
+        //             setUser1(res.data[0])
+        //             setUser((prev)=>{
+        //                 let newUser = [...prev]
+        //                 newUser[0] = res.data[0]
+        //                 return newUser
+        //                })
+        //                console.log(user)
 
-                })
-            axios.get(`http://localhost:3000/users/${res.data[1].Sender}`)
-                .then(res => {
-                    setUser2(res.data[0]);
-                    setUser((prev)=>{
-                        let newUser = [...prev]
-                        newUser[1] = res.data[1]
-                        return newUser
-                       })
-            })
-            axios.get(`http://localhost:3000/users/${res.data[2].Sender}`)
-                .then(res => {
-                    setUser3(res.data[0]);
-                    setUser((prev)=>{
-                        let newUser = [...prev]
-                        newUser[2] = res.data[2]
-                        return newUser
-                       })
-        })
+        //         })
+        //     axios.get(`http://localhost:3000/users/${res.data[1].Sender}`)
+        //         .then(res => {
+        //             setUser2(res.data[0]);
+        //             setUser((prev)=>{
+        //                 let newUser = [...prev]
+        //                 newUser[1] = res.data[1]
+        //                 return newUser
+        //                })
+        //     })
+        //     axios.get(`http://localhost:3000/users/${res.data[2].Sender}`)
+        //         .then(res => {
+        //             setUser3(res.data[0]);
+        //             setUser((prev)=>{
+        //                 let newUser = [...prev]
+        //                 newUser[2] = res.data[2]
+        //                 return newUser
+        //                })
+        // })
     })}, [])
 
     useEffect(() => {
@@ -125,20 +126,7 @@ export default function Description() {
                                     <ul>
                                         {latestDon && latestDon.map((value, index) =>
                                        
-                                            <li className='liDonations' >
-                                                <div className='row'>
-                                                    <img className='imgD' src='https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png' alt='' />
-                                                    <div className='col title1 '>
-                                                        <p className='donation'>{value.amount}</p>
-                                                        <h5 className='name' >{user[index].FirstName}
-                                                            <span className='span'>&nbsp; - &nbsp;&nbsp;&nbsp;{value.created}</span>
-                                                        </h5>
-
-                                                    </div>
-
-                                                </div>
-                                                <span className='msg'>“God bless you dear”</span>
-                                            </li>
+                                           <DonnationCard don={value} key={value._id}/>
                                         )
                                         
                                         }

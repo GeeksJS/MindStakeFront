@@ -1,9 +1,24 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
 
 export default function Pricing() {
+    const navigate = useNavigate()
+    const [packs, setPacks] = useState()
+    useEffect(async () => {
+        await axios.get(`http://localhost:3000/packs/`)
+            .then((res) => {
+                setPacks(res.data)
 
-    
+                console.log(packs)
+            })
+    }
+        , [])
+    const handleChooseProject = (pack) => {
+        navigate(`/chooseProject/${pack}`)
+    }
+  
     return (
         <React.Fragment>
             <>
@@ -30,106 +45,51 @@ export default function Pricing() {
                 <section className="pricing-section section-gap-two primary-soft-bg">
                     <div className="container">
                         <div className="row pricing-boxes justify-content-center">
-                            <div
-                                className="col-lg-4 col-md-6 col-sm-10 wow fadeInUp"
-                                data-wow-delay="0s"
-                            >
-                                <div className="pricing-box mb-30">
-                                    <h6 className="plan-name">Basic Plan</h6>
-                                    <div className="price">
-                                        <span className="currency">$</span>
-                                        <span>29.67<small className='pricing'>/Year</small></span>
+                            {packs &&
+                                packs.map((pack, index) => (
+
+                                    <div
+                                        className="col-lg-4 col-md-6 col-sm-10 "
+                                        data-wow-delay="0s" style={{ paddingTop: "50px" }}
+                                    >
+                                        <div className="pricing-box mb-30" style={{ height: "100%" }}>
+                                            <h6 className="plan-name">{pack.Title}</h6>
+                                            <div className="price">
+                                                <span className="currency">$</span>
+                                                <span>{pack.Price}<small className='pricing'>/{pack.Duration}</small></span>
+                                            </div>
+                                            <span className="plan-subtitle">{pack.Description}</span>
+                                            <ul className="plan-feature"  >
+                                                {pack.Features && pack.Features.map((feature, index1) => (
+                                                    <li >
+                                                        <i className="fas fa-check" /> {feature}
+                                                    </li>
+
+                                                ))
+                                                }
+                                                <li className="hidden-feature">
+                                                    <i className="fas fa-check" /> Unlimited Projects
+                                                </li>
+                                                <li className="hidden-feature">
+                                                    <i className="fas fa-check" /> Premium Quality Support
+                                                </li>
+                                                <li className="hidden-feature">
+                                                    <i className="fas fa-check" /> Notification Feature
+                                                </li>
+
+                                            </ul>
+                                            <a className=" pricing-btn" onClick={()=> handleChooseProject(pack._id)}>
+                                                Select Plan <i className="fas fa-arrow-right" />
+                                            </a>
+                                            <div className="plan-shape">
+                                                <img src="assets/img/pricing-shape.png" alt="shape" />
+                                            </div>
+                                        </div>
+                                       
                                     </div>
-                                    <span className="plan-subtitle">Suitable For Any IT Solutions</span>
-                                    <ul className="plan-feature">
-                                        <li>
-                                            <i className="fas fa-check" /> Boost your project
-                                        </li>
-                                        <li className="hidden-feature">
-                                            <i className="fas fa-check" /> Unlimited Projects
-                                        </li>
-                                        <li className="hidden-feature">
-                                            <i className="fas fa-check" /> Premium Quality Support
-                                        </li>
-                                        <li className="hidden-feature">
-                                            <i className="fas fa-check" /> Notification Feature
-                                        </li>
-                                    </ul>
-                                    <a href="#" className="pricing-btn">
-                                        Select Plan <i className="fas fa-arrow-right" />
-                                    </a>
-                                    <div className="plan-shape">
-                                        <img src="assets/img/pricing-shape.png" alt="shape" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                className="col-lg-4 col-md-6 col-sm-10 wow fadeInUp"
-                                data-wow-delay="0.1s"
-                            >
-                                <div className="pricing-box featured-plan mb-30">
-                                    <h6 className="plan-name">popular Plan</h6>
-                                    <div className="price">
-                                        <span className="currency">$</span>
-                                        <span>35.92<small className='pricing1'>/Year</small></span>
-                                    </div>
-                                    <span className="plan-subtitle">Suitable For Any IT Solutions</span>
-                                    <ul className="plan-feature">
-                                        <li>
-                                            <i className="fas fa-check" /> Boost your project
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-check" /> Unlimited Projects
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-check" /> Premium Quality Support
-                                        </li>
-                                        <li className="hidden-feature">
-                                            <i className="fas fa-check" /> Notification Feature
-                                        </li>
-                                    </ul>
-                                    <a href="#" className="pricing-btn">
-                                        Select Plan <i className="fas fa-arrow-right" />
-                                    </a>
-                                    <div className="plan-shape">
-                                        <img src="assets/img/pricing-shape.png" alt="shape" />
-                                    </div>
-                                    <span className="plan-tag">Save 45%</span>
-                                </div>
-                            </div>
-                            <div
-                                className="col-lg-4 col-md-6 col-sm-10 wow fadeInUp"
-                                data-wow-delay="0.2s"
-                            >
-                                <div className="pricing-box mb-30">
-                                    <h6 className="plan-name">premium Plan</h6>
-                                    <div className="price">
-                                        <span className="currency">$</span>
-                                        <span>65.39<small className='pricing'>/Year</small></span>
-                                    </div>
-                                    <span className="plan-subtitle">Suitable For Any IT Solutions</span>
-                                    <ul className="plan-feature">
-                                        <li>
-                                            <i className="fas fa-check" /> Boost your project
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-check" /> Unlimited Projects
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-check" /> Premium Quality Support
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-check" /> Notification Feature
-                                        </li>
-                                    </ul>
-                                    <a href="#" className="pricing-btn">
-                                        Select Plan <i className="fas fa-arrow-right" />
-                                    </a>
-                                    <div className="plan-shape">
-                                        <img src="assets/img/pricing-shape.png" alt="shape" />
-                                    </div>
-                                </div>
-                            </div>
+                                    
+                                ))}
+
                         </div>
                     </div>
                 </section>

@@ -2363,8 +2363,12 @@ a:hover {
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 	margin: 0;
-}
 
+}
+.project-style-one::selection{
+	border: #00796B solid 4px;
+
+}
 .project-style-one.no-shadow .project-item .content {
 	-webkit-box-shadow: none;
 	box-shadow: none;

@@ -38,7 +38,7 @@ export default function Video({ match }) {
 
 
     return <React.Fragment>
-        <a  style={{ marginLeft: "1100px" , marginTop:"25px"}} data-bs-toggle="tooltip" data-bs-placement="top" title="Close video chat" href="/home">
+        <a  style={{ marginLeft: "1100px" , marginTop:"25px"}} data-bs-toggle="tooltip" data-bs-placement="top" title="Close video chat" href="/">
             <span style={{color: "red"}}>
             <i class="fa fa-phone fa-2x" ></i>
             </span>

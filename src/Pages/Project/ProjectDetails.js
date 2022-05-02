@@ -8,6 +8,7 @@ import EditProject from './EditProject'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkAdd';
 import { green } from '@material-ui/core/colors'
 import Proposal from '../Proposal/Proposal'
+import axiosconfig from '../../axiosConfig'
 
 
 export default function ProjectDetails() {
@@ -33,15 +34,16 @@ export default function ProjectDetails() {
     const [showEdit, setShowEdit] = useState(false)
     const [openPopup, setOpenPopup] = useState(false)
     const [openPopupPW, setOpenPopupPW] = useState(false)
+  
     let { id } = useParams();
     const navigate = useNavigate()
-
+   
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:3000/projects/getproject/${id}`)
+            await axiosconfig.get(`/projects/getproject/${id}`)
                 .then(res => {
                     setProject(res.data[0])
-                  
+
                     if (!author) {
                         author = res.data[0].User
                     }
@@ -54,7 +56,7 @@ export default function ProjectDetails() {
                     setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
                     // end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
                 })
-            await axios.get(`http://localhost:3000/users/${author}`)
+            await axiosconfig.get(`/users/${author}`)
                 .then(res => {
                     setUser(res.data[0]);
                 })
@@ -130,7 +132,7 @@ export default function ProjectDetails() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/projects/deleteproject/${id}`)
+                axiosconfig.delete(`/projects/deleteproject/${id}`)
                     .then(
                         Swal.fire(
                             'Deleted!',
@@ -145,7 +147,7 @@ export default function ProjectDetails() {
     }
 
     const addBookmark = () => {
-        axios.post(`http://localhost:3000/bookmarks/addBookmark/${id}/${Connected.userId}`)
+        axiosconfig.post(`/bookmarks/addBookmark/${id}/${Connected.userId}`)
             .then(
                 navigate('/bookmarks')
             )
@@ -171,13 +173,14 @@ export default function ProjectDetails() {
         if (dollar100) {
             qte = 100
         }
-        const date = new Date(Date.now() ).toLocaleDateString()
+        const date = new Date(Date.now()).toLocaleDateString()
 
         const data = {
             amount: qte,
             created: date,
             Sender: Connected.userId,
-            Receiver: user._id
+            Receiver: user._id,
+            Project: id
         }
 
         Swal.fire({
@@ -190,13 +193,13 @@ export default function ProjectDetails() {
             confirmButtonText: 'Yes, donate!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post(`http://localhost:3000/payment/add-donation`, data)
+                axios.post(`${process.env.REACT_APP_API_URL}/payment/add-donation`, data)
                     .then(async () => {
-                        await axios.get(`http://localhost:3000/blockchain/wallet/${Connected.userId}`)
+                        await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${Connected.userId}`)
                             .then(async (res) => {
                                 sender = res.data.address
 
-                                await axios.get(`http://localhost:3000/blockchain/wallet/${user._id}`)
+                                await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${user._id}`)
                                     .then(async () => {
                                         receiver = res.data.address
 
@@ -206,21 +209,21 @@ export default function ProjectDetails() {
                                             senderWalletAddress: sender
                                         }
 
-                                        await axios.post(`http://localhost:3000/blockchain/transact`, data)
+                                        await axios.post(`${process.env.REACT_APP_API_URL}/blockchain/transact`, data)
                                             .then(async () => {
-                                                await axios.get(`http://localhost:3000/blockchain/mine-transactions`)
+                                                await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/mine-transactions`)
                                                     .then(async () => {
                                                         const data = {
                                                             coins: qte
                                                         }
-                                                        await axios.put(`http://localhost:3000/blockchain/update-wallet-minus/${Connected.userId}`, data)
-                                                        await axios.put(`http://localhost:3000/blockchain/update-wallet/${user._id}`, data)
-                                                            .then(async() => {
+                                                        await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet-minus/${Connected.userId}`, data)
+                                                        await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet/${user._id}`, data)
+                                                            .then(async () => {
                                                                 const raised = project.Raised + (qte * 0.5)
                                                                 const data = {
                                                                     Raised: raised
                                                                 }
-                                                                await axios.put(`http://localhost:3000/projects/updateprojectRaised/${id}`, data)
+                                                                await axios.put(`${process.env.REACT_APP_API_URL}/projects/updateprojectRaised/${id}`, data)
                                                                     .then(() => {
                                                                         Swal.fire(
                                                                             'Done!',
@@ -228,7 +231,7 @@ export default function ProjectDetails() {
                                                                             'success'
                                                                         )
                                                                     })
-                                                                    window.location.reload()
+                                                                window.location.reload()
 
 
                                                             })
@@ -274,7 +277,7 @@ export default function ProjectDetails() {
                     <div className="row align-items-center justify-content-start">
                         <div className="col-lg-6 col-md-10">
                             <div className="project-thumb mb-md-50">
-                                <img src={`http://localhost:3000/uploads/images/${project.Picture}`} className="proj-img"
+                                <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture}`} className="proj-img"
                                     alt="Image" />
                             </div>
                         </div>
@@ -294,7 +297,7 @@ export default function ProjectDetails() {
                                 </h3>
                                 <div className="meta">
                                     <div className="author">
-                                        <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`}
+                                        <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`}
                                             alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
                                         <a href="#">{user.UserName}</a>
                                     </div>
@@ -351,8 +354,8 @@ export default function ProjectDetails() {
                                                 <a type="submit" className="main-btn" onClick={donation}>
                                                     Donate Now <i className="fas fa-arrow-right" />
                                                 </a>
-                                                
-                                                <Link to={`/proposal/${id}`} type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
+
+                                                <Link to={`/proposal/${id}/${project.User}`} type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
                                                     Propose to cantact <i class="fab fa-facebook-messenger"></i>
                                                 </Link>
                                             </div>
@@ -393,13 +396,13 @@ export default function ProjectDetails() {
                 </div>
             </section>
             {
-                    Connected.Role === "Investor" && openPopup && <Proposal
-                        project_id={id}
-                        owner={project.User}
-                        openPopup={openPopup}
-                        setOpenPopup={setOpenPopup}
-                    ></Proposal>
-                }
+                Connected.Role === "Investor" && openPopup && <Proposal
+                    project_id={id}
+                    owner={project.User}
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                ></Proposal>
+            }
         </React.Fragment>
     )
 }

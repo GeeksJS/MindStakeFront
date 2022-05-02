@@ -13,7 +13,7 @@ export default function Donations() {
     useEffect(() => {
         const fetchData = async () => {
             if (Connected.Role === "Creator") {
-                await axios.get(`http://localhost:3000/payment/donations-creator/${Connected.userId}`)
+                await axios.get(`${process.env.REACT_APP_API_URL}/payment/donations-creator/${Connected.userId}`)
                     .then(res => {
                         console.log(res.data)
                         setDonations(res.data)
@@ -21,7 +21,7 @@ export default function Donations() {
                     })
             }
             else {
-                await axios.get(`http://localhost:3000/payment/donations-user/${Connected.userId}`)
+                await axios.get(`${process.env.REACT_APP_API_URL}/payment/donations-user/${Connected.userId}`)
                     .then(res => {
                         console.log(res.data)
                         setDonations(res.data)

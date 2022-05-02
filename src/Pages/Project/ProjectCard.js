@@ -15,7 +15,7 @@ export default function ProjectCard(props) {
                     <div
                         className="thumb"
                         style={{
-                            backgroundImage: `url(http://localhost:3000/uploads/images/${project.Picture})`
+                            backgroundImage: `url(${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture})`
                         }}
                     />
                     <div className="content">

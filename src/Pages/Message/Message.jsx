@@ -8,7 +8,7 @@ export default function Message({message,own}) {
             <div className="messageTop">
                 <img
                     className='messageImg'
-                    src={`http://localhost:3000/uploads/images/${Connected.ImageProfile}`}
+                    src={`${process.env.REACT_APP_API_URL}/uploads/images/${Connected.ImageProfile}`}
                     alt="" 
                 />
                 <p className='messageText'>{message?.text}</p>

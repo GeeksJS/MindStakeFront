@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import axiosconfig from '../../axiosConfig'
 
 import './Proposal.css'
 export default function ListProposal() {
@@ -11,7 +12,7 @@ export default function ListProposal() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://localhost:3000/proposal/owner/${Connected.userId}`).then(res => {
+                await axiosconfig.get(`/proposal/owner/${Connected.userId}`).then(res => {
                     setListProp(res.data);
                     console.log("this my data ", res)
                 }
@@ -26,14 +27,14 @@ export default function ListProposal() {
 
     }, [etat]);
     const ApproveAction = (id) => {
-        axios.put(`http://localhost:3000/proposal/accepte/${id}`).then(
+        axiosconfig.put(`/proposal/approve/${id}`).then(
             setEtat(!etat)
 
         )
     }
 
     const DeclineAction = (id) => {
-        axios.put(`http://localhost:3000/proposal/reject/${id}`).then(
+        axiosconfig.put(`/proposal/reject/${id}`).then(
             setEtat(!etat)
         )
     }
@@ -61,7 +62,7 @@ export default function ListProposal() {
                                     <td>{value.body}</td>
                                     <td>{value.amount}</td>
                                     <td>
-                                        <label style={{width:'80px'}} className={value.state === "Approved" ? "badge badge-success" : value.state === "Waiting" ? "badge badge-warning" : "badge badge-danger"}>{value.state}</label>
+                                        <label style={{width:'80px'}} className={value.state === "Approved" ?  "badge badge-success": value.state === "Accepted"?  "badge badge-success" : value.state === "Waiting" ? "badge badge-warning" : "badge badge-danger"}>{value.state}</label>
                                     </td>
                                     {value.state === "Waiting" ?
                                         <td>
@@ -69,7 +70,7 @@ export default function ListProposal() {
                                                 <button class="badge badge-success" style={{width:'70px',height:'30px',borderRadius:'10%',marginRight:'10px'}} onClick={() => ApproveAction(value._id)}> Accept</button>
                                                 <button class="badge badge-danger" style={{width:'70px',height:'30px',borderRadius:'10%'}} onClick={() => DeclineAction(value._id)}> Reject</button>
                                             </div>
-                                        </td> : value.state === "Approved" ? <td>Check Your Messenger  </td> : <td> thank you wish you good luck!!</td>}
+                                        </td> : value.state === "Approved" ? <td>Waiting for investor to contact you</td> : value.state === "Rejected" ? <td> thank you wish you good luck!!</td> : <td>check your messages</td>}
 
 
 

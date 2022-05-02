@@ -19,7 +19,7 @@ export default function Wallet() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:3000/blockchain/wallet/${Connected.userId}`)
+            await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${Connected.userId}`)
                 .then(res => {
                     console.log(res.data)
                     setWalletInfo(res.data)

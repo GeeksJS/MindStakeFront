@@ -7,7 +7,7 @@ import i18n from '../../i18n';
 import { NavDropdown } from 'react-bootstrap';
 import './style.css'
 import axios from 'axios';
-
+import MagicBell, { FloatingNotificationInbox } from '@magicbell/magicbell-react';
 export default function Navbar() {
     var classNameHome = "site-header sticky-header transparent-header topbar-transparent";
     var classNameOther = "site-header sticky-header other ";
@@ -25,7 +25,7 @@ export default function Navbar() {
 
         window.history.replaceState(null, "payment", "localhost:3000/off")
     }
-
+    const theme = { "icon": { "borderColor": "#6113A3", "width": "24px" }, "unseenBadge": { "backgroundColor": "#DF4759" }, "header": { "backgroundColor": "#6113A3", "textColor": "#ffffff", "borderRadius": "16px" }, "footer": { "backgroundColor": "#6113A3", "textColor": "#ffffff", "borderRadius": "16px" }, "notification": { "default": { "textColor": "#15091F", "borderRadius": "8px", "backgroundColor": "#6113A3" }, "unseen": { "backgroundColor": "#6113A3" }, "unread": { "backgroundColor": "#6113A3" } } };
     // function changeLocale(l) {
     //     if (locale !== l) {
     //         i18n.changeLanguage(l);
@@ -37,13 +37,13 @@ export default function Navbar() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:3000/blockchain/wallet/${User.userId}`)
+            await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${User.userId}`)
                 .then(res => {
                     console.log(res.data)
                     setWalletInfo(res.data)
-                
+
                 })
-           
+
         }
         fetchData().then()
     }, []);
@@ -166,73 +166,57 @@ export default function Navbar() {
 
 
 
-                                   
 
 
 
-                                        <div className="footer-widgets widget contact-widget li ml-30 mr--30">
 
-                                            <div class="main-search gva-search open">
-                                                <li>
-                                                    <a>
-                                                        <span className="icon1">
-                                                            <i className="far fa-search" ></i>
-                                                        </span>
-                                                    </a>
-                                                    <ul className="submenu">
-                                                        <div class="gva-search-content search-content" style={{marginTop:'-2px'}}>
-                                                            <div class="search-content-inner">
-                                                                <div class="content-inner"><form method="get" class="searchform gva-main-search" >
-                                                                    <div class="gva-search">
-                                                                        <input name="s" maxlength="40" class="form-control input-large input-search" type="text" size="20" placeholder="Search..." />
-                                                                        <span class="input-group-addon input-large btn-search" style={{ marginTop:'-10px'}}>
-                                                                            <i className="far fa-search" style={{ marginRight: '20px', color: '#14b761' }} ></i>
+                                    <div className="footer-widgets widget contact-widget li ml-30 mr--30">
 
-                                                                        </span>
-                                                                    </div>
-                                                                </form>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </ul>
+                                        
+                                        <li>
+                                            <a>
+                                                <span className="icon1">
+                                                    <i className="far fa-bell" ></i>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        
+                                        {User.Role === "Creator" && <li>
+                                            <Link to='/pricing'>
+                                                <span className="icon1">
+                                                    <i className="fas fa-rocket"></i>
+                                                </span>
+                                            </Link>
+                                        </li>}
+
+
+                                        <li>
+                                            <a>
+                                                <span className="icon1">
+                                                    <i className="far fa-user" ></i>
+                                                </span>
+                                            </a>
+                                            <ul className="submenu">
+                                                <li key={User.userId}>
+                                                    <NavLink hidden={!localStorage.getItem("token")} to={'/profile/' + User.userId}>Profile</NavLink>
                                                 </li>
-                                            </div>
-                                            <li>
-                                                <Link to='/pricing'>
-                                                    <span className="icon1">
-                                                        <i className="fas fa-rocket"></i>
-                                                    </span>
-                                                </Link>
-                                            </li>
-
-
-                                            <li>
-                                                <a>
-                                                    <span className="icon1">
-                                                        <i className="far fa-user" ></i>
-                                                    </span>
-                                                </a>
-                                                <ul className="submenu">
+                                                <li key={User.userId}>
+                                                    <NavLink hidden={!localStorage.getItem("token")} to={'/wallet'}>My Wallet</NavLink>
+                                                </li>
+                                                <li key={User.userId}>
+                                                    <NavLink hidden={!localStorage.getItem("token")} to={'/bookmarks'}>My Bookmarks</NavLink>
+                                                </li>
+                                                {User.Role === "Creator" &&
                                                     <li key={User.userId}>
-                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/profile/' + User.userId}>Profile</NavLink>
-                                                    </li>
-                                                    <li key={User.userId}>
-                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/wallet'}>My Wallet</NavLink>
-                                                    </li>
-                                                    <li key={User.userId}>
-                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/bookmarks'}>My Bookmarks</NavLink>
-                                                    </li>
-                                                   {User.Role ==="Creator" && 
-                                                   <li key={User.userId}>
-                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/listproposal/'+ User.userId}>List Proposal</NavLink>
+                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/listproposal/' + User.userId}>List Proposal</NavLink>
                                                     </li>}
-                                                    <li>
-                                                        <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
-                                                        <a href='/login' hidden={!localStorage.getItem("token")} onClick={() => localStorage.clear()} >Logout</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </div>
+                                                <li>
+                                                    <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
+                                                    <a href='/login' hidden={!localStorage.getItem("token")} onClick={() => localStorage.clear()} >Logout</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </div>
                                 </ul>
                             </div>
                         </div>

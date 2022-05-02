@@ -10,17 +10,24 @@ import { Link, useParams } from 'react-router-dom';
 import { Slider } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import axiosconfig from '../../axiosConfig'
+
 export default function ProposalForm() {
+
+
   let { id } = useParams();
+  let { idOwner } = useParams();
+
   const Connected = JSON.parse(localStorage.getItem('user'))
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
   const [project, setProject] = useState({})
   const steps = ['Send your Proposal', 'Contact with Creator', 'Confirm Proposal', 'end Proposal'];
   const [val, setVal] = useState(0);
+  const [user, setUser] = useState(0);
   const [proposal, setProposal] = useState({
     projectId: id,
-    ownerId: project.User,
+    ownerId: idOwner,
     investorId: Connected.userId,
     object: "",
     amount: 1000,
@@ -29,21 +36,36 @@ export default function ProposalForm() {
   const [St, setSt] = useState("")
   const [proposalverif, setProposalverif] = useState();
   useEffect(async () => {
-    await axios.get(`http://localhost:3000/projects/getproject/${id}`)
+    await axiosconfig.get(`/projects/getproject/${id}`)
       .then(async (res) => {
         setProject(res.data[0])
-        await axios.get(`http://localhost:3000/proposal/getByInvestorandProject/${id}/${Connected.userId}`).then((res) => {
+        await axiosconfig.get(`/proposal/getByInvestorandProject/${id}/${Connected.userId}`).then((res) => {
           setProposalverif(res.data)
-          console.log(proposalverif)
+
           if (res.data.state === "Waiting") {
+            
             setSt("Waiting")
             setActiveStep(1)
+      
           }
           else if (res.data.state === "Approved") {
+            
+            setSt("Approved")
             setActiveStep(2)
+         
+        
           } else if (res.data.state === "Rejected") {
+           
             setSt("Rejected")
             setActiveStep(1)
+         
+            
+          }else{
+            
+            setSt("Accepted")
+            setActiveStep(3)
+           
+          
           }
         }
         )
@@ -51,6 +73,20 @@ export default function ProposalForm() {
 
       );
   }, [activeStep]);
+
+
+
+
+  useEffect(async () => {
+    await axiosconfig.get(`/users/${idOwner}`).then((res) => {
+      setUser(res.data[0])
+    })
+
+
+
+  }, []);
+
+
   const totalSteps = () => {
     return steps.length;
   };
@@ -87,8 +123,8 @@ export default function ProposalForm() {
   const handleComplete = (e) => {
     e.preventDefault()
     setSt("Waiting")
-    console.log(proposal)
-    axios.post(`http://localhost:3000/proposal/`, proposal)
+
+    axiosconfig.post(`/proposal/`, proposal)
       .then(
         Swal.fire(
           'Done!',
@@ -98,6 +134,22 @@ export default function ProposalForm() {
 
       )
       .then(() => {
+        const headers = {
+          'X-MAGICBELL-API-SECRET': 'NdMGvg+CgiAIxqic/ykB+NTLrDW2TkrAU69CEicA',
+          'X-MAGICBELL-API-KEY': 'fe7dea920934062248bcb344699ce13d6a64cd73',
+        };
+
+        const data = {
+          notification: {
+            title: 'Task assigned to you: Upgrade to Startup plan',
+            content: 'salem ya3tik sa7a. Thank you.',
+            category: 'billing',
+            action_url: 'https://magicbell.com/pricing',
+            recipients: [{ email: user.Email }],
+          },
+        };
+
+        axios.post('https://api.magicbell.com/notifications', data, { headers });
         const newCompleted = completed;
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
@@ -114,14 +166,22 @@ export default function ProposalForm() {
     setVal(data)
 
     setProposal({ ...proposal, [e.target.name]: e.target.value })
-    console.log(proposal)
+
   }
   const handleDelete = (e) => {
     e.preventDefault()
-    axios.delete(`http://localhost:3000/proposal/${id}/${Connected.userId}`).then(
+    axiosconfig.delete(`/proposal/${id}/${Connected.userId}`).then(
       setActiveStep(0)
     )
   }
+  const handleMessage = (e, id) => {
+    e.preventDefault()
+    axiosconfig.put(`/proposal/accept/${id}`).then(
+      setActiveStep(3)
+
+    )
+
+}
 
   return (
     <React.Fragment>
@@ -150,9 +210,10 @@ export default function ProposalForm() {
               {steps.map((label, index) => (
                 <Step key={label} completed={completed[index]}>
                   <StepButton color="inherit" onClick={handleStep(index)}>
-                    {label}
+                    {label}  
                   </StepButton>
                 </Step>
+               
               ))}
             </Stepper>
             <div>
@@ -184,7 +245,7 @@ export default function ProposalForm() {
                   </Typography>
                 }
 
-                {activeStep === 1 && St==="Waiting" &&
+                {activeStep === 1 && St === "Waiting" &&
 
                   <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
                     <div style={{ paddingBottom: "150px" }}>
@@ -197,7 +258,7 @@ export default function ProposalForm() {
 
                   </Typography>
                 }
-                {activeStep === 1 &&  St==="Rejected" &&
+                {activeStep === 1 && St === "Rejected" &&
 
                   <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
                     <div style={{ paddingBottom: "150px" }}>
@@ -205,11 +266,48 @@ export default function ProposalForm() {
                       <h4>Your proposal has been Rejected</h4>
                       <h4>You can try again</h4>
                       <br /><br />
-
+                      <a type="submit" className="main-btn" onClick={(e) => handleDelete(e)}
+                        style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
+                        Update Proposal <i class='fas fa-edit'></i>
+                      </a>
                     </div>
 
                   </Typography>
                 }
+
+                {activeStep === 2 && St === "Approved" &&
+
+                  <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
+                    <div style={{ paddingBottom: "150px" }}>
+                      <img src="/assets/img/contactus.gif" alt="MindStake" />
+                      <h4>Creator Accept to contact you</h4>
+                      <h4>He 's waiting for your message </h4>
+                      <br /><br />
+                      <a type="submit" className="main-btn" onClick={(e) => handleMessage(e,proposalverif._id)}
+                        style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
+                        Send Message to creator <i class="fa fa-envelope"></i>
+                      </a>
+                      
+                    </div>
+
+                  </Typography>
+                }
+                
+                {activeStep === 3 && St === "Accepted" &&
+
+                  <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
+                    <div style={{ paddingBottom: "150px" }}>
+                      <img src="/assets/img/completed.gif" alt="MindStake" />
+                      <h4>A new conversation has been added to your messenger</h4>
+                      <h4>please contact the creator </h4>
+                      <br /><br />
+                    
+                      
+                    </div>
+
+                  </Typography>
+                }
+
 
               </div>
 

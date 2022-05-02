@@ -12,7 +12,7 @@ export default function ForgotPassword() {
         const data = {
             Email: email
         }
-        axios.post(`http://localhost:3000/password-reset`, data)
+        axios.post(`${process.env.REACT_APP_API_URL}/password-reset`, data)
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem('ResetPasswordUserId', JSON.stringify(res.data.ResetPasswordUserId))

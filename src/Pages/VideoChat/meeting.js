@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import DailyIframe from '@daily-co/daily-js';
 
@@ -13,7 +13,7 @@ export default function Video({ match }) {
         const domain = 'https://beatsup.daily.co/';
         const url = 'http://localhost:3000';
         axios
-            .get(`${url}/video-call/${id}`)
+            .get(`${url}/video-call/test`)
             .then((res) => {
                 if (res.status === 200) {
                     const callFrame = DailyIframe.createFrame({
@@ -27,7 +27,7 @@ export default function Video({ match }) {
                         showLeaveButton: true,
                         showFullscreenButton: true,
                     }).join({
-                        url: domain + id,
+                        url: domain + 'test',
                     });
                     document.body.appendChild(callFrame);
                 }
@@ -38,7 +38,13 @@ export default function Video({ match }) {
 
 
     return <React.Fragment>
+        <a  style={{ marginLeft: "1100px" , marginTop:"25px"}} data-bs-toggle="tooltip" data-bs-placement="top" title="Close video chat" href="/">
+            <span style={{color: "red"}}>
+            <i class="fa fa-phone fa-2x" ></i>
+            </span>
+        </a>
         <br /><br /><br />
         <><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></>;
+
     </React.Fragment>
 }

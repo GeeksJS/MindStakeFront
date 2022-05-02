@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import axiosconfig from '../../axiosConfig'
 
 export default function Reply(props) {
 
@@ -24,7 +25,7 @@ export default function Reply(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`http://localhost:3000/users/${reply.User}`);
+                const { data: response } = await axiosconfig.get(`/users/${reply.User}`);
                 setUser(response[0]);
                 //console.log(user)
             } catch (error) {
@@ -40,7 +41,7 @@ export default function Reply(props) {
             <li>
                 <div className="comment-body">
                     <div className="commentator-img">
-                        <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Author" />
+                        <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt="Author" />
                     </div>
                     <div className="comment-content">
                         <h5 className="commentator">{user.UserName}</h5>

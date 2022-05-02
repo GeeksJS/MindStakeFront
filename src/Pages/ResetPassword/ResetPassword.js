@@ -16,7 +16,7 @@ export default function ResetPassword() {
             Password: Pwd.Password,
             ConfirmPassword: Pwd.ConfirmPassword
         }
-        axios.post(`http://localhost:3000/password-reset/${userId}/${token}`, data)
+        axios.post(`${process.env.REACT_APP_API_URL}/password-reset/${userId}/${token}`, data)
             .then(res => {
                 console.log(res.data)
                 localStorage.removeItem('ResetPasswordUserId')

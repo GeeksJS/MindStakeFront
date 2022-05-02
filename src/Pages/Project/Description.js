@@ -1,16 +1,57 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import DonnationCard from './DonnationCard';
+import axiosconfig from '../../axiosConfig'
 
 export default function Description() {
     let { id } = useParams();
     const [project, setProject] = useState({})
+    const [latestDon, setLatestDon] = useState();
+    const [user1, setUser1] = useState();
+    // const [user2, setUser2] = useState();
+    // const [user3, setUser3] = useState();
+    // const [user, setUser] = useState([...Array(3)]);
 
+    useEffect(async () => {
+        await axiosconfig.get(`/payment/donations-byProject/${id}`).then((res) => {
+            setLatestDon(res.data)
+        //     axios.get(`http://localhost:3000/users/${res.data[0].Sender}`)
+        //         .then((res) => {
+        //             setUser1(res.data[0])
+        //             setUser((prev)=>{
+        //                 let newUser = [...prev]
+        //                 newUser[0] = res.data[0]
+        //                 return newUser
+        //                })
+        //                console.log(user)
+
+        //         })
+        //     axios.get(`http://localhost:3000/users/${res.data[1].Sender}`)
+        //         .then(res => {
+        //             setUser2(res.data[0]);
+        //             setUser((prev)=>{
+        //                 let newUser = [...prev]
+        //                 newUser[1] = res.data[1]
+        //                 return newUser
+        //                })
+        //     })
+        //     axios.get(`http://localhost:3000/users/${res.data[2].Sender}`)
+        //         .then(res => {
+        //             setUser3(res.data[0]);
+        //             setUser((prev)=>{
+        //                 let newUser = [...prev]
+        //                 newUser[2] = res.data[2]
+        //                 return newUser
+        //                })
+        // })
+    })}, [])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/projects/getproject/${id}`)
+        axiosconfig.get(`/projects/getproject/${id}`)
             .then(res => {
                 setProject(res.data[0])
+
             })
             .catch(err => {
                 console.error(err);
@@ -39,11 +80,11 @@ export default function Description() {
 
                                     {project.Video !== "video.mp4" ?
                                         <video controls width="700" >
-                                            <source src={`http://localhost:3000/uploads/video/${project.Video}`}
+                                            <source src={`${process.env.REACT_APP_API_URL}/uploads/video/${project.Video}`}
                                                 type="video/mp4"></source>
                                             salem</video> :
                                         <img controls width="700" height='500px'
-                                            src={`http://localhost:3000/uploads/images/${project.Picture}`}
+                                            src={`${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture}`}
                                             alt="Image"
                                         />
                                     }
@@ -82,49 +123,17 @@ export default function Description() {
                                 <div className="rewards-box mt-md-50">
                                     <h4 className="title">Latest Donations</h4>
 
+
                                     <ul>
-                                        <li className='liDonations' >
-                                            <div className='row'>
-                                                <img className='imgD' src='https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png' alt='' />
-                                                <div className='col title1 '>
-                                                    <p className='donation'>20$</p>
-                                                    <h5 className='name' >David Marks
-                                                        <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
-                                                    </h5>
+                                        {latestDon && latestDon.map((value, index) =>
+                                       
+                                           <DonnationCard don={value} key={value._id}/>
+                                        )
+                                        
+                                        }
 
-                                                </div>
 
-                                            </div>
-                                            <span className='msg'>“God bless you dear”</span>
-                                        </li>
-                                        <li className='liDonations' >
-                                            <div className='row'>
-                                                <img className='imgD' src='https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png' alt='' />
-                                                <div className='col title1 '>
-                                                    <p className='donation'>20$</p>
-                                                    <h5 className='name' >David Marks
-                                                        <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
-                                                    </h5>
 
-                                                </div>
-
-                                            </div>
-                                            <span className='msg'>“God bless you dear”</span>
-                                        </li>
-                                        <li className='liDonations' >
-                                            <div className='row'>
-                                                <img className='imgD' src='https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png' alt='' />
-                                                <div className='col title1 '>
-                                                    <p className='donation'>20$</p>
-                                                    <h5 className='name' >David Marks
-                                                        <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
-                                                    </h5>
-
-                                                </div>
-
-                                            </div>
-                                            <span className='msg'>“God bless you dear”</span>
-                                        </li>
                                     </ul>
 
                                 </div>

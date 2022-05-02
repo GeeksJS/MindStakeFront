@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axiosconfig from '../../axiosConfig'
 
 export default function Contact() {
     const [newComplaint, setNewComplaint] = useState({})
@@ -24,7 +25,7 @@ export default function Contact() {
             if (result.isConfirmed) {
                 console.log("hahaa")
 
-                axios.post(`http://localhost:3000/complaints/addcomplaint/`, data)
+                axiosconfig.post(`/complaints/addcomplaint/`, data)
                     .then(res => {
                         console.log("Sent")
                     })

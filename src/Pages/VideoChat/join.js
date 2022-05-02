@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function JoinRoom() {
   const [room, setRoom] = useState(null);
-
-  const onSubmit = () => {
-    window.location.assign(`/video/${room}`);
-  };
-
+  let{id} = useParams();
+  const navigate = useNavigate();
+useEffect(()=>{
+  navigate(`/video/${id}`);
+},[])
   return (
     <div>
-      <input type="text" onChange={(e) => setRoom(e.target.value)} />
-      <button onClick={onSubmit}>Submit</button>
+     
     </div>
   );
 }

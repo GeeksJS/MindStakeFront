@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axiosconfig from '../../axiosConfig'
 
 export default function Project(props) {
 
@@ -11,7 +12,7 @@ export default function Project(props) {
     const pourcentage = (project.Raised * 100) / project.Goal;
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/users/${project.User}`)
+        axiosconfig.get(`/users/${project.User}`)
             .then(res => {
                 setUser(res.data[0]);
             })
@@ -28,7 +29,7 @@ export default function Project(props) {
                     <div
                         className="thumb"
                         style={{
-                            backgroundImage: `url(http://localhost:3000/uploads/images/${project.Picture})`
+                            backgroundImage: `url(${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture})`
                         }}
                     />
                     <div className="content">
@@ -40,7 +41,7 @@ export default function Project(props) {
                             <i class='fas fa-trash-alt' id='deleteIcon' style={{ marginLeft: '40px' }} onClick={deleteBookmark}></i>
                         }
                         <div className="author">
-                            <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Thumb" />
+                            <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt="Thumb" />
                             <a href="#">{user.UserName}</a>
                         </div>
                         <h5 id="myTitle" className="title">

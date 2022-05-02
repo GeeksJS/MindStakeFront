@@ -11,6 +11,7 @@ import axios from 'axios'
 import { faPersonDotsFromLine } from '@fortawesome/free-solid-svg-icons'
 import Project from '../Project/Project'
 import ProjectCard from '../Project/ProjectCard'
+import axiosconfig from '../../axiosConfig'
 
 
 export default function Profile() {
@@ -41,8 +42,8 @@ export default function Profile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://localhost:3000/users/${id}`).then(res => setProfile(res.data[0]));
-                await axios.get(`http://localhost:3000/projects/getProjectByUser/${id}`).then(res => setProject(res.data));
+                await axiosconfig.get(`/users/${id}`).then(res => setProfile(res.data[0]));
+                await axiosconfig.get(`/projects/getProjectByUser/${id}`).then(res => setProject(res.data));
 
             } catch (error) {
                 console.error(error)
@@ -58,7 +59,7 @@ export default function Profile() {
         const data ={
             Email: Connected.Email
         }
-        axios.post(`http://localhost:3000/users/activate-account-email`,data)
+        axios.post(`${process.env.REACT_APP_API_URL}/users/activate-account-email`,data)
             .then(
                 Swal.fire(
                     'Done!',
@@ -108,7 +109,7 @@ export default function Profile() {
 
                             <div className="wrapper" >
                                 <img
-                                    src={`http://localhost:3000/uploads/images/${Profile.ImageProfile}`}
+                                    src={`${process.env.REACT_APP_API_URL}/uploads/images/${Profile.ImageProfile}`}
                                     alt=""
                                     className="user-profile"
                                 />
@@ -152,7 +153,7 @@ export default function Profile() {
                                         <strong>About Me</strong>
                                     </h4>
                                     {Profile.Cv !== "default.pdf" && Profile.Cv.endsWith("f") && <p>
-                                        <embed src={`http://localhost:3000/uploads/cv/${Profile.Cv}`} type="application/pdf" width="100%" height="600px" />
+                                        <embed src={`${process.env.REACT_APP_API_URL}/uploads/cv/${Profile.Cv}`} type="application/pdf" width="100%" height="600px" />
                                     </p>}
                                     {(Profile.Cv === "default.pdf" || !(Profile.Cv.endsWith("f"))) && Profile.Role == "SimpleUser" && <p>
                                         As a simple user, we give you the opportunity to help your best creator by donating their project and encourage our creator with your feedback.

@@ -12,7 +12,7 @@ export default function Transactions() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:3000/payment/transactions/${Connected.userId}`)
+            await axios.get(`${process.env.REACT_APP_API_URL}/payment/transactions/${Connected.userId}`)
                 .then(res => {
                     console.log(res.data)
                     setTransactions(res.data)

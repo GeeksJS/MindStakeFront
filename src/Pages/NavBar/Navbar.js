@@ -7,7 +7,7 @@ import i18n from '../../i18n';
 import { NavDropdown } from 'react-bootstrap';
 import './style.css'
 import axios from 'axios';
-import MagicBell, { FloatingNotificationInbox } from '@magicbell/magicbell-react';
+// import MagicBell, { FloatingNotificationInbox } from '@magicbell/magicbell-react';
 export default function Navbar() {
     var classNameHome = "site-header sticky-header transparent-header topbar-transparent";
     var classNameOther = "site-header sticky-header other ";

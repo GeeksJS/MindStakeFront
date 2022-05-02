@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Dialog, DialogTitle, DialogContent, Typography } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import axiosconfig from '../../axiosConfig'
 
 
 
@@ -36,7 +37,7 @@ export default function EditProject(props) {
         data.append("file", vid)
         data.append("Description", project.Description)
         console.log(data)
-        axios.put(`http://localhost:3000/projects/updateproject/${id}` , data)
+        axiosconfig.put(`/projects/updateproject/${id}` , data)
         .then(res => {
             console.log("updated")
             window.location.reload()

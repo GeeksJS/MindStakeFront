@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axiosconfig from '../../axiosConfig'
 
 export default function EditProfileUser(props) {
     const { User_id, openPopup, setOpenPopup } = props;
@@ -13,7 +14,7 @@ export default function EditProfileUser(props) {
 
     useEffect(async () => {
 
-        await axios.get(`http://localhost:3000/users/${User_id}`)
+        await axiosconfig.get(`/users/${User_id}`)
             .then(res => {
                 setProfile(res.data[0])
             })
@@ -44,7 +45,7 @@ export default function EditProfileUser(props) {
 
         console.log("hethi l data", data)
 
-        await axios.put(`http://localhost:3000/users/updateSimpleUser/${User_id}`, data)
+        await axiosconfig.put(`/users/updateSimpleUser/${User_id}`, data)
             .then(res => {
                 setOpenPopup(false)
                 Navigate('/profile')

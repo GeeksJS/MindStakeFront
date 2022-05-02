@@ -74,7 +74,7 @@ export default function Register({ setToken }) {
         }
 
 
-        axios.post(`http://localhost:3000/users/signup`, dataI)
+        axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, dataI)
             .then(async res => {
                 if (res.data == null) {
                     Swal.fire(
@@ -86,7 +86,7 @@ export default function Register({ setToken }) {
                     setToken(res.data.token)
                     localStorage.setItem('user', JSON.stringify(res.data))
                     const id = res.data.userId
-                    await axios.post(`http://localhost:3000/blockchain/create-wallet/${id}`)
+                    await axios.post(`${process.env.REACT_APP_API_URL}/blockchain/create-wallet/${id}`)
                         .then(() => {
                             Swal.fire(
                                 'Registration done!',

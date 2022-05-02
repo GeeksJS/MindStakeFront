@@ -22,7 +22,7 @@ export default function Login({ setToken }) {
             Email: email,
             Password: password
         }
-        axios.post(`http://localhost:3000/users/login`, data)
+        axios.post(`${process.env.REACT_APP_API_URL}/users/login`, data)
             .then(res => {
                 console.log(res.data)
                 setToken(res.data.token)

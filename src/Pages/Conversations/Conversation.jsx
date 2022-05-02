@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState,useEffect } from 'react'
 import './conversations.css'
+import axiosconfig from '../../axiosConfig'
 
 export default function Conversation({conversation,currentUser}) {
   const [user,setUser] = useState(null);
@@ -8,7 +9,7 @@ export default function Conversation({conversation,currentUser}) {
   useEffect(() => {
     const friendId= conversation.members.find((m)=>m !== currentUser._id);
     const getUser = async () => {
-    await axios.get("http://localhost:3000/users/" + friendId)
+    await axiosconfig.get("/users/" + friendId)
     .then(res => {
       setUser(res.data[0]);  //res.data is a user
     })
@@ -21,7 +22,7 @@ export default function Conversation({conversation,currentUser}) {
     <div className='conversation'>
       <img  
         className='conversationImg'
-        src={`http://localhost:3000/uploads/images/${user?.ImageProfile}`}
+        src={`${process.env.REACT_APP_API_URL}/uploads/images/${user?.ImageProfile}`}
         alt="" />    
       <span className="conversationName"> {user?.UserName+" " +user?.FirstName }</span>
     </div>

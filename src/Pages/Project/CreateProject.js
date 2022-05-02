@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2';
 import './index'
 import './style.css'
+import axiosconfig from '../../axiosConfig'
 
 export default function CreateProject() {
 
@@ -46,7 +47,7 @@ export default function CreateProject() {
         // data.append("SocialMedia", newproject.SocialMedia)
         data.append("Location", location)
 
-        axios.post(`http://localhost:3000/projects/addproject/` + User.userId, data)
+        axiosconfig.post(`/projects/addproject/` + User.userId, data)
             .then(res => {
                 Navigate('/myprojects')
                 window.location.reload()

@@ -4,6 +4,7 @@ import Navbar from '../NavBar/Navbar'
 import Project from './Project'
 import Review from '../Chatbot/Review'
 import axios from 'axios'
+import axiosconfig from '../../axiosConfig'
 
 export default function MyProjects() {
 
@@ -20,7 +21,7 @@ export default function MyProjects() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`http://localhost:3000/projects/getProjectByUser/${User.userId}`);
+                const { data: response } = await axiosconfig.get(`/projects/getProjectByUser/${User.userId}`);
                 setMyprojects(response);
             } catch (error) {
                 console.error(error)

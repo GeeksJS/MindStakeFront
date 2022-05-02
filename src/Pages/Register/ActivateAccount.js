@@ -11,7 +11,7 @@ export default function ActivateAccount() {
     const activateAccount = (e) => {
         e.preventDefault()
         
-        axios.post(`http://localhost:3000/users/activate-account/${user.userId}`)
+        axios.post(`${process.env.REACT_APP_API_URL}/users/activate-account/${user.userId}`)
             .then(res => {
                 console.log(res.data)
                 // localStorage.removeItem('ResetPasswordUserId')

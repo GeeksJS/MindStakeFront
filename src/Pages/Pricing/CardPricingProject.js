@@ -72,7 +72,7 @@ export default function CardPricingProject() {
                             await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${User.userId}`)
                                 .then(async (res) => {
                                     sender = res.data.address
-                                    await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/62670e7fabf4fe09f0c79ecd`)
+                                    await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/62311109e8aaa2c137724f3e`)
                                         .then(async () => {
                                             receiver = res.data.address
                                             const data = {
@@ -88,7 +88,7 @@ export default function CardPricingProject() {
                                                                 coins: pack.Price / 0.6
                                                             }
                                                             await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet-minus/${User.userId}`, data)
-                                                            await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet/62670e7fabf4fe09f0c79ecd`, data)
+                                                            await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet/62311109e8aaa2c137724f3e`, data)
                                                                 .then(async () => {
                                                                             window.location.href="/Pricing"
                                                                 })

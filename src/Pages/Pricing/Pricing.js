@@ -1,13 +1,14 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axiosconfig from '../../axiosConfig'
 
 
 export default function Pricing() {
     const navigate = useNavigate()
     const [packs, setPacks] = useState()
     useEffect(async () => {
-        await axios.get(`http://localhost:3000/packs/`)
+        await axiosconfig.get(`/packs/`)
             .then((res) => {
                 setPacks(res.data)
 

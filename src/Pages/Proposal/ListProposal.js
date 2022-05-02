@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import axiosconfig from '../../axiosConfig'
 
 import './Proposal.css'
 export default function ListProposal() {
@@ -11,7 +12,7 @@ export default function ListProposal() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://localhost:3000/proposal/owner/${Connected.userId}`).then(res => {
+                await axiosconfig.get(`/proposal/owner/${Connected.userId}`).then(res => {
                     setListProp(res.data);
                     console.log("this my data ", res)
                 }
@@ -26,14 +27,14 @@ export default function ListProposal() {
 
     }, [etat]);
     const ApproveAction = (id) => {
-        axios.put(`http://localhost:3000/proposal/approve/${id}`).then(
+        axiosconfig.put(`/proposal/approve/${id}`).then(
             setEtat(!etat)
 
         )
     }
 
     const DeclineAction = (id) => {
-        axios.put(`http://localhost:3000/proposal/reject/${id}`).then(
+        axiosconfig.put(`/proposal/reject/${id}`).then(
             setEtat(!etat)
         )
     }

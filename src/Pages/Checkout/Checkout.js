@@ -20,7 +20,7 @@ export default function Checkout() {
     'Your payment was successfull!',
     'success'
   ).then(async () => {
-    await axios.get(`http://localhost:3000/blockchain/payment`)
+    await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/payment`)
       .then(res => {
         console.log(res.data.data[0].amount / 100)
         console.log((res.data.data[0].amount / 100) / 0.6)
@@ -43,9 +43,9 @@ export default function Checkout() {
           User: Connected.userId
         }
 
-        axios.post(`http://localhost:3000/payment/add-transaction`, data)
+        axios.post(`${process.env.REACT_APP_API_URL}/payment/add-transaction`, data)
           .then(async () => {
-            await axios.get(`http://localhost:3000/blockchain/wallet/${Connected.userId}`)
+            await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${Connected.userId}`)
               .then(async (res1) => {
                 
 
@@ -58,14 +58,14 @@ export default function Checkout() {
                   senderWalletAddress: "044b2bae1bb11aef295db332b35ffbc36bfb3a7c375eda12d3fd15b1fb15f945c24a1b691301fb6d6b3e655ca87a691159d7f075fddddaf590f1ce0cfbf6554d13"
                 }
 
-                await axios.post(`http://localhost:3000/blockchain/transact`, data)
+                await axios.post(`${process.env.REACT_APP_API_URL}/blockchain/transact`, data)
                   .then(async () => {
-                    await axios.get(`http://localhost:3000/blockchain/mine-transactions`)
+                    await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/mine-transactions`)
                       .then(async () => {
                         const data = {
                           coins: qte
                         }
-                        await axios.put(`http://localhost:3000/blockchain/update-wallet/${Connected.userId}`, data)
+                        await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet/${Connected.userId}`, data)
                         .then( window.location.href = '/wallet')
                         
                         

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import axiosconfig from '../../axiosConfig'
 
 export default function DonnationCard(propos) {
 
@@ -7,7 +8,7 @@ const idUser = propos.don.Sender
 const [user, setUser] = useState();
 console.log(idUser)
 useEffect(async () => {
-       await axios.get(`http://localhost:3000/users/${idUser}`)
+       await axiosconfig.get(`/users/${idUser}`)
             .then((res) => {
                 setUser(res.data[0])
                 
@@ -18,7 +19,7 @@ useEffect(async () => {
   return (
     <li className='liDonations' >
     <div className='row'>
-       {user && <img className='imgD'src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt='' />}
+       {user && <img className='imgD'src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt='' />}
         <div className='col title1 '>
             <p className='donation'>{propos.don.amount} <small>Gc</small></p>
             {user && <h5 className='name' >{user.UserName}

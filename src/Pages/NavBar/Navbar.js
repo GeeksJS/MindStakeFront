@@ -37,7 +37,7 @@ export default function Navbar() {
 
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:3000/blockchain/wallet/${User.userId}`)
+            await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${User.userId}`)
                 .then(res => {
                     console.log(res.data)
                     setWalletInfo(res.data)
@@ -181,13 +181,13 @@ export default function Navbar() {
                                             </a>
                                         </li>
                                         
-                                        <li>
+                                        {User.Role === "Creator" && <li>
                                             <Link to='/pricing'>
                                                 <span className="icon1">
                                                     <i className="fas fa-rocket"></i>
                                                 </span>
                                             </Link>
-                                        </li>
+                                        </li>}
 
 
                                         <li>

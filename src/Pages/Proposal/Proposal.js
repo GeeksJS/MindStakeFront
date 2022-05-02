@@ -11,6 +11,7 @@ import { faPersonDotsFromLine } from '@fortawesome/free-solid-svg-icons'
 import Project from '../Project/Project'
 import ProjectCard from '../Project/ProjectCard'
 import { Button, Dialog, DialogContent, DialogTitle, Typography } from '@material-ui/core'
+import axiosconfig from '../../axiosConfig'
 
 
 export default function Proposal(props) {
@@ -35,7 +36,7 @@ export default function Proposal(props) {
     const doModify = async (e) => {
         e.preventDefault()
         console.log(proposal)
-        await axios.post(`http://localhost:3000/proposal/`, proposal)
+        await axiosconfig.post(`/proposal/`, proposal)
             .then(() => {
                 setOpenPopup(false)
             }

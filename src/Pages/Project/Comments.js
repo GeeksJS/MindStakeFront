@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Comment from './Comment';
+import axiosconfig from '../../axiosConfig'
 
 export default function Comments(props) {
 
@@ -15,7 +16,7 @@ export default function Comments(props) {
         const data = {
             Description: newcomment.Description
         }
-        axios.post(`http://localhost:3000/comments/addComment/${User.userId}/${props.idProject}`, data)
+        axiosconfig.post(`/comments/addComment/${User.userId}/${props.idProject}`, data)
             .then(res => {
 
                 setCmnt(!cmnt)
@@ -27,7 +28,7 @@ export default function Comments(props) {
     }
 
     const deleteCom = (id) => {
-        axios.delete(`http://localhost:3000/comments/delete/${id}`)
+        axiosconfig.delete(`/comments/delete/${id}`)
             .then(setCmnt(!cmnt))
             .catch(err => {
                 console.error(err);
@@ -43,7 +44,7 @@ export default function Comments(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`http://localhost:3000/comments/getAllComments/${props.idProject}`);
+                const { data: response } = await axiosconfig.get(`/comments/getAllComments/${props.idProject}`);
                 setComment(response);
             } catch (error) {
                 console.error(error)

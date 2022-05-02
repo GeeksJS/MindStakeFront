@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import DonnationCard from './DonnationCard';
+import axiosconfig from '../../axiosConfig'
 
 export default function Description() {
     let { id } = useParams();
@@ -13,7 +14,7 @@ export default function Description() {
     // const [user, setUser] = useState([...Array(3)]);
 
     useEffect(async () => {
-        await axios.get(`http://localhost:3000/payment/donations-byProject/${id}`).then((res) => {
+        await axiosconfig.get(`/payment/donations-byProject/${id}`).then((res) => {
             setLatestDon(res.data)
         //     axios.get(`http://localhost:3000/users/${res.data[0].Sender}`)
         //         .then((res) => {
@@ -47,7 +48,7 @@ export default function Description() {
     })}, [])
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/projects/getproject/${id}`)
+        axiosconfig.get(`/projects/getproject/${id}`)
             .then(res => {
                 setProject(res.data[0])
 
@@ -79,11 +80,11 @@ export default function Description() {
 
                                     {project.Video !== "video.mp4" ?
                                         <video controls width="700" >
-                                            <source src={`http://localhost:3000/uploads/video/${project.Video}`}
+                                            <source src={`${process.env.REACT_APP_API_URL}/uploads/video/${project.Video}`}
                                                 type="video/mp4"></source>
                                             salem</video> :
                                         <img controls width="700" height='500px'
-                                            src={`http://localhost:3000/uploads/images/${project.Picture}`}
+                                            src={`${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture}`}
                                             alt="Image"
                                         />
                                     }

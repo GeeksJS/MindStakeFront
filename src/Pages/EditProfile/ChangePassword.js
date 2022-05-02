@@ -2,6 +2,7 @@ import { Button, Dialog, DialogContent, DialogTitle, Typography } from '@materia
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom';
+import axiosconfig from '../../axiosConfig'
 
 export default function ChangePassword(props) {
     const { User_id, openPopupPW, setOpenPopupPW } = props;
@@ -22,7 +23,7 @@ export default function ChangePassword(props) {
             confirm_Password: Pwd.confirm_Password
         }
 
-        await axios.put(`http://localhost:3000/users/changePassword/${User_id}`, data)
+        await axios.put(`${process.env.REACT_APP_API_URL}/users/changePassword/${User_id}`, data)
             .then(res => {
                 setOpenPopupPW(false)
                 Navigate('/profile')

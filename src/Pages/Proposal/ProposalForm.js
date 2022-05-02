@@ -10,6 +10,8 @@ import { Link, useParams } from 'react-router-dom';
 import { Slider } from '@mui/material';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import axiosconfig from '../../axiosConfig'
+
 export default function ProposalForm() {
 
 
@@ -34,10 +36,10 @@ export default function ProposalForm() {
   const [St, setSt] = useState("")
   const [proposalverif, setProposalverif] = useState();
   useEffect(async () => {
-    await axios.get(`http://localhost:3000/projects/getproject/${id}`)
+    await axiosconfig.get(`/projects/getproject/${id}`)
       .then(async (res) => {
         setProject(res.data[0])
-        await axios.get(`http://localhost:3000/proposal/getByInvestorandProject/${id}/${Connected.userId}`).then((res) => {
+        await axiosconfig.get(`/proposal/getByInvestorandProject/${id}/${Connected.userId}`).then((res) => {
           setProposalverif(res.data)
 
           if (res.data.state === "Waiting") {
@@ -76,7 +78,7 @@ export default function ProposalForm() {
 
 
   useEffect(async () => {
-    await axios.get(`http://localhost:3000/users/${idOwner}`).then((res) => {
+    await axiosconfig.get(`/users/${idOwner}`).then((res) => {
       setUser(res.data[0])
     })
 
@@ -122,7 +124,7 @@ export default function ProposalForm() {
     e.preventDefault()
     setSt("Waiting")
 
-    axios.post(`http://localhost:3000/proposal/`, proposal)
+    axiosconfig.post(`/proposal/`, proposal)
       .then(
         Swal.fire(
           'Done!',
@@ -168,13 +170,13 @@ export default function ProposalForm() {
   }
   const handleDelete = (e) => {
     e.preventDefault()
-    axios.delete(`http://localhost:3000/proposal/${id}/${Connected.userId}`).then(
+    axiosconfig.delete(`/proposal/${id}/${Connected.userId}`).then(
       setActiveStep(0)
     )
   }
   const handleMessage = (e, id) => {
     e.preventDefault()
-    axios.put(`http://localhost:3000/proposal/accept/${id}`).then(
+    axiosconfig.put(`/proposal/accept/${id}`).then(
       setActiveStep(3)
 
     )

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import './style.css'
+import axiosconfig from '../../axiosConfig'
 
 export default function CardPricingProject() {
     const [Myprojects, setMyprojects] = useState('')
@@ -14,7 +15,7 @@ export default function CardPricingProject() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`http://localhost:3000/projects/getProjectByUser/${User.userId}`);
+                const { data: response } = await axiosconfig.get(`/projects/getProjectByUser/${User.userId}`);
                 setMyprojects(response);
             } catch (error) {
                 console.error(error)
@@ -23,14 +24,14 @@ export default function CardPricingProject() {
         fetchData().then(Myprojects);
     }, []);
     useEffect(() => {
-        axios.get(`http://localhost:3000/users/${User.userId}`)
+        axiosconfig.get(`/users/${User.userId}`)
             .then(res => {
                 setUser(res.data[0]);
             })
     }, []);
     const [pack, setPack] = useState()
     useEffect(async () => {
-        await axios.get(`http://localhost:3000/packs/${idPack}`)
+        await axiosconfig.get(`/packs/${idPack}`)
             .then((res) => {
                 setPack(res.data[0])
                     console.log("hello", res.data[0])
@@ -61,17 +62,17 @@ export default function CardPricingProject() {
             confirmButtonText: 'Yes, buy this pack!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post(`http://localhost:3000/projects/BuyPackForProject/${idPa}/${idPr}`)
+                axiosconfig.post(`/projects/BuyPackForProject/${idPa}/${idPr}`)
                     .then(
                         Swal.fire(
                             'Done!',
                             'Pack added to your project.',
                             'success'
                         ).then(async () => {
-                            await axios.get(`http://localhost:3000/blockchain/wallet/${User.userId}`)
+                            await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${User.userId}`)
                                 .then(async (res) => {
                                     sender = res.data.address
-                                    await axios.get(`http://localhost:3000/blockchain/wallet/62670e7fabf4fe09f0c79ecd`)
+                                    await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/62670e7fabf4fe09f0c79ecd`)
                                         .then(async () => {
                                             receiver = res.data.address
                                             const data = {
@@ -79,15 +80,15 @@ export default function CardPricingProject() {
                                                 amount: pack.Price / 0.6,
                                                 senderWalletAddress: sender
                                             }
-                                            await axios.post(`http://localhost:3000/blockchain/transact`, data)
+                                            await axios.post(`${process.env.REACT_APP_API_URL}/blockchain/transact`, data)
                                                 .then(async () => {
-                                                    await axios.get(`http://localhost:3000/blockchain/mine-transactions`)
+                                                    await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/mine-transactions`)
                                                         .then(async () => {
                                                             const data = {
                                                                 coins: pack.Price / 0.6
                                                             }
-                                                            await axios.put(`http://localhost:3000/blockchain/update-wallet-minus/${User.userId}`, data)
-                                                            await axios.put(`http://localhost:3000/blockchain/update-wallet/62670e7fabf4fe09f0c79ecd`, data)
+                                                            await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet-minus/${User.userId}`, data)
+                                                            await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet/62670e7fabf4fe09f0c79ecd`, data)
                                                                 .then(async () => {
                                                                             window.location.href="/Pricing"
                                                                 })
@@ -136,7 +137,7 @@ export default function CardPricingProject() {
                                             <div
                                                 className="thumb"
                                                 style={{
-                                                    backgroundImage: `url(http://localhost:3000/uploads/images/${project.Picture})`
+                                                    backgroundImage: `url(${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture})`
                                                 }}
                                             />
                                             <div className="content">
@@ -146,7 +147,7 @@ export default function CardPricingProject() {
                                                 </div>
 
                                                 <div className="author">
-                                                    <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Thumb" />
+                                                    <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt="Thumb" />
                                                     <a href="#">{user.UserName}</a>
                                                 </div>
                                                 <h5 id="myTitle" className="title">

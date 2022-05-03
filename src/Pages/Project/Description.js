@@ -16,36 +16,10 @@ export default function Description() {
     useEffect(async () => {
         await axiosconfig.get(`/payment/donations-byProject/${id}`).then((res) => {
             setLatestDon(res.data)
-        //     axios.get(`http://localhost:3000/users/${res.data[0].Sender}`)
-        //         .then((res) => {
-        //             setUser1(res.data[0])
-        //             setUser((prev)=>{
-        //                 let newUser = [...prev]
-        //                 newUser[0] = res.data[0]
-        //                 return newUser
-        //                })
-        //                console.log(user)
-
-        //         })
-        //     axios.get(`http://localhost:3000/users/${res.data[1].Sender}`)
-        //         .then(res => {
-        //             setUser2(res.data[0]);
-        //             setUser((prev)=>{
-        //                 let newUser = [...prev]
-        //                 newUser[1] = res.data[1]
-        //                 return newUser
-        //                })
-        //     })
-        //     axios.get(`http://localhost:3000/users/${res.data[2].Sender}`)
-        //         .then(res => {
-        //             setUser3(res.data[0]);
-        //             setUser((prev)=>{
-        //                 let newUser = [...prev]
-        //                 newUser[2] = res.data[2]
-        //                 return newUser
-        //                })
-        // })
+       
     })}, [])
+
+    
 
     useEffect(() => {
         axiosconfig.get(`/projects/getproject/${id}`)

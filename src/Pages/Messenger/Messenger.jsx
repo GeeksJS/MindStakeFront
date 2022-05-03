@@ -7,6 +7,7 @@ import { AuthContext } from '../Context/AuthContext';
 import axios from "axios";
 import { io } from "socket.io-client";
 import { Link } from "react-router-dom";
+import axiosconfig from '../../axiosConfig'
 
 export default function Messenger() {
   const { user } = useContext(AuthContext);
@@ -48,18 +49,21 @@ export default function Messenger() {
   }, [user]);
 
 
-// useEffect(()=>{
-//   await axios.get("http://localhost:3000/users/" + friendId)
-//   .then(res => {
-//     setUser(res.data[0]);  //res.data is a user
-//   })
-//   .catch(err =>console.log(err));
-//   },[])
+  // useEffect(()=>{
+  //   await axios.get("http://localhost:3000/users/" + friendId)
+  //   .then(res => {
+  //     setUser(res.data[0]);  //res.data is a user
+  //   })
+  //   .catch(err =>console.log(err));
+  //   },[])
 
   useEffect(() => {
     const getConversations = async () => {
-      await axios.get("http://localhost:3000/conversations/" + user.userId)
+
+      await axios.get(`${process.env.REACT_APP_API_URL}/conversations/` + user.userId)
         .then(res => {
+          //console.log(res.data)
+
           setConversations(res.data);  //res.data is an array of conversations
         })
         .catch(err => console.log(err));
@@ -70,7 +74,7 @@ export default function Messenger() {
   useEffect(() => {
     const getMessage = async () => {
 
-      await axios.get("http://localhost:3000/messages/" + currentChat?._id)
+      await axios.get(`${process.env.REACT_APP_API_URL}/messages/` + currentChat?._id)
         .then(res => {
           setMessages(res.data);  //res.data is an array of messages
         })
@@ -96,7 +100,7 @@ export default function Messenger() {
       text: newMessage,
     });
 
-    await axios.post("http://localhost:3000/messages/", message)
+    await axios.post(`${process.env.REACT_APP_API_URL}/messages/`, message)
       .then(res => {
         setMessages([...messages, res.data]);
         setNewMessage("");
@@ -106,62 +110,63 @@ export default function Messenger() {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-
-
+ 
 
   return (
-    <div className='messenger'>
-      <div className='chatMenu'>
-        <div className="chatMenuWrapper">
-          <input placeholder="Search for friends" className="chatMenuInput" />
-          {conversations.map((conversation, index) => (
-            <div onClick={() => setCurrentChat(conversation)}>
-              <Conversation conversation={conversation} key={index} currentUser={user} />
-            </div>
-          ))}
+    <div className="container">
+      <div className='messenger'>
+        <div className='chatMenu' style={{backgroundColor:'#edf9f3',borderRadius:'5%'}}>
+          <div className="chatMenuWrapper">
+            <input placeholder="Search for friends" className="chatMenuInput" style={{backgroundColor:'#edf9f3'}}/>
+            {conversations.map((conversation, index) => {
+              //console.log(conversation);
+              return (<div onClick={() => setCurrentChat(conversation)}>
+                <Conversation conversation={conversation} key={index} currentUser={user} />
+              </div>
+              )
+            })}
+          </div>
         </div>
-      </div>
-      <div className='chatBox'>
-        <div className="chatBoxWrapper">
-          {
-            currentChat ?
-              <>
-                <div className="chatBoxTop" >
+        <div className='chatBox'>
+          <div className="chatBoxWrapper">
+            {
+              currentChat ?
+                <>
+                  <div className="chatBoxTop" >
 
-                <Link to={'/join/'+ currentChat._id} style={{display:"flex" , justifyContent:"end" }}data-bs-toggle="tooltip" data-bs-placement="top" title="Join video chat">
-                    <span className="icon1">
-                      <i className="fas fa-video"></i>
-                    </span>
-                  </Link>
-                  {
-                    messages.map((message, index) => (
-                      <div ref={scrollRef}>
-                        <Message
-                          message={message}
-                          key={index}
-                          own={message.sender === user.userId} />
-                      </div>
-                    ))
-                  }
-                </div>
-                
-                <div className="chatBoxBottom">
-                
-                  <textarea
-                    className="chatMessageInput"
-                    placeholder="Write your message here..."
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    value={newMessage}
-                  >
-                  </textarea>
-                  <button className="chatSubmitButton" onClick={handleSubmit}>send</button>
-                </div>
-              </>
-              : <span className="noConversationText"> Open a conversation to start a chat</span>}
+                    <Link to={'/join/' + currentChat._id} style={{ display: "flex", justifyContent: "end" }} data-bs-toggle="tooltip" data-bs-placement="top" title="Join video chat">
+                      <span className="icon1">
+                        <i className="fas fa-video"></i>
+                      </span>
+                    </Link>
+                    {
+                      messages.map((message, index) => (
+                        <div ref={scrollRef}>
+                          <Message
+                            message={message}
+                            key={index}
+                            own={message.sender === user.userId} />
+                        </div>
+                      ))
+                    }
+                  </div>
+
+                  <div className="chatBoxBottom">
+
+                    <textarea
+                      className="chatMessageInput"
+                      placeholder="Write your message here..."
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      value={newMessage}
+                    >
+                    </textarea>
+                    <button className="chatSubmitButton" onClick={handleSubmit}>send</button>
+                  </div>
+                </>
+                : <span className="noConversationText"> Open a conversation to start a chat</span>}
+          </div>
         </div>
-      </div>
-      <div className='chatOnline'>
+        {/* <div className='chatOnline'>
         <div className="chatOnlineWrapper">
           <ChatOnline
             onlineUsers={onlineUsers}
@@ -170,6 +175,7 @@ export default function Messenger() {
           />
 
         </div>
+      </div> */}
       </div>
     </div>
   )

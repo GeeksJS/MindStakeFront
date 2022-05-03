@@ -1,10 +1,23 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 import axiosconfig from '../../axiosConfig'
 
 
 export default function Pricing() {
+    const Navigate = useNavigate()
+
+    const Connected = JSON.parse(localStorage.getItem('user'))
+
+    {
+        !Connected.isActivated &&
+            Swal.fire(
+                'Account activation required!',
+                'Please activate your account!',
+                'warning'
+            ).then(() => Navigate('/'))
+    }
     const navigate = useNavigate()
     const [packs, setPacks] = useState()
     useEffect(async () => {

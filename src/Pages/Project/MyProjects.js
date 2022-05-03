@@ -12,11 +12,12 @@ export default function MyProjects() {
     const User = JSON.parse(localStorage.getItem('user'))
     const [searchTerm, setsearchTerm] = useState('')
 
+
     const [visible, setVisible] = useState(3);
     const showMoreProjects = () => {
         setVisible(prevValue => prevValue + 3);
     }
-    const keys = ["Category", "Title"];
+    const keys = ["Category", "Title","Approved"];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +34,7 @@ export default function MyProjects() {
     const search = (e) => {
         setsearchTerm(e.target.value)
     }
+    
     return (
         <React.Fragment>
 
@@ -72,6 +74,13 @@ export default function MyProjects() {
                             <option >Music</option>
                             <option >Other</option>
                         </select>
+                        <select name="orderby" class="orderby" style={{ width: '300px',marginRight:'500px' }} onChange={search}>
+
+                            <option value="All projects" selected="selected">All projects</option>
+                            <option value="true">Approved</option>
+                            <option value="false">Pending</option>
+                            
+                        </select>
 
                         <div class="searchbar">
                             <input class="search_input" type="text" name="" placeholder="Search..." onChange={search} />
@@ -84,10 +93,14 @@ export default function MyProjects() {
 
                         {Myprojects &&
                             Myprojects.filter(((project) => {
-                                if(searchTerm ==="All categories"){
+                                if (searchTerm === "All categories") {
                                     return project
                                 }
-                                if (keys.some((key) => project[key].toLowerCase().includes(searchTerm.toLowerCase()))) {
+                                if (searchTerm === "All projects") {
+                                    return project
+                                }
+                                //console.log(keys)
+                                if (keys.some((key) => project[key].toString().toLowerCase().includes(searchTerm.toLowerCase()))) {
 
                                     return project
                                 }

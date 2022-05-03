@@ -38,21 +38,21 @@ export default function Footer() {
                                         <h4 className="widget-title">Our Projects</h4>
                                         <ul>
                                             <li>
-                                                <a>Web Development</a>
+                                                <a>Illustration</a>
                                             </li>
                                             <li>
-                                                <a>Medical &amp; Health</a>
+                                                <a>Cinema</a>
                                             </li>
 
 
                                             <li>
-                                                <a>Food &amp; Clothes</a>
+                                                <a>Art</a>
                                             </li>
                                             <li>
-                                                <a>Video &amp; Movies</a>
+                                                <a>Music</a>
                                             </li>
                                             <li>
-                                                <a>Educations</a>
+                                                <a>Gaming</a>
                                             </li>
                                             <li>
                                                 <a>Technology</a>

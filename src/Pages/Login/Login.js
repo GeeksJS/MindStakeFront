@@ -102,7 +102,7 @@ export default function Login({ setToken }) {
                 let email = result.value;
                 axios({
                     method: "post",
-                    url: "http://localhost:3000/users/facebooklogin",
+                    url: `${process.env.REACT_APP_API_URL}/users/facebooklogin`,
                     data: { accessToken: response.accessToken, userID: response.userID, name: response.name, emailAdresse: email }
                 }).then(response => {
                     console.log("facebook login success, client side", response);
@@ -115,7 +115,7 @@ export default function Login({ setToken }) {
         } else {
             axios({
                 method: "post",
-                url: "http://localhost:3000/users/facebooklogin",
+                url: `${process.env.REACT_APP_API_URL}/users/facebooklogin`,
                 data: { accessToken: response.accessToken, userID: response.userID, name: response.name, emailAdresse: response.email }
             }).then(response => {
                 console.log("facebook login success, client side", response);
@@ -139,7 +139,7 @@ export default function Login({ setToken }) {
     const responseSuccessGoogle = (response) => {
         axios({
             method: "post",
-            url: "http://localhost:3000/users/googlelogin",
+            url: `${process.env.REACT_APP_API_URL}/users/googlelogin`,
             data: { tokenId: response.tokenId }
         }).then(response => {
             console.log("Google login success", response);

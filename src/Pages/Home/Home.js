@@ -75,9 +75,11 @@ export default function Home() {
                                     <i className="flaticon-crowdfunding" />
                                 </div>
                                 <div className="content white-color">
-                                    <div className="count-wrap">
-                                        <span className="count">3598</span>
-                                        <span className="suffix">+</span>
+                              
+                                    <div className="count-wrap" 
+                                    data-countup="{&quot;endValue&quot;:82.18,&quot;decimalPlaces&quot;:2,&quot;suffix&quot;:&quot;M&quot;,&quot;prefix&quot;:&quot;$&quot;}">
+                                        3598
+                                        
                                     </div>
                                     <h6 className="title">We’ve Project Complate</h6>
                                 </div>
@@ -154,9 +156,9 @@ export default function Home() {
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a>Education</a>
+                                        <a>Illustration</a>
                                     </h4>
-                                    <p>School, Collage &amp; University</p>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -166,13 +168,12 @@ export default function Home() {
                         >
                             <div className="fancy-box-item mt-30">
                                 <div className="icon">
-                                    <i className="flaticon-stethoscope" />
+                                    <i className="flaticon-crowdfunding" />
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a>Medical &amp; Health</a>
+                                        <a>Creation</a>
                                     </h4>
-                                    <p>School, Collage &amp; University</p>
                                 </div>
                             </div>
                         </div>
@@ -182,13 +183,12 @@ export default function Home() {
                         >
                             <div className="fancy-box-item mt-30">
                                 <div className="icon">
-                                    <i className="flaticon-tshirt-1" />
+                                    <i className="flaticon-open-box" />
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a>Clothes</a>
+                                        <a>Art</a>
                                     </h4>
-                                    <p>School, Collage &amp; University</p>
                                 </div>
                             </div>
                         </div>
@@ -200,11 +200,10 @@ export default function Home() {
                                 <div className="icon">
                                     <i className="flaticon-video-camera" />
                                 </div>
-                                <div className="content">
-                                    <h4 className="title">
-                                        <a>Video &amp; Films</a>
+                                <div className="content" style={{textAlign:'center'}}>
+                                    <h4 className="title" >
+                                        <a>Cinema</a>
                                     </h4>
-                                    <p>School, Collage &amp; University</p>
                                 </div>
                             </div>
                         </div>
@@ -220,7 +219,6 @@ export default function Home() {
                                     <h4 className="title">
                                         <a>Technology</a>
                                     </h4>
-                                    <p>School, Collage &amp; University</p>
                                 </div>
                             </div>
                         </div>
@@ -230,13 +228,12 @@ export default function Home() {
                         >
                             <div className="fancy-box-item mt-30">
                                 <div className="icon">
-                                    <i className="flaticon-salad" />
+                                    <i className="flaticon-finance" />
                                 </div>
                                 <div className="content">
                                     <h4 className="title">
-                                        <a>Organic Foods</a>
+                                        <a>Gaming</a>
                                     </h4>
-                                    <p>School, Collage &amp; University</p>
                                 </div>
                             </div>
                         </div>

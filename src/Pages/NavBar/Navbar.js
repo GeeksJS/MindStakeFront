@@ -7,6 +7,7 @@ import i18n from '../../i18n';
 import { NavDropdown } from 'react-bootstrap';
 import './style.css'
 import axios from 'axios';
+import Swal from 'sweetalert2';
 // import MagicBell, { FloatingNotificationInbox } from '@magicbell/magicbell-react';
 export default function Navbar() {
     var classNameHome = "site-header sticky-header transparent-header topbar-transparent";
@@ -45,8 +46,29 @@ export default function Navbar() {
                 })
 
         }
-        fetchData().then()
+        fetchData().then(walletInfo)
     }, []);
+
+    const bal = Number(walletInfo.balance)
+
+    const activateAccount = (e) => {
+        e.preventDefault()
+        const data ={
+            Email: User.Email
+        }
+        axios.post(`${process.env.REACT_APP_API_URL}/users/activate-account-email`,data)
+            .then(
+                Swal.fire(
+                    'Done!',
+                    'Activation email sent successfully!',
+                    'success'
+                )
+                
+
+            )
+            .catch(err => {
+            })
+    }
 
     return (
 
@@ -148,21 +170,25 @@ export default function Navbar() {
                                         </li> : null
                                     }
 
+                                    {User.isActivated ?
+                                        <div className='btn-group'>
+                                            <div className="icon0 text-amount">
 
-                                    <div className='btn-group'>
-                                        <div className="icon0 text-amount">
+                                                <i className="fab fa-gg-circle fa-2x fa-spin"></i>
+                                                {walletInfo && <span className='mr-30'>{bal.toFixed(2)}</span>}
 
-                                            <i className="fab fa-gg-circle fa-2x fa-spin"></i>
-                                            <span className='mr-30'>{walletInfo.balance}</span>
+                                            </div>
+                                            <div className="btn-buy text-amount">
 
+                                                <a href='https://buy.stripe.com/test_6oE9Ev0l2c6jepacMT' style={{ color: 'white', fontWeight: 'bold' }}>BUY</a>
+
+                                            </div>
                                         </div>
-                                        <div className="btn-buy text-amount">
-
-                                            <a href='https://buy.stripe.com/test_6oE9Ev0l2c6jepacMT' style={{ color: 'white', fontWeight: 'bold' }}>BUY</a>
-
-                                        </div>
-                                    </div>
-
+                                        :
+                                        <button onClick={activateAccount} className="main-btn1" style={{ marginLeft: '170px', backgroundColor: 'green', color: 'white' }}   >
+                                            Activate account
+                                        </button>
+                                    }
 
 
 
@@ -172,7 +198,7 @@ export default function Navbar() {
 
                                     <div className="footer-widgets widget contact-widget li ml-30 mr--30">
 
-                                        
+
                                         <li>
                                             <a>
                                                 <span className="icon1">
@@ -180,7 +206,7 @@ export default function Navbar() {
                                                 </span>
                                             </a>
                                         </li>
-                                        
+
                                         {User.Role === "Creator" && <li>
                                             <Link to='/pricing'>
                                                 <span className="icon1">

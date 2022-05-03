@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import ReactPaginate from 'react-paginate';
 
 
 import './style.css'
 import Transactions from './Transactions';
 import Donations from './Donations';
+import Swal from 'sweetalert2';
 
 export default function Wallet() {
 
@@ -14,7 +15,17 @@ export default function Wallet() {
 
     const [walletInfo, setWalletInfo] = useState({});
 
+    const Navigate = useNavigate()
 
+
+    {
+        !Connected.isActivated &&
+            Swal.fire(
+                'Account activation required!',
+                'Please activate your account!',
+                'warning'
+            ).then(() => Navigate('/'))
+    }
 
 
     useEffect(() => {
@@ -70,7 +81,7 @@ export default function Wallet() {
                                         <h5 style={{ color: 'white' }}>{Connected.UserName.charAt(0).toUpperCase() + Connected.UserName.slice(1)}'s Wallet</h5>
                                     </div>
                                     <div className="number">
-                                        <small><bold>Balance:</bold> </small>{walletInfo.balance} <small>GC</small>
+                                        <small><bold>Balance:</bold> </small>{Number(walletInfo.balance).toFixed(2)} <small>GC</small>
                                     </div>
 
 

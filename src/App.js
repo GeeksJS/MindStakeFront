@@ -49,6 +49,7 @@ function App() {
 
   //i18n.on('languageChanged', (lng) => setLocale(i18n.language));
 
+  const User = JSON.parse(localStorage.getItem('user'))
 
   return (
     <div className='App'>
@@ -131,7 +132,7 @@ function App() {
           <Route exact path="/join/:id" element={<JoinMeeting/>} />
           <Route exact path="/video/:id" element={<VideoCall/>} />
 
-
+          
 
 
         </Routes>
@@ -141,7 +142,8 @@ function App() {
 
       </BrowserRouter >
       <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%', marginBottom: '60px', zIndex: '999' }} color='white'></ScrollToTop>
-      <ChatDialog style={{ backgroundColor: '#02a95c', borderRadius: '50%', zIndex: '999' }} />
+      {User && User.Role==="Creator" &&
+        <ChatDialog style={{ backgroundColor: '#02a95c', borderRadius: '50%', zIndex: '999' }} />}
     </div >
 
   );

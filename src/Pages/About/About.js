@@ -100,7 +100,7 @@ export default function About() {
                                         Your transactions are based on our new Cryptocurrency GEEKCOIN and they are
                                         safe and secure thanks to the Blockchain Technology.
                                     </p>
-                                    <a href="project-details.html" className="link">
+                                    <a  className="link">
                                         <i className="fas fa-arrow-right" />
                                     </a>
                                     <span className="box-index">01</span>
@@ -122,7 +122,7 @@ export default function About() {
                                         We provide a live messenger to assure a fluid communication
                                         between investors and entrepreneurs who seek to promote their projects.
                                     </p>
-                                    <a href="project-details.html" className="link">
+                                    <a  className="link">
                                         <i className="fas fa-arrow-right" />
                                     </a>
                                     <span className="box-index">02</span>
@@ -144,7 +144,7 @@ export default function About() {
                                         We provide a Chatbot powered by IA to guide you and help you
                                         find the best offers with a highly advanced recommendation system.
                                     </p>
-                                    <a href="project-details.html" className="link">
+                                    <a  className="link">
                                         <i className="fas fa-arrow-right" />
                                     </a>
                                     <span className="box-index">03</span>
@@ -177,13 +177,14 @@ export default function About() {
                             <div className="col">
                                 <div className="member-box">
                                     <div className="member-photo">
-                                        <img src="assets/img/team/01.jpg" alt="Member" />
+                                        <img src="assets/img/ilyes.jpeg" alt="Member" style={{maxHeight:'400px',minHeight:'400px'}}/>
                                     </div>
                                     <div className="member-info">
                                         <h5 className="name">
                                             <a href="company-overview.html">Fitouri Ilyes</a>
                                         </h5>
-                                        <span className="title">CEO &amp; Founder</span>
+                                        <span className="title">Web Developer</span>
+
                                         <ul className="social-links">
                                             <li>
                                                 <a href="#">
@@ -212,13 +213,14 @@ export default function About() {
                             <div className="col">
                                 <div className="member-box">
                                     <div className="member-photo">
-                                        <img src="assets/img/team/02.jpg" alt="Member" />
+                                        <img src="assets/img/wajdi.jpeg" alt="Member" style={{maxHeight:'400px',minHeight:'400px'}}/>
                                     </div>
                                     <div className="member-info">
                                         <h5 className="name">
                                             <a href="company-overview.html">Ben Haj Yahya Wajdi</a>
                                         </h5>
-                                        <span className="title">Jonior Manager</span>
+                                        <span className="title">Web Developer</span>
+
                                         <ul className="social-links">
                                             <li>
                                                 <a href="#">
@@ -247,13 +249,14 @@ export default function About() {
                             <div className="col">
                                 <div className="member-box">
                                     <div className="member-photo">
-                                        <img src="assets/img/team/03.jpg" alt="Member" />
+                                        <img src="assets/img/monam.jpeg" alt="Member" style={{maxHeight:'400px',minHeight:'400px'}}/>
                                     </div>
                                     <div className="member-info">
                                         <h5 className="name">
                                             <a href="company-overview.html">Ben Gouta Monem</a>
                                         </h5>
-                                        <span className="title">Digital Marketer</span>
+                                        <span className="title">Web Developer</span>
+
                                         <ul className="social-links">
                                             <li>
                                                 <a href="#">
@@ -282,7 +285,7 @@ export default function About() {
                             <div className="col">
                                 <div className="member-box">
                                     <div className="member-photo">
-                                        <img src="assets/img/team/04.jpg" alt="Member" />
+                                        <img src="assets/img/achref.png" alt="Member" style={{maxHeight:'400px',minHeight:'400px'}}/>
                                     </div>
                                     <div className="member-info">
                                         <h5 className="name">

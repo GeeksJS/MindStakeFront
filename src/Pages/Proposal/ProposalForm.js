@@ -43,29 +43,29 @@ export default function ProposalForm() {
           setProposalverif(res.data)
 
           if (res.data.state === "Waiting") {
-            
+
             setSt("Waiting")
             setActiveStep(1)
-      
+
           }
           else if (res.data.state === "Approved") {
-            
+
             setSt("Approved")
             setActiveStep(2)
-         
-        
+
+
           } else if (res.data.state === "Rejected") {
-           
+
             setSt("Rejected")
             setActiveStep(1)
-         
-            
-          }else{
-            
+
+
+          } else {
+
             setSt("Accepted")
             setActiveStep(3)
-           
-          
+
+
           }
         }
         )
@@ -125,39 +125,40 @@ export default function ProposalForm() {
     setSt("Waiting")
 
     axiosconfig.post(`/proposal/`, proposal)
-      .then(
+      .then(() => {
         Swal.fire(
           'Done!',
           'Your proposal has been submited!',
           'success'
         )
-
-      )
-      .then(() => {
-        const headers = {
-          'X-MAGICBELL-API-SECRET': 'NdMGvg+CgiAIxqic/ykB+NTLrDW2TkrAU69CEicA',
-          'X-MAGICBELL-API-KEY': 'fe7dea920934062248bcb344699ce13d6a64cd73',
-        };
-
-        const data = {
-          notification: {
-            title: 'Task assigned to you: Upgrade to Startup plan',
-            content: 'salem ya3tik sa7a. Thank you.',
-            category: 'billing',
-            action_url: 'https://magicbell.com/pricing',
-            recipients: [{ email: user.Email }],
-          },
-        };
-
-        axios.post('https://api.magicbell.com/notifications', data, { headers });
         const newCompleted = completed;
         newCompleted[activeStep] = true;
         setCompleted(newCompleted);
         handleNext();
-
       }
-
       )
+    // .then(() => {
+    //   const headers = {
+    //     'X-MAGICBELL-API-SECRET': 'NdMGvg+CgiAIxqic/ykB+NTLrDW2TkrAU69CEicA',
+    //     'X-MAGICBELL-API-KEY': 'fe7dea920934062248bcb344699ce13d6a64cd73',
+    //   };
+
+    //   const data = {
+    //     notification: {
+    //       title: 'Task assigned to you: Upgrade to Startup plan',
+    //       content: 'salem ya3tik sa7a. Thank you.',
+    //       category: 'billing',
+    //       action_url: 'https://magicbell.com/pricing',
+    //       recipients: [{ email: user.Email }],
+    //     },
+    //   };
+
+    //   axios.post('https://api.magicbell.com/notifications', data, { headers });
+
+
+    // }
+
+    //)
 
   };
 
@@ -181,7 +182,7 @@ export default function ProposalForm() {
 
     )
 
-}
+  }
 
   return (
     <React.Fragment>
@@ -210,10 +211,10 @@ export default function ProposalForm() {
               {steps.map((label, index) => (
                 <Step key={label} completed={completed[index]}>
                   <StepButton color="inherit" onClick={handleStep(index)}>
-                    {label}  
+                    {label}
                   </StepButton>
                 </Step>
-               
+
               ))}
             </Stepper>
             <div>
@@ -283,16 +284,16 @@ export default function ProposalForm() {
                       <h4>Creator Accept to contact you</h4>
                       <h4>He 's waiting for your message </h4>
                       <br /><br />
-                      <a type="submit" className="main-btn" onClick={(e) => handleMessage(e,proposalverif._id)}
+                      <a type="submit" className="main-btn" onClick={(e) => handleMessage(e, proposalverif._id)}
                         style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
                         Send Message to creator <i class="fa fa-envelope"></i>
                       </a>
-                      
+
                     </div>
 
                   </Typography>
                 }
-                
+
                 {activeStep === 3 && St === "Accepted" &&
 
                   <Typography sx={{ mt: 2, mb: 1, paddingTop: "50px" }} >
@@ -301,8 +302,8 @@ export default function ProposalForm() {
                       <h4>A new conversation has been added to your messenger</h4>
                       <h4>please contact the creator </h4>
                       <br /><br />
-                    
-                      
+
+
                     </div>
 
                   </Typography>

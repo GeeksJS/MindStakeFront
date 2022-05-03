@@ -34,10 +34,10 @@ export default function ProjectDetails() {
     const [showEdit, setShowEdit] = useState(false)
     const [openPopup, setOpenPopup] = useState(false)
     const [openPopupPW, setOpenPopupPW] = useState(false)
-  
+
     let { id } = useParams();
     const navigate = useNavigate()
-   
+
     useEffect(() => {
         const fetchData = async () => {
             await axiosconfig.get(`/projects/getproject/${id}`)
@@ -51,7 +51,7 @@ export default function ProjectDetails() {
 
                     // pourcentage = project.Raised / (100 * project.Goal)
                     console.log(new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(project.EndDate))
-                    setEndDate(new Date(project.EndDate))
+                    setEndDate(new Intl.DateTimeFormat('en-UK', { year: 'numeric', month: 'numeric', day: 'numeric'}).format(project.EndDate))
                     // start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
                     setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
                     // end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
@@ -249,7 +249,14 @@ export default function ProjectDetails() {
 
 
     }
+    const [donations, setDonations] = useState();
 
+    useEffect(async () => {
+        await axiosconfig.get(`/payment/all-donations-byProject/${id}`).then((res) => {
+            setDonations(res.data)
+            console.log(res.data)
+       
+    })}, [])
 
     let pourcentage = (project.Raised * 100) / project.Goal;
 
@@ -303,7 +310,7 @@ export default function ProjectDetails() {
                                     </div>
                                     <a href="#" className="date">
                                         <i className="far fa-calendar-alt" />
-                                        {startDate}
+                                        {new Date(project.CreationDate).toLocaleDateString("en-UK")}
                                     </a>
                                 </div>
                                 <div className="project-funding-info">
@@ -312,12 +319,12 @@ export default function ProjectDetails() {
                                         <span className="info-title">Goal</span>
                                     </div>
                                     <div className="info-box">
-                                        <span>9</span>
-                                        <span className="info-title">Backers</span>
+                                        <span>{donations}</span>
+                                        <span className="info-title">Donations</span>
                                     </div>
                                     <div className="info-box">
-                                        <span></span>
-                                        <span className="info-title">Days Left</span>
+                                        <span>{new Date(project.EndDate).toLocaleDateString("en-UK")}</span>
+                                        <span className="info-title">End Date</span>
                                     </div>
                                 </div>
                                 <div className="project-raised clearfix">
@@ -349,7 +356,7 @@ export default function ProjectDetails() {
                                                 </a>
                                             </div>
                                         }
-                                        {Connected.Role === 'Investor' &&
+                                        {Connected.Role === 'Investor' && Date.parse(project.EndDate) > Date.now() &&
                                             <div >
                                                 <a type="submit" className="main-btn" onClick={donation}>
                                                     Donate Now <i className="fas fa-arrow-right" />
@@ -366,7 +373,7 @@ export default function ProjectDetails() {
                                                     style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
                                                     Edit <i class='fas fa-edit'></i>
                                                 </a>
-                                                <button className="main-btn" onClick={handleDelete} disabled={project.Raised !== 0}
+                                                <button className="main-btn" onClick={handleDelete} hidden={project.Raised !== 0}
                                                     style={{ backgroundColor: 'rgba(255, 0, 0, 0.8)', marginLeft: '30px', marginTop: '0px' }}>
                                                     Delete <i class='fas fa-trash-alt' style={{ fontSize: '15px' }}></i>
                                                 </button>

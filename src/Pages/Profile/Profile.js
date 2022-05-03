@@ -288,32 +288,7 @@ export default function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        {Profile.Role == "Creator" && <section >
-                            <div className="container">
-                                <div className="row align-items-center justify-content-between">
-                                    <div className="col-lg-12">
-                                        <h2 className="text-blue">Projects</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>}
-                        <section className="project-section section-gap-extra-bottom">
-                            <div className="container">
-                                <div className="row project-items justify-content-center project-style-one">
-                                    {(Projects && Profile.Role == "Creator") &&
-                                        Projects.map((project, index) => (
-                                            <ProjectCard key={index} project={project} />
-                                        ))
-                                    }
-                                    {!Projects && <div>
-                                        This creator has no Projects
-                                    </div>}
-                                </div>
-                            </div>
-                        </section>
-
-                    </div>
+                    
                 </div>
 
                 {

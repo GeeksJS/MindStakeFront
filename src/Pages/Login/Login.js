@@ -5,6 +5,9 @@ import './login.css'
 import axios from "axios";
 import FacebookLogin from 'react-facebook-login';
 import Swal from 'sweetalert2';
+import { LinkedIn } from 'react-linkedin-login-oauth2';
+// You can use provided image shipped by this package or using your own
+import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png';
 
 
 export default function Login({ setToken }) {
@@ -19,22 +22,35 @@ export default function Login({ setToken }) {
             Email: email,
             Password: password
         }
-        axios.post(`http://localhost:3000/users/login`, data)
+        axios.post(`${process.env.REACT_APP_API_URL}/users/login`, data)
             .then(res => {
                 console.log(res.data)
                 setToken(res.data.token)
 
-                localStorage.setItem('user', JSON.stringify(res.data))
+                if (res.data.token) {
+                    localStorage.setItem('user', JSON.stringify(res.data))
+                    navigate('/')
+                    window.location.reload()
+                } else {
+                    Swal.fire(
+                        'Invalid credentials!',
+                        '',
+                        'warning'
+                    )
+                }
 
 
-                navigate('/')
-                window.location.reload()
 
                 console.log(localStorage.getItem('token'))
                 console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
+                Swal.fire(
+                    'Invalid credentials!',
+                    '',
+                    'warning'
+                )
             })
     }
 
@@ -45,26 +61,62 @@ export default function Login({ setToken }) {
             <div id="iconGroup">
                 <Google />
                 <Facebook />
+                <br />
+
+            </div>
+            <div className='iconGroup' style={{ height: '50px' }}>
+                <LinkedIn
+                    clientId="778pwi5gutqz7v"
+                    redirectUri={`http://localhost:3002/`}
+                    onSuccess={(code) => {
+                        console.log(code);
+                    }}
+                    onError={(error) => {
+                        console.log(error);
+                    }}
+                >
+                    {({ linkedInLogin }) => (
+                        <img
+                            onClick={linkedInLogin}
+                            src={linkedin}
+                            alt="Sign in with Linked In"
+                            style={{ maxWidth: '180px', cursor: 'pointer' }}
+                        />
+                    )}
+                </LinkedIn>
             </div>
         </div>
     );
 
 
     //------------------- Begin Login with facebook Api consumer--------------
-     const responseFacebook = (response) => {
-         
-    if(response.email === undefined){
-          const { value: email } =  Swal.fire({
-            title: 'Input email address',
-            input: 'email',
-            inputLabel: 'Your email address',
-            inputPlaceholder: 'Enter your email address'
-          }).then(result=>{
-            let email = result.value;
+    const responseFacebook = (response) => {
+
+        if (response.email === undefined) {
+            const { value: email } = Swal.fire({
+                title: 'Input email address',
+                input: 'email',
+                inputLabel: 'Your email address',
+                inputPlaceholder: 'Enter your email address'
+            }).then(result => {
+                let email = result.value;
+                axios({
+                    method: "post",
+                    url: "http://localhost:3000/users/facebooklogin",
+                    data: { accessToken: response.accessToken, userID: response.userID, name: response.name, emailAdresse: email }
+                }).then(response => {
+                    console.log("facebook login success, client side", response);
+                    localStorage.setItem('token', JSON.stringify(response.data.token))
+                    localStorage.setItem('user', JSON.stringify(response.data))
+                    navigate('/')
+                    window.location.reload()
+                })
+            });
+        } else {
             axios({
                 method: "post",
                 url: "http://localhost:3000/users/facebooklogin",
-                data: { accessToken: response.accessToken,userID : response.userID, name:response.name,emailAdresse: email }
+                data: { accessToken: response.accessToken, userID: response.userID, name: response.name, emailAdresse: response.email }
             }).then(response => {
                 console.log("facebook login success, client side", response);
                 localStorage.setItem('token', JSON.stringify(response.data.token))
@@ -72,20 +124,7 @@ export default function Login({ setToken }) {
                 navigate('/')
                 window.location.reload()
             })
-          });
-    }else {
-        axios({
-            method: "post",
-            url: "http://localhost:3000/users/facebooklogin",
-            data: { accessToken: response.accessToken,userID : response.userID, name:response.name,emailAdresse:response.email }
-        }).then(response => {
-            console.log("facebook login success, client side", response);
-            localStorage.setItem('token', JSON.stringify(response.data.token))
-            localStorage.setItem('user', JSON.stringify(response.data))
-            navigate('/')
-            window.location.reload()
-        })
-    }
+        }
     };
     const Facebook = props => (
         <FacebookLogin
@@ -127,8 +166,17 @@ export default function Login({ setToken }) {
         />
 
     );
-//------------------- End Login with facebook Api consumer--------------
+    //------------------- End Login with facebook Api consumer--------------
+    const [type, setType] = useState("password")
 
+    const showPasswd = () => {
+        if (type === "password") {
+            setType("text")
+        }
+        if (type === "text") {
+            setType("password")
+        }
+    }
 
     return (
         <div id="loginform" >
@@ -140,9 +188,15 @@ export default function Login({ setToken }) {
                         <input placeholder="Enter you email" type="email" onChange={e => setEmail(e.target.value)} />
                         <br />
                         <label>Password</label>
-                        <input placeholder="Enter you password" type="password" onChange={e => setPassword(e.target.value)} />
+                        <input placeholder="Enter you password" type={type} id="myPasswd" onChange={e => setPassword(e.target.value)} />
+                        <br />
+
                     </div>
-                    <a href="#" className='forgotPass'>Forgot password?</a>
+                    <div className='row' style={{marginLeft:'70px',marginBottom:'10px'}}>
+                        <input style={{ width: '20px', height: '20px' }} type="checkbox" onClick={() => showPasswd()} />
+                        &nbsp;&nbsp;<p>Show Password</p>
+                    </div>
+                    <Link to='/forgot-password' className='forgotPass'>Forgot password?</Link>
                     <a href='/' style={{ width: '100%' }}>
                         <div id='button' className='rowLogin'>
                             <button >login</button>

@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Checkout from '../Checkout/Checkout';
-
+import LocaleContext from '../../LocaleContext';
+import i18n from '../../i18n';
+import { NavDropdown } from 'react-bootstrap';
+import './style.css'
+import axios from 'axios';
+// import MagicBell, { FloatingNotificationInbox } from '@magicbell/magicbell-react';
 export default function Navbar() {
     var classNameHome = "site-header sticky-header transparent-header topbar-transparent";
     var classNameOther = "site-header sticky-header other ";
 
+    const { locale } = useContext(LocaleContext);
 
     const [trans, setTrans] = React.useState(false);
     const [active, setActive] = React.useState("");
@@ -19,7 +25,28 @@ export default function Navbar() {
 
         window.history.replaceState(null, "payment", "localhost:3000/off")
     }
+    const theme = { "icon": { "borderColor": "#6113A3", "width": "24px" }, "unseenBadge": { "backgroundColor": "#DF4759" }, "header": { "backgroundColor": "#6113A3", "textColor": "#ffffff", "borderRadius": "16px" }, "footer": { "backgroundColor": "#6113A3", "textColor": "#ffffff", "borderRadius": "16px" }, "notification": { "default": { "textColor": "#15091F", "borderRadius": "8px", "backgroundColor": "#6113A3" }, "unseen": { "backgroundColor": "#6113A3" }, "unread": { "backgroundColor": "#6113A3" } } };
+    // function changeLocale(l) {
+    //     if (locale !== l) {
+    //         i18n.changeLanguage(l);
+    //     }
+    // }
 
+    const [walletInfo, setWalletInfo] = useState({});
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${User.userId}`)
+                .then(res => {
+                    console.log(res.data)
+                    setWalletInfo(res.data)
+
+                })
+
+        }
+        fetchData().then()
+    }, []);
 
     return (
 
@@ -45,7 +72,9 @@ export default function Navbar() {
                                     </li>
                                 </ul>
                             </div>
-                            <div className="col-auto d-none d-md-block">
+                            {/* <a href="#" onClick={changeLocale('en')}>English</a>
+                            <a href="#" onClick={changeLocale('ar')}>العربية</a> */}
+                            {/* <div className="col-auto d-none d-md-block">
                                 <ul className="social-icons">
                                     <li>
                                         <a>
@@ -68,10 +97,16 @@ export default function Navbar() {
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
+                {/* <div className="header-topbar d-none d-sm-block">
+                    <div class="alert alert-danger border-2 d-flex align-items-center" style={{width:'60%',marginLeft:'20%'}} role="alert">
+                        <div class=" me-3 icon-item" ><span class="fas fa-times-circle text-danger fs-3"></span></div>
+                        <p class="mb-0 flex-1">A simple danger alert—check it out!</p><button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div> */}
                 <div className="navbar-wrapper">
                     <div className="container">
                         <div className="navbar-inner">
@@ -90,7 +125,7 @@ export default function Navbar() {
                                         <ul className="submenu">
                                             {User.Role === "Creator" &&
                                                 <div><li>
-                                                    <NavLink to="createproject">Create Project</NavLink>
+                                                    <a href="/createproject">Create Project</a>
                                                 </li>
                                                     <li>
                                                         <NavLink to="myprojects">My Projects</NavLink>
@@ -118,7 +153,7 @@ export default function Navbar() {
                                         <div className="icon0 text-amount">
 
                                             <i className="fab fa-gg-circle fa-2x fa-spin"></i>
-                                            <span className='mr-30'>88</span>
+                                            <span className='mr-30'>{walletInfo.balance}</span>
 
                                         </div>
                                         <div className="btn-buy text-amount">
@@ -128,15 +163,16 @@ export default function Navbar() {
                                         </div>
                                     </div>
 
+
+
+
+
+
+
+
                                     <div className="footer-widgets widget contact-widget li ml-30 mr--30">
 
-                                        <li>
-                                            <Link to='/pricing'>
-                                                <span className="icon1">
-                                                    <i className="fas fa-rocket"></i>
-                                                </span>
-                                            </Link>
-                                        </li>
+                                        
                                         <li>
                                             <a>
                                                 <span className="icon1">
@@ -144,6 +180,15 @@ export default function Navbar() {
                                                 </span>
                                             </a>
                                         </li>
+                                        
+                                        {User.Role === "Creator" && <li>
+                                            <Link to='/pricing'>
+                                                <span className="icon1">
+                                                    <i className="fas fa-rocket"></i>
+                                                </span>
+                                            </Link>
+                                        </li>}
+
 
                                         <li>
                                             <a>
@@ -156,8 +201,15 @@ export default function Navbar() {
                                                     <NavLink hidden={!localStorage.getItem("token")} to={'/profile/' + User.userId}>Profile</NavLink>
                                                 </li>
                                                 <li key={User.userId}>
+                                                    <NavLink hidden={!localStorage.getItem("token")} to={'/wallet'}>My Wallet</NavLink>
+                                                </li>
+                                                <li key={User.userId}>
                                                     <NavLink hidden={!localStorage.getItem("token")} to={'/bookmarks'}>My Bookmarks</NavLink>
                                                 </li>
+                                                {User.Role === "Creator" &&
+                                                    <li key={User.userId}>
+                                                        <NavLink hidden={!localStorage.getItem("token")} to={'/listproposal/' + User.userId}>List Proposal</NavLink>
+                                                    </li>}
                                                 <li>
                                                     <a href='/login' hidden={localStorage.getItem("token")}>Login</a>
                                                     <a href='/login' hidden={!localStorage.getItem("token")} onClick={() => localStorage.clear()} >Logout</a>
@@ -170,7 +222,10 @@ export default function Navbar() {
                         </div>
                     </div>
                 </div>
-            </header>
-        </React.Fragment>
+
+            </header >
+
+
+        </React.Fragment >
     )
 }

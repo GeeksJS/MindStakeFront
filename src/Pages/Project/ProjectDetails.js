@@ -7,14 +7,16 @@ import Description from './Description'
 import EditProject from './EditProject'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkAdd';
 import { green } from '@material-ui/core/colors'
+import Proposal from '../Proposal/Proposal'
+import axiosconfig from '../../axiosConfig'
 
 
 export default function ProjectDetails() {
 
     let author
-    let end1 = 0
-    let start1 = 0
-    let pourcentage = 0
+
+
+    //let pourcentage = 0
 
     const Connected = JSON.parse(localStorage.getItem('user'))
     const [dollar5, setDollar5] = useState(false)
@@ -30,31 +32,43 @@ export default function ProjectDetails() {
     const [endDate, setEndDate] = useState()
     const [startDate, setStartDate] = useState()
     const [showEdit, setShowEdit] = useState(false)
+    const [openPopup, setOpenPopup] = useState(false)
+    const [openPopupPW, setOpenPopupPW] = useState(false)
+  
     let { id } = useParams();
     const navigate = useNavigate()
-
+   
     useEffect(() => {
         const fetchData = async () => {
-            await axios.get(`http://localhost:3000/projects/getproject/${id}`)
+            await axiosconfig.get(`/projects/getproject/${id}`)
                 .then(res => {
                     setProject(res.data[0])
+
                     if (!author) {
                         author = res.data[0].User
                     }
                     setDate(new Date(project.CreationDate))
-                    pourcentage = project.Raised / (100 * project.Goal)
+
+                    // pourcentage = project.Raised / (100 * project.Goal)
+                    console.log(new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(project.EndDate))
                     setEndDate(new Date(project.EndDate))
-                    start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
+                    // start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
                     setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
-                    end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
+                    // end1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
                 })
-            await axios.get(`http://localhost:3000/users/${author}`)
+            await axiosconfig.get(`/users/${author}`)
                 .then(res => {
                     setUser(res.data[0]);
                 })
         }
         fetchData().then(project, user)
     }, []);
+    // console.log("date: " +date)
+    // const start = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
+    // const end = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
+    // const leftDays = end - start;
+    // console.log(leftDays)
+
     const click5 = () => {
         setDollar5(true)
         setDollar10(false)
@@ -118,7 +132,7 @@ export default function ProjectDetails() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:3000/projects/deleteproject/${id}`)
+                axiosconfig.delete(`/projects/deleteproject/${id}`)
                     .then(
                         Swal.fire(
                             'Deleted!',
@@ -133,18 +147,112 @@ export default function ProjectDetails() {
     }
 
     const addBookmark = () => {
-        axios.post(`http://localhost:3000/bookmarks/addBookmark/${id}/${Connected.userId}`)
+        axiosconfig.post(`/bookmarks/addBookmark/${id}/${Connected.userId}`)
             .then(
                 navigate('/bookmarks')
             )
     }
 
+    const donation = () => {
+        let qte;
+        let sender;
+        let receiver;
 
-    const donate = () => {
-        //navigate('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op' ,{replace:true})
-        // window.location.replace('https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op')
-        <Link to={{ pathname: 'https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op' }}></Link>
+        if (dollar5) {
+            qte = 5
+        }
+        if (dollar10) {
+            qte = 10
+        }
+        if (dollar20) {
+            qte = 20
+        }
+        if (dollar50) {
+            qte = 50
+        }
+        if (dollar100) {
+            qte = 100
+        }
+        const date = new Date(Date.now()).toLocaleDateString()
+
+        const data = {
+            amount: qte,
+            created: date,
+            Sender: Connected.userId,
+            Receiver: user._id,
+            Project: id
+        }
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, donate!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post(`${process.env.REACT_APP_API_URL}/payment/add-donation`, data)
+                    .then(async () => {
+                        await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${Connected.userId}`)
+                            .then(async (res) => {
+                                sender = res.data.address
+
+                                await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${user._id}`)
+                                    .then(async () => {
+                                        receiver = res.data.address
+
+                                        const data = {
+                                            recipient: receiver,
+                                            amount: qte,
+                                            senderWalletAddress: sender
+                                        }
+
+                                        await axios.post(`${process.env.REACT_APP_API_URL}/blockchain/transact`, data)
+                                            .then(async () => {
+                                                await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/mine-transactions`)
+                                                    .then(async () => {
+                                                        const data = {
+                                                            coins: qte
+                                                        }
+                                                        await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet-minus/${Connected.userId}`, data)
+                                                        await axios.put(`${process.env.REACT_APP_API_URL}/blockchain/update-wallet/${user._id}`, data)
+                                                            .then(async () => {
+                                                                const raised = project.Raised + (qte * 0.5)
+                                                                const data = {
+                                                                    Raised: raised
+                                                                }
+                                                                await axios.put(`${process.env.REACT_APP_API_URL}/projects/updateprojectRaised/${id}`, data)
+                                                                    .then(() => {
+                                                                        Swal.fire(
+                                                                            'Done!',
+                                                                            'Donnation made successfully!',
+                                                                            'success'
+                                                                        )
+                                                                    })
+                                                                window.location.reload()
+
+
+                                                            })
+
+
+
+                                                    })
+                                            })
+                                    })
+                            })
+
+                    })
+            }
+        })
+
+
     }
+
+
+    let pourcentage = (project.Raised * 100) / project.Goal;
+
     return (
         <React.Fragment>
             <section className="page-title-area" >
@@ -169,7 +277,7 @@ export default function ProjectDetails() {
                     <div className="row align-items-center justify-content-start">
                         <div className="col-lg-6 col-md-10">
                             <div className="project-thumb mb-md-50">
-                                <img src={`http://localhost:3000/uploads/images/${project.Picture}`} className="proj-img"
+                                <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture}`} className="proj-img"
                                     alt="Image" />
                             </div>
                         </div>
@@ -181,7 +289,7 @@ export default function ProjectDetails() {
                                     </a>
                                     <div className="bookmarkIcon" data-bs-toggle="tooltip" data-bs-placement="top" title="Add to bookmarks">
                                         {/* <span >Add to bookmarks</span> */}
-                                        <BookmarkBorderIcon style={{transform:'scale(1.5)'}} onClick={addBookmark} />
+                                        <BookmarkBorderIcon style={{ transform: 'scale(1.5)' }} onClick={addBookmark} />
                                     </div>
                                 </div>
                                 <h3 className="project-title">
@@ -189,7 +297,7 @@ export default function ProjectDetails() {
                                 </h3>
                                 <div className="meta">
                                     <div className="author">
-                                        <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`}
+                                        <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`}
                                             alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
                                         <a href="#">{user.UserName}</a>
                                     </div>
@@ -208,27 +316,27 @@ export default function ProjectDetails() {
                                         <span className="info-title">Backers</span>
                                     </div>
                                     <div className="info-box">
-                                        <span>{end1 - start1}</span>
+                                        <span></span>
                                         <span className="info-title">Days Left</span>
                                     </div>
                                 </div>
                                 <div className="project-raised clearfix">
                                     <div className="d-flex align-items-center justify-content-between">
                                         <div className="raised-label">Raised of {project.Raised}</div>
-                                        <div className="percent-raised">{pourcentage}%</div>
+                                        <div className="percent-raised">{pourcentage.toFixed(2)}%</div>
                                     </div>
                                     <div className="stats-bar" data-value={79}>
-                                        <div className="bar-line" />
+                                        <div className="bar-line" style={{ width: `${pourcentage}%` }} />
                                     </div>
                                 </div>
                                 <div className="project-form">
                                     <form action="#">
                                         {(Connected.Role === 'Investor' || Connected.Role === 'SimpleUser') && <ul className="donation-amount">
-                                            <li className={dollar5 && 'dollar-5'} onClick={click5}>$5</li>
-                                            <li className={dollar10 && 'dollar-5'} onClick={click10}> $10</li>
-                                            <li className={dollar20 && 'dollar-5'} onClick={click20}>$20</li>
-                                            <li className={dollar50 && 'dollar-5'} onClick={click50}>$50</li>
-                                            <li className={dollar100 && 'dollar-5'} onClick={click100}>$100</li>
+                                            <li className={dollar5 && 'dollar-5'} onClick={click5}>5&nbsp;<small>Gc</small></li>
+                                            <li className={dollar10 && 'dollar-5'} onClick={click10}> 10&nbsp;<small>Gc</small></li>
+                                            <li className={dollar20 && 'dollar-5'} onClick={click20}>20&nbsp;<small>Gc</small></li>
+                                            <li className={dollar50 && 'dollar-5'} onClick={click50}>50&nbsp;<small>Gc</small></li>
+                                            <li className={dollar100 && 'dollar-5'} onClick={click100}>100&nbsp;<small>Gc</small></li>
                                         </ul>
                                         }
                                         <br />
@@ -236,19 +344,20 @@ export default function ProjectDetails() {
                                         {showEdit && <EditProject clicked={showEdit} close={setShowEdit} proj={project} />}
                                         {Connected.Role === 'SimpleUser' &&
                                             <div >
-                                                <a type="submit" className="main-btn" href='https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'>
+                                                <a type="submit" className="main-btn" onClick={donation}>
                                                     Donate Now <i className="fas fa-arrow-right" />
                                                 </a>
                                             </div>
                                         }
                                         {Connected.Role === 'Investor' &&
                                             <div >
-                                                <a type="submit" className="main-btn" href='https://buy.stripe.com/test_8wMcQHaZG6LZ0yk6op'>
+                                                <a type="submit" className="main-btn" onClick={donation}>
                                                     Donate Now <i className="fas fa-arrow-right" />
                                                 </a>
-                                                <button type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
-                                                    Contact <i class="fab fa-facebook-messenger"></i>
-                                                </button>
+
+                                                <Link to={`/proposal/${id}/${project.User}`} type="submit" className="main-btn" style={{ backgroundColor: 'rgba(255, 180, 40)', marginLeft: '30px', marginTop: '0px' }}>
+                                                    Propose to cantact <i class="fab fa-facebook-messenger"></i>
+                                                </Link>
                                             </div>
                                         }
                                         {Connected.Role === 'Creator' && Connected.userId === user._id &&
@@ -257,7 +366,7 @@ export default function ProjectDetails() {
                                                     style={{ backgroundColor: 'rgba(44, 130, 201)' }}>
                                                     Edit <i class='fas fa-edit'></i>
                                                 </a>
-                                                <button  className="main-btn" onClick={handleDelete} disabled={project.Raised !== 0}
+                                                <button className="main-btn" onClick={handleDelete} disabled={project.Raised !== 0}
                                                     style={{ backgroundColor: 'rgba(255, 0, 0, 0.8)', marginLeft: '30px', marginTop: '0px' }}>
                                                     Delete <i class='fas fa-trash-alt' style={{ fontSize: '15px' }}></i>
                                                 </button>
@@ -286,6 +395,14 @@ export default function ProjectDetails() {
                     </div>
                 </div>
             </section>
+            {
+                Connected.Role === "Investor" && openPopup && <Proposal
+                    project_id={id}
+                    owner={project.User}
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                ></Proposal>
+            }
         </React.Fragment>
     )
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Project from './Project'
 import axios from 'axios'
+import axiosconfig from '../../axiosConfig'
 
 export default function Bookmarks() {
 
@@ -11,7 +12,7 @@ export default function Bookmarks() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`http://localhost:3000/bookmarks/getBookmarks/${Connected.userId}`);
+                const { data: response } = await axiosconfig.get(`/bookmarks/getBookmarks/${Connected.userId}`);
                 setBookmarks(response);
             } catch (error) {
                 console.error(error)
@@ -22,7 +23,7 @@ export default function Bookmarks() {
     }, []);
 
     const deleteBm =  (idProject , idUser) => {
-         axios.delete(`http://localhost:3000/bookmarks/deleteBookmark/${idProject}/${idUser}`)
+         axiosconfig.delete(`/bookmarks/deleteBookmark/${idProject}/${idUser}`)
             .then(res => 
                  window.location.reload()
                 )

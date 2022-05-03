@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axiosconfig from '../../axiosConfig'
 
 export default function Project(props) {
 
@@ -8,28 +9,27 @@ export default function Project(props) {
     const [project, setProject] = useState(props.project)
     const [user, setUser] = useState({})
     const date = new Date(project.CreationDate)
-
-    const pourcentage = project.Raised / (100 * project.Goal);
+    const pourcentage = (project.Raised * 100) / project.Goal;
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/users/${project.User}`)
+        axiosconfig.get(`/users/${project.User}`)
             .then(res => {
                 setUser(res.data[0]);
             })
     }, []);
-
-    const deleteBookmark = (e) =>{
-        props.deleteBookmark(project._id, Connected.userId)  
+  
+    const deleteBookmark = (e) => {
+        props.deleteBookmark(project._id, Connected.userId)
     }
 
     return (
         <React.Fragment>
-            <div className="col-lg-4 col-md-6 col-sm-10">
+            <div id="myProject" className="col-lg-4 col-md-6 col-sm-10" >
                 <div className="project-item mb-30">
                     <div
                         className="thumb"
                         style={{
-                            backgroundImage: `url(http://localhost:3000/uploads/images/${project.Picture})`
+                            backgroundImage: `url(${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture})`
                         }}
                     />
                     <div className="content">
@@ -41,10 +41,10 @@ export default function Project(props) {
                             <i class='fas fa-trash-alt' id='deleteIcon' style={{ marginLeft: '40px' }} onClick={deleteBookmark}></i>
                         }
                         <div className="author">
-                            <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Thumb" />
+                            <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt="Thumb" />
                             <a href="#">{user.UserName}</a>
                         </div>
-                        <h5 className="title">
+                        <h5 id="myTitle" className="title">
                             <Link to={"/detailProject/" + project._id}>
                                 {project.Title}
                             </Link>
@@ -54,10 +54,10 @@ export default function Project(props) {
                                 <span className="value-title">
                                     Raised of <span className="value">${project.Raised}</span>
                                 </span>
-                                <span className="stats-percentage">{pourcentage}%</span>
+                                <span className="stats-percentage">{pourcentage.toFixed(2)}%</span>
                             </div>
                             <div className="stats-bar" data-value={79}>
-                                <div className="bar-line" />
+                                <div className="bar-line" style={{ width: `${pourcentage}%` }}/>
                             </div>
                         </div>
                         <span className="date">

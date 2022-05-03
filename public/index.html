@@ -30,9 +30,7 @@
   <!--====== Responsive css ======-->
   <link rel="stylesheet" href="/assets/css/responsive.css" />
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
 
- 
 </head>
 
 <body>
@@ -48,12 +46,14 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
   <script type="text/babel" src="../assets/js/jquery.min.js"></script>
 
   <script type="text/babel" src="../assets/js/bootstrap.min.js"></script>
 
   <script type="text/babel" src="../assets/js/jquery.inview.min.js"></script>
-
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/babel" src="../assets/js/slick.min.js"></script>
 
   <script type="text/babel" src="../assets/js/lity.min.js"></script>
@@ -67,23 +67,23 @@
 
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script type='text/javascript' 
-  src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js'></script>
+  <script type='text/javascript'
+    src='https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js'></script>
   <script>
     new OffAmazonPayments.Widgets.Wallet({
       sellerId: 'jhjhjhgj',
-      onPaymentSelect: function(orderReference) {
+      onPaymentSelect: function (orderReference) {
         // Replace this code with the action that you want to perform
         // after the payment method is chosen.
-  
+
         // Ideally this would enable the next action for the buyer
         // including either a "Continue" or "Place Order" button.
       },
       design: {
         designMode: 'responsive'
       },
-  
-      onError: function(error) {
+
+      onError: function (error) {
         // Your error handling code.
         // During development you can use the following
         // code to view error messages:
@@ -92,7 +92,12 @@
       }
     }).bind("walletWidgetDiv");
   </script>
-  
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHBAuUWd0F5TJtnkU5r_E7N42_bPaTDb0&callback=initAutocomplete&libraries=places"
+    defer></script>
+  <script crossorigin src="https://unpkg.com/@daily-co/daily-js"></script>
+
 </body>
 
 </html>

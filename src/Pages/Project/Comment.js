@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Reply from './Reply';
+import axiosconfig from '../../axiosConfig'
 
 export default function Comment(props) {
 
@@ -27,7 +28,7 @@ export default function Comment(props) {
     }
 
     const deleteRep = (id) => {
-        axios.delete(`http://localhost:3000/comments/delete/${id}`)
+        axiosconfig.delete(`/comments/delete/${id}`)
             .then(setRep(!rep))
             .catch(err => {
                 console.error(err);
@@ -43,7 +44,7 @@ export default function Comment(props) {
         const data = {
             Description: newreply.Description
         }
-        axios.post(`http://localhost:3000/comments/addReply/${connected.userId}/${idCom}`, data)
+        axiosconfig.post(`/comments/addReply/${connected.userId}/${idCom}`, data)
             .then(res => {
                 setNewReply({})
                 setReplyForm(false)
@@ -60,14 +61,14 @@ export default function Comment(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: response } = await axios.get(`http://localhost:3000/users/${comment.User}`);
+                const { data: response } = await axiosconfig.get(`/users/${comment.User}`);
                 setUser(response[0]);
             } catch (error) {
                 console.error(error)
             }
 
             try {
-                const { data: response } = await axios.get(`http://localhost:3000/comments/getReplysByCommentId/${comment._id}`);
+                const { data: response } = await axiosconfig.get(`/comments/getReplysByCommentId/${comment._id}`);
                 setReplys(response);
             } catch (error) {
                 console.error(error)
@@ -82,15 +83,15 @@ export default function Comment(props) {
             <li>
                 <div className="comment-body">
                     <div className="commentator-img">
-                        <img src={`http://localhost:3000/uploads/images/${user.ImageProfile}`} alt="Author" />
+                        <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt="Author" />
                     </div>
                     <div className="comment-content" >
                         <h5 className="commentator">{user.UserName}</h5>
                         <span className="date">{CreateDate}</span>
                         <p className='commentP'>                                                                                                                                                                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            {comment.Description}                                                                                                                                                                                                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {comment.Description}                                                                                                                                                                                                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </p>
-                        <i class='fas fa-trash-alt' id='deleteIcon' onClick={deleteComment}></i>
+                        {connected.userId === user._id && <i class='fas fa-trash-alt' id='deleteIcon' onClick={deleteComment}></i>}
                         <a className="reply-link" value={replyform} onClick={addForm}>
                             Reply<i className="fas fa-arrow-right" />
                         </a>

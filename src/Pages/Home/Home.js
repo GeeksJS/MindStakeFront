@@ -4,10 +4,14 @@ import Review from '../Chatbot/Review'
 import Footer from '../Footer/Footer'
 import Navbar from '../NavBar/Navbar'
 import ScrollToTop from "react-scroll-to-top";
+import { Trans, useTranslation } from 'react-i18next';
 
 
 
 export default function Home() {
+   // const { t, i18n } = useTranslation();
+
+    const User = JSON.parse(localStorage.getItem('user'))
 
     return (
         <React.Fragment>
@@ -435,28 +439,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            {/* <div className='row'>
-                <Link to="chatbot" class="rsc-float-button sc-fjdhpX godhbL" >
-                    <svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path>
-                        <path d="M0 0h24v24H0z" fill="none"></path>
-                    </svg>
-                </Link>
-            </div> */}
-
-
-            <Routes>
-                <Route path='chatbot' element={
-                    <div className='chatbot1'>
-                        <Review />
-                    </div>
-
-                }></Route>
-            </Routes>
-
-
-
-
 
 
         </React.Fragment>

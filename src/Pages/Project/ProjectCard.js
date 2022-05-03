@@ -10,12 +10,12 @@ export default function ProjectCard(props) {
 
     return (
         <React.Fragment>
-            <div className="card info-card">
+            <div className="card info-card cp ">
                 <div className="card-body">
                     <div
                         className="thumb"
                         style={{
-                            backgroundImage: `url(http://localhost:3000/uploads/images/${project.Picture})`
+                            backgroundImage: `url(${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture})`
                         }}
                     />
                     <div className="content">

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./chatOnline.css";
+import axiosconfig from '../../axiosConfig'
 
 export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
   const [friends, setFriends] = useState([]);
@@ -8,7 +9,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   useEffect(() => {
     const getFriends = async () => {
-      const res = await axios.get("http://localhost:3000/users/users");
+      const res = await axiosconfig.get("/users/users");
       const Investors = res.data.filter((f) => f.Role === "Investor");
 
             setFriends(Investors);
@@ -24,7 +25,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
   const handleClick = async (user) => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/conversations/find/${currentId}/${user._id}`
+        `${process.env.REACT_APP_API_URL}/conversations/find/${currentId}/${user._id}`
       );
       if(res.data != null) {
       setCurrentChat(res.data);
@@ -36,10 +37,10 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
         // data.append("senderId", currentId);
         // data.append("receiverId", user._id);
        const res = await axios.post(
-          `http://localhost:3000/conversations`
+          `${process.env.REACT_APP_API_URL}/conversations`
         ,data);
         const result = await axios.get(
-          `http://localhost:3000/conversations/find/${currentId}/${user._id}`
+          `${process.env.REACT_APP_API_URL}/conversations/find/${currentId}/${user._id}`
         );
         setCurrentChat(result.data);
         
@@ -57,7 +58,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
           <div className="chatOnlineImgContainer">
             <img
               className="chatOnlineImg"
-              src={`http://localhost:3000/uploads/images/${o.ImageProfile}`}
+              src={`${process.env.REACT_APP_API_URL}/uploads/images/${o.ImageProfile}`}
               alt=""
             />
             <div className="chatOnlineBadge"></div>

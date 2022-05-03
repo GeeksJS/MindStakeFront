@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axiosconfig from '../../axiosConfig'
 
 export default function EditProfile(props) {
     const { User_id, openPopup, setOpenPopup } = props;
@@ -16,7 +17,7 @@ export default function EditProfile(props) {
 
     useEffect(async () => {
 
-        await axios.get(`http://localhost:3000/users/${User_id}`)
+        await axiosconfig.get(`/users/${User_id}`)
             .then(res => {
                 setProfile(res.data[0])
             })
@@ -72,7 +73,7 @@ export default function EditProfile(props) {
 
         console.log("hethi l data", data)
 
-        await axios.put(`http://localhost:3000/users/update/${User_id}`, data)
+        await axiosconfig.put(`/users/update/${User_id}`, data)
             .then(res => {
                 setOpenPopup(false)
                 Navigate('/profile')
@@ -109,14 +110,14 @@ export default function EditProfile(props) {
             <DialogContent dividers>
                 <div>
                     <div className="container">
-                    <form onSubmit={handleSubmit(doModify)}>
+                    <form onSubmit={doModify}>
                             <div className="tp-donations-details">
 
                                 <div className="form-row" >
                                     <div className="form-group col-md-6">
                                         <label for="inputEmail4">First Name</label>
                                         <input type="text" className="form-control" id="FirstName" placeholder="FirstName"                                       
-                                            name="FirstName"{...register("FirstName", { required: 'FirstName is required' })}
+                                            name="FirstName"
                                              value={profile.FirstName} onChange={handleChange}
                                              />
                                         {errors.FirstName?.type === 'required' && !errors.FirstName.ref.value && <div className='alert-danger'>{errors.FirstName.message}</div>}
@@ -124,11 +125,10 @@ export default function EditProfile(props) {
                                     <div className="form-group col-md-6">
                                         <label for="inputPassword4">Last Name</label>
                                         <input type="text" className="form-control" id="LastName" placeholder="LastName"
-                                            name="LastName" {...register("LastName", { required: 'LastName is required' })}
+                                            name="LastName" 
                                              value={profile.LastName} onChange={handleChange}
                                            
                                         />
-                                        {errors.LastName?.type === 'required' && !errors.LastName.ref.value && <div className='alert-danger'>{errors.LastName.message}</div>}
 
                                     </div>
                                 </div>
@@ -136,17 +136,9 @@ export default function EditProfile(props) {
                                     <label for="inputAddress">Email</label>
                                     <input type="email" className="form-control" id="Email" placeholder="Email"
                                         name="Email"
-                                         {...register("Email", {
-                                            required: 'Email is required',
-                                            pattern: {
-                                                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                                                message: "invalid Email address"
-                                            }
-                                        })} value={profile.Email} onChange={handleChange}
+                                        value={profile.Email} onChange={handleChange}
                                         />
-                                    {errors.Email?.type === 'required' && !errors.Email.ref.value && <div className='alert-danger'>{errors.Email.message}</div>}
-                                    {errors.Email?.type === 'pattern' && !errors.Email.ref.value && <div className='alert-danger'>{errors.Email.message}</div>}
-                                
+                               
                                 </div>
 
                                 <div className="form-row">

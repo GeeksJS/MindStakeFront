@@ -2334,12 +2334,12 @@ a:hover {
 	position: absolute;
 	left: 0;
 	top: 0;
-	width: 0;
+	width: 50%;
 	height: 100%;
 	-webkit-transition: width 2s ease-in-out;
 	-o-transition: width 2s ease-in-out;
 	transition: width 2s ease-in-out;
-	background-color: var(--primary-color);
+	background-color: green;
 }
 
 .project-items .project-item .date {
@@ -2363,8 +2363,12 @@ a:hover {
 	-ms-transform: translateY(-50%);
 	transform: translateY(-50%);
 	margin: 0;
-}
 
+}
+.project-style-one::selection{
+	border: #00796B solid 4px;
+
+}
 .project-style-one.no-shadow .project-item .content {
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -5730,3 +5734,9 @@ a:hover {
 	color: #001d23;
 }
 
+body.swal2-shown > [aria-hidden="true"] {
+	transition: 0.1s filter;
+	filter: blur(10px);
+  }
+
+  

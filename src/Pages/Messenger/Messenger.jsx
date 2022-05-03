@@ -6,6 +6,7 @@ import { useContext, useState, useEffect, useRef } from 'react';
 import { AuthContext } from '../Context/AuthContext';
 import axios from "axios";
 import { io } from "socket.io-client";
+import { Link } from "react-router-dom";
 
 export default function Messenger() {
   const { user } = useContext(AuthContext);
@@ -15,7 +16,7 @@ export default function Messenger() {
   const [newMessage, setNewMessage] = useState(" ");
   const scrollRef = useRef();
   const socket = useRef();
-  const [arrivalMessage,setArrivalMessage]=useState(null);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
 
 
@@ -47,7 +48,13 @@ export default function Messenger() {
   }, [user]);
 
 
-
+// useEffect(()=>{
+//   await axios.get("http://localhost:3000/users/" + friendId)
+//   .then(res => {
+//     setUser(res.data[0]);  //res.data is a user
+//   })
+//   .catch(err =>console.log(err));
+//   },[])
 
   useEffect(() => {
     const getConversations = async () => {
@@ -88,7 +95,7 @@ export default function Messenger() {
       receiverId,
       text: newMessage,
     });
-    
+
     await axios.post("http://localhost:3000/messages/", message)
       .then(res => {
         setMessages([...messages, res.data]);
@@ -121,6 +128,12 @@ export default function Messenger() {
             currentChat ?
               <>
                 <div className="chatBoxTop" >
+
+                <Link to={'/join/'+ currentChat._id} style={{display:"flex" , justifyContent:"end" }}data-bs-toggle="tooltip" data-bs-placement="top" title="Join video chat">
+                    <span className="icon1">
+                      <i className="fas fa-video"></i>
+                    </span>
+                  </Link>
                   {
                     messages.map((message, index) => (
                       <div ref={scrollRef}>
@@ -132,7 +145,9 @@ export default function Messenger() {
                     ))
                   }
                 </div>
+                
                 <div className="chatBoxBottom">
+                
                   <textarea
                     className="chatMessageInput"
                     placeholder="Write your message here..."
@@ -148,11 +163,11 @@ export default function Messenger() {
       </div>
       <div className='chatOnline'>
         <div className="chatOnlineWrapper">
-        <ChatOnline
-              onlineUsers={onlineUsers}
-              currentId={user.userId}
-              setCurrentChat={setCurrentChat}
-            />
+          <ChatOnline
+            onlineUsers={onlineUsers}
+            currentId={user.userId}
+            setCurrentChat={setCurrentChat}
+          />
 
         </div>
       </div>

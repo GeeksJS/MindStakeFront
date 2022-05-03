@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axiosconfig from '../../axiosConfig'
 
 export default function Contact() {
     const [newComplaint, setNewComplaint] = useState({})
@@ -24,7 +25,7 @@ export default function Contact() {
             if (result.isConfirmed) {
                 console.log("hahaa")
 
-                axios.post(`http://localhost:3000/complaints/addcomplaint/`, data)
+                axiosconfig.post(`/complaints/addcomplaint/`, data)
                     .then(res => {
                         console.log("Sent")
                     })
@@ -40,7 +41,7 @@ export default function Contact() {
                 )
             }
         })
-        e.preventDefault()
+    
 
         const data = {
             Description: newComplaint.Description,
@@ -200,9 +201,7 @@ export default function Contact() {
                                                             type="text"
                                                             placeholder="Title"
                                                             value={newComplaint.Title} onChange={handleChange}
-                                                            {...register("Title", { required: 'Title is required' })}
                                                         />
-                                                        {errors.Title?.type === 'required' && !errors.Title.ref.value && <div className='alert-danger'>{errors.Title.message}</div>}
                                                     </div>
                                                 </div>
                                                 <div className="col-12">
@@ -213,9 +212,7 @@ export default function Contact() {
                                                             id="Description"
                                                             placeholder="Description"
                                                             value={newComplaint.Description} onChange={handleChange}
-                                                            {...register("Description", { required: 'Description is required' })}
                                                         />
-                                                        {errors.Description?.type === 'required' && !errors.Description.ref.value && <div className='alert-danger'>{errors.Description.message}</div>}
 
                                                     </div>
                                                 </div>

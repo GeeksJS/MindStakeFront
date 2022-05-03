@@ -11,6 +11,7 @@ import axios from 'axios'
 import { faPersonDotsFromLine } from '@fortawesome/free-solid-svg-icons'
 import Project from '../Project/Project'
 import ProjectCard from '../Project/ProjectCard'
+import axiosconfig from '../../axiosConfig'
 
 
 export default function Profile() {
@@ -41,8 +42,8 @@ export default function Profile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://localhost:3000/users/${id}`).then(res => setProfile(res.data[0]));
-                await axios.get(`http://localhost:3000/projects/getProjectByUser/${id}`).then(res => setProject(res.data));
+                await axiosconfig.get(`/users/${id}`).then(res => setProfile(res.data[0]));
+                await axiosconfig.get(`/projects/getProjectByUser/${id}`).then(res => setProject(res.data));
 
             } catch (error) {
                 console.error(error)
@@ -52,6 +53,25 @@ export default function Profile() {
 
     }, [!openPopup]);
 
+
+    const activateAccount = (e) => {
+        e.preventDefault()
+        const data ={
+            Email: Connected.Email
+        }
+        axios.post(`${process.env.REACT_APP_API_URL}/users/activate-account-email`,data)
+            .then(
+                Swal.fire(
+                    'Done!',
+                    'Activation email sent successfully!',
+                    'success'
+                )
+                
+
+            )
+            .catch(err => {
+            })
+    }
 
     if (Profile) {
         return (
@@ -79,15 +99,17 @@ export default function Profile() {
 
                     <div className="card social-prof" style={{ zIndex: '999' }}>
                         <div className="card-body">
-                            {Profile._id === Connected.userId && <button className="main-btn1" style={{ marginLeft: '1000px' }} onClick={() => setOpenPopup(true)}  >
+                            
+                            
+                            {Profile._id === Connected.userId && <button className="main-btn1" style={{ marginLeft: '900px' }} onClick={() => setOpenPopup(true)}  >
                                 Edit <i className="far fa-edit" />
                             </button>}
 
-                            {Profile._id === Connected.userId && <button class="btn" onClick={() => setOpenPopupPW(true)}> <i class="fas fa-cog" style={{ marginLeft: '10px' }} ></i></button>}
+                            {Profile._id === Connected.userId && <button class="main-btn1" onClick={() => setOpenPopupPW(true)}> <i class="fas fa-cog" style={{ marginLeft: '0px' }} ></i></button>}
 
                             <div className="wrapper" >
                                 <img
-                                    src={`http://localhost:3000/uploads/images/${Profile.ImageProfile}`}
+                                    src={`${process.env.REACT_APP_API_URL}/uploads/images/${Profile.ImageProfile}`}
                                     alt=""
                                     className="user-profile"
                                 />
@@ -115,6 +137,9 @@ export default function Profile() {
                                 <Facebook />
                                 <Twitter />
                                 <LinkedIn />
+                                {!Connected.isActivated && <button onClick={activateAccount} className="main-btn1" style={{ marginLeft: '950px',backgroundColor:'green',color:'white' }}   >
+                                Activate account 
+                            </button>}
                             </div>
 
                         </div>
@@ -127,16 +152,16 @@ export default function Profile() {
                                     <h4>
                                         <strong>About Me</strong>
                                     </h4>
-                                    {Profile.Cv !== "default.pdf" && <p>
-                                        <embed src={`http://localhost:3000/uploads/cv/${Profile.Cv}`} type="application/pdf" width="100%" height="600px" />
+                                    {Profile.Cv !== "default.pdf" && Profile.Cv.endsWith("f") && <p>
+                                        <embed src={`${process.env.REACT_APP_API_URL}/uploads/cv/${Profile.Cv}`} type="application/pdf" width="100%" height="600px" />
                                     </p>}
-                                    {Profile.Cv === "default.pdf" && Profile.Role == "SimpleUser" && <p>
+                                    {(Profile.Cv === "default.pdf" || !(Profile.Cv.endsWith("f"))) && Profile.Role == "SimpleUser" && <p>
                                         As a simple user, we give you the opportunity to help your best creator by donating their project and encourage our creator with your feedback.
                                     </p>}
-                                    {Profile.Cv === "default.pdf" && Profile.Role == "Investor" && <p>
-                                        We would like to take this opportunity to appreciate and thank you for your kind corporation and for trusting our company. 
+                                    {(Profile.Cv === "default.pdf" || !(Profile.Cv.endsWith("f"))) && Profile.Role == "Investor" && <p>
+                                        We would like to take this opportunity to appreciate and thank you for your kind corporation and for trusting our company.
                                         We would like to apologize if we could not meet up with any of your expectations or give you regular updates.
-                                         We would request you to please keep investing in the future as well.                                    </p>}
+                                        We would request you to please keep investing in the future as well.                                    </p>}
                                     <h4 className="mb-3">
                                         <strong>Personal Info</strong>
                                     </h4>

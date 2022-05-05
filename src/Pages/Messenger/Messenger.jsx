@@ -19,8 +19,10 @@ export default function Messenger() {
   const socket = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  
+  const [users ,setUser] = useState([])
 
-
+  
 
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
@@ -63,7 +65,7 @@ export default function Messenger() {
       await axios.get(`${process.env.REACT_APP_API_URL}/conversations/` + user.userId)
         .then(res => {
           //console.log(res.data)
-
+          setUser(res.data)
           setConversations(res.data);  //res.data is an array of conversations
         })
         .catch(err => console.log(err));
@@ -111,7 +113,6 @@ export default function Messenger() {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
  
-
   return (
     <div className="container">
       <div className='messenger'>
@@ -120,6 +121,7 @@ export default function Messenger() {
             <input placeholder="Search for friends" className="chatMenuInput" style={{backgroundColor:'#edf9f3'}}/>
             {conversations.map((conversation, index) => {
               //console.log(conversation);
+              
               return (<div onClick={() => setCurrentChat(conversation)}>
                 <Conversation conversation={conversation} key={index} currentUser={user} />
               </div>
@@ -145,7 +147,9 @@ export default function Messenger() {
                           <Message
                             message={message}
                             key={index}
-                            own={message.sender === user.userId} />
+                            own={message.sender === user.userId} 
+                            users={users}
+                            />
                         </div>
                       ))
                     }

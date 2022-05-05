@@ -29,7 +29,7 @@ export default function Project(props) {
                     <div
                         className="thumb"
                         style={{
-                            backgroundImage: `url(${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture})`
+                            backgroundImage: `url(https://storage.googleapis.com/mindstake_bucket/${project.Picture})`
                         }}
                     />
                     <div className="content">
@@ -41,7 +41,7 @@ export default function Project(props) {
                             <i class='fas fa-trash-alt' id='deleteIcon' style={{ marginLeft: '40px' }} onClick={deleteBookmark}></i>
                         }
                         <div className="author">
-                            <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt="Thumb" />
+                            <img src={`https://storage.googleapis.com/mindstake_bucket/${user.ImageProfile}`} alt="Thumb" />
                             <a href="#">{user.UserName}</a>
                         </div>
                         <h5 id="myTitle" className="title">

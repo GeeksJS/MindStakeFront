@@ -15,7 +15,7 @@ export default function ProjectCard(props) {
                     <div
                         className="thumb"
                         style={{
-                            backgroundImage: `url(${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture})`
+                            backgroundImage: `url(https://storage.googleapis.com/mindstake_bucket/${project.Picture})`
                         }}
                     />
                     <div className="content">

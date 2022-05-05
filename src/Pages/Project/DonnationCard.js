@@ -19,7 +19,7 @@ export default function DonnationCard(propos) {
   return (
     <li className='liDonations' >
       <div className='row'>
-        {user && <img className='imgD rounded-circle' src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt='' />}
+        {user && <img className='imgD rounded-circle' src={`https://storage.googleapis.com/mindstake_bucket/${user.ImageProfile}`} alt='' />}
         <div className='col title1 '>
           
             <div className='row'>

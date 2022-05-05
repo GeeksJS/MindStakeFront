@@ -54,11 +54,11 @@ export default function Description() {
 
                                     {project.Video !== "video.mp4" ?
                                         <video controls width="700" >
-                                            <source src={`${process.env.REACT_APP_API_URL}/uploads/video/${project.Video}`}
+                                            <source src={`https://storage.googleapis.com/mindstake_bucket/${project.Video}`}
                                                 type="video/mp4"></source>
                                             salem</video> :
                                         <img controls width="700" height='500px'
-                                            src={`${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture}`}
+                                            src={`https://storage.googleapis.com/mindstake_bucket/${project.Picture}`}
                                             alt="Image"
                                         />
                                     }

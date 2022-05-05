@@ -83,7 +83,7 @@ export default function Comment(props) {
             <li>
                 <div className="comment-body">
                     <div className="commentator-img">
-                        <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt="Author" />
+                        <img src={`https://storage.googleapis.com/mindstake_bucket/${user.ImageProfile}`} alt="Author" />
                     </div>
                     <div className="comment-content" >
                         <h5 className="commentator">{user.UserName}</h5>

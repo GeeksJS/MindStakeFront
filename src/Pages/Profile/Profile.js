@@ -109,7 +109,7 @@ export default function Profile() {
 
                             <div className="wrapper" >
                                 <img
-                                    src={`${process.env.REACT_APP_API_URL}/uploads/images/${Profile.ImageProfile}`}
+                                    src={`https://storage.googleapis.com/mindstake_bucket/${Profile.ImageProfile}`}
                                     alt=""
                                     className="user-profile"
                                 />
@@ -153,7 +153,7 @@ export default function Profile() {
                                         <strong>About Me</strong>
                                     </h4>
                                     {Profile.Cv !== "default.pdf" && Profile.Cv.endsWith("f") && <p>
-                                        <embed src={`${process.env.REACT_APP_API_URL}/uploads/cv/${Profile.Cv}`} type="application/pdf" width="100%" height="600px" />
+                                        <embed src={`https://storage.googleapis.com/mindstake_bucket/${Profile.Cv}`} type="application/pdf" width="100%" height="600px" />
                                     </p>}
                                     {(Profile.Cv === "default.pdf" || !(Profile.Cv.endsWith("f"))) && Profile.Role == "SimpleUser" && <p>
                                         As a simple user, we give you the opportunity to help your best creator by donating their project and encourage our creator with your feedback.

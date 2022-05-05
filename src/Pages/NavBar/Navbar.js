@@ -175,7 +175,7 @@ export default function Navbar() {
                                             <div className="icon0 text-amount">
 
                                                 <i className="fab fa-gg-circle fa-2x fa-spin"></i>
-                                                {walletInfo && <span className='mr-30'>{bal.toFixed(2)}</span>}
+                                                {walletInfo && <span className='mr-30'>{bal.toFixed(1)}</span>}
 
                                             </div>
                                             <div className="btn-buy text-amount">

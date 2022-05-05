@@ -41,7 +41,7 @@ export default function Project(props) {
                             <i class='fas fa-trash-alt' id='deleteIcon' style={{ marginLeft: '40px' }} onClick={deleteBookmark}></i>
                         }
                         <div className="author">
-                            <img src={`https://storage.googleapis.com/mindstake_bucket/${user.ImageProfile}?authuser=6`} alt="Thumb" />
+                            <img src={`https://storage.googleapis.com/mindstake_bucket/${user.ImageProfile}`} alt="Thumb" />
                             <a href="#">{user.UserName}</a>
                         </div>
                         <h5 id="myTitle" className="title">

@@ -27,7 +27,7 @@ export default function Conversation({ conversation, currentUser }) {
     <div className='conversation'>
       <img
         className='conversationImg'
-        src={`${process.env.REACT_APP_API_URL}/uploads/images/${user?.ImageProfile}`}
+        src={`https://storage.googleapis.com/mindstake_bucket/${user?.ImageProfile}`}
         alt="" />
       <span className="conversationName"> {user?.LastName + " " + user?.FirstName}</span>
     </div>

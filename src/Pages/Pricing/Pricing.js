@@ -81,15 +81,7 @@ export default function Pricing() {
 
                                                 ))
                                                 }
-                                                <li className="hidden-feature">
-                                                    <i className="fas fa-check" /> Unlimited Projects
-                                                </li>
-                                                <li className="hidden-feature">
-                                                    <i className="fas fa-check" /> Premium Quality Support
-                                                </li>
-                                                <li className="hidden-feature">
-                                                    <i className="fas fa-check" /> Notification Feature
-                                                </li>
+                                               
 
                                             </ul>
                                             <a className=" pricing-btn" onClick={()=> handleChooseProject(pack._id)}>

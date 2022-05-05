@@ -58,7 +58,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
           <div className="chatOnlineImgContainer">
             <img
               className="chatOnlineImg"
-              src={`${process.env.REACT_APP_API_URL}/uploads/images/${o.ImageProfile}`}
+              src={`https://storage.googleapis.com/mindstake_bucket/${o.ImageProfile}`}
               alt=""
             />
             <div className="chatOnlineBadge"></div>

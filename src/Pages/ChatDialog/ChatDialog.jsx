@@ -4,7 +4,7 @@ function ChatDialog() {
     useEffect(() => {
         (function (d, m) {
             var kommunicateSettings = {
-                "appId": "19bffabea91c40ae88b584b27889bf93f",
+                "appId": "2803fc25ba6a7b8cc3610af437e2513b0",
                 "popupWidget": true,
                 "automaticChatOpenOnNavigation": true
             };

@@ -81,7 +81,7 @@ export default function Wallet() {
                                         <h5 style={{ color: 'white' }}>{Connected.UserName.charAt(0).toUpperCase() + Connected.UserName.slice(1)}'s Wallet</h5>
                                     </div>
                                     <div className="number">
-                                        <small><bold>Balance:</bold> </small>{Number(walletInfo.balance).toFixed(2)} <small>GC</small>
+                                        <small><bold>Balance:</bold> </small>{Number(walletInfo.balance).toFixed(0)} <small>GC</small>
                                     </div>
 
 

@@ -137,7 +137,7 @@ export default function CardPricingProject() {
                                             <div
                                                 className="thumb"
                                                 style={{
-                                                    backgroundImage: `url(${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture})`
+                                                    backgroundImage: `url(https://storage.googleapis.com/mindstake_bucket/${project.Picture})`
                                                 }}
                                             />
                                             <div className="content">
@@ -147,7 +147,7 @@ export default function CardPricingProject() {
                                                 </div>
 
                                                 <div className="author">
-                                                    <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`} alt="Thumb" />
+                                                    <img src={`https://storage.googleapis.com/mindstake_bucket/${user.ImageProfile}`} alt="Thumb" />
                                                     <a href="#">{user.UserName}</a>
                                                 </div>
                                                 <h5 id="myTitle" className="title">

@@ -284,7 +284,7 @@ export default function ProjectDetails() {
                     <div className="row align-items-center justify-content-start">
                         <div className="col-lg-6 col-md-10">
                             <div className="project-thumb mb-md-50">
-                                <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${project.Picture}`} className="proj-img"
+                                <img src={`https://storage.googleapis.com/mindstake_bucket/${project.Picture}`} className="proj-img"
                                     alt="Image" />
                             </div>
                         </div>
@@ -304,7 +304,7 @@ export default function ProjectDetails() {
                                 </h3>
                                 <div className="meta">
                                     <div className="author">
-                                        <img src={`${process.env.REACT_APP_API_URL}/uploads/images/${user.ImageProfile}`}
+                                        <img src={`https://storage.googleapis.com/mindstake_bucket/${user.ImageProfile}`}
                                             alt="Thumb" style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
                                         <a href="#">{user.UserName}</a>
                                     </div>

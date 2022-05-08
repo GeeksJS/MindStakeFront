@@ -223,7 +223,7 @@ export default function ProjectDetails() {
                                                                 const data = {
                                                                     Raised: raised
                                                                 }
-                                                                await axios.put(`${process.env.REACT_APP_API_URL}/projects/updateprojectRaised/${id}`, data)
+                                                                await axiosconfig.put(`/projects/updateprojectRaised/${id}`, data)
                                                                     .then(() => {
                                                                         Swal.fire(
                                                                             'Done!',

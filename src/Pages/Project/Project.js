@@ -17,7 +17,7 @@ export default function Project(props) {
                 setUser(res.data[0]);
             })
     }, []);
-  
+
     const deleteBookmark = (e) => {
         props.deleteBookmark(project._id, Connected.userId)
     }
@@ -44,11 +44,16 @@ export default function Project(props) {
                             <img src={`https://storage.googleapis.com/mindstake_bucket/${user.ImageProfile}?authuser=6`} alt="Thumb" />
                             <a href="#">{user.UserName}</a>
                         </div>
-                        <h5 id="myTitle" className="title">
+                        {Connected ? <h5 id="myTitle" className="title">
                             <Link to={"/detailProject/" + project._id}>
                                 {project.Title}
                             </Link>
-                        </h5>
+                        </h5> : <h5 id="myTitle" className="title">
+
+                            {project.Title}
+
+                        </h5>}
+
                         <div className="project-stats">
                             <div className="stats-value">
                                 <span className="value-title">
@@ -57,7 +62,7 @@ export default function Project(props) {
                                 <span className="stats-percentage">{pourcentage.toFixed(2)}%</span>
                             </div>
                             <div className="stats-bar" data-value={79}>
-                                <div className="bar-line" style={{ width: `${pourcentage}%` }}/>
+                                <div className="bar-line" style={{ width: `${pourcentage}%` }} />
                             </div>
                         </div>
                         <span className="date">

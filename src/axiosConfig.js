@@ -5,7 +5,7 @@ const token = JSON.parse(localStorage.getItem('token'))
 
 const instance = axios.create({
     // .. where we make our configurations
-    baseURL: 'http://localhost:3000'
+    baseURL: 'https://mindstakeback.herokuapp.com/'
 });
 
 // Where you would set stuff like your 'Authorization' header, etc ...

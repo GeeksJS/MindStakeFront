@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Comment from './Comment';
 import axiosconfig from '../../axiosConfig'
+import { useParams } from 'react-router-dom';
+import DonnationCard from './DonnationCard';
 
 export default function Comments(props) {
 
@@ -10,7 +12,8 @@ export default function Comments(props) {
     const [newcomment, setNewComment] = useState({})
     const User = JSON.parse(localStorage.getItem('user'))
 
-
+    let { id } = useParams();
+    const [latestDon, setLatestDon] = useState();
     const addComment = (e) => {
         e.preventDefault()
         const data = {
@@ -53,6 +56,11 @@ export default function Comments(props) {
         fetchData().then(comments);
 
     }, [cmnt]);
+    useEffect(async () => {
+        await axiosconfig.get(`/payment/donations-byProject/${id}`).then((res) => {
+            setLatestDon(res.data)
+       
+    })}, [])
     return (
         <React.Fragment>
             <div className="project-details-tab">
@@ -97,45 +105,22 @@ export default function Comments(props) {
                             <div className="col-lg-4 col-md-6 col-sm-10">
                                 <div className="rewards-box mt-md-50">
                                     <h4 className="title">Latest Donations</h4>
+
+
                                     <ul>
-                                        <li className='liDonations' >
-                                            <div className='row'>
-                                                <img className='imgD' src='https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png' alt='' />
-                                                <div className='col title1 '>
-                                                    <p className='donation'>20$</p>
-                                                    <h5 className='name' >David Marks
-                                                        <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <span className='msg'>“God bless you dear”</span>
-                                        </li>
-                                        <li className='liDonations' >
-                                            <div className='row'>
-                                                <img className='imgD' src='https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png' alt='' />
-                                                <div className='col title1 '>
-                                                    <p className='donation'>20$</p>
-                                                    <h5 className='name' >David Marks
-                                                        <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <span className='msg'>“God bless you dear”</span>
-                                        </li>
-                                        <li className='liDonations' >
-                                            <div className='row'>
-                                                <img className='imgD' src='https://jancaynap.com/portfolio/bragout/images/profilepics/profile3.imageset/profile-circle.png' alt='' />
-                                                <div className='col title1 '>
-                                                    <p className='donation'>20$</p>
-                                                    <h5 className='name' >David Marks
-                                                        <span className='span'>&nbsp; - &nbsp; 3 Hours ago</span>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                            <span className='msg'>“God bless you dear”</span>
-                                        </li>
+                                        {latestDon && latestDon.map((value, index) =>
+                                       
+                                           <DonnationCard don={value} key={value._id}/>
+                                        )
+                                        
+                                        }
+
+
+
                                     </ul>
+
                                 </div>
+                               
                             </div>
                         </div>
                     </div>

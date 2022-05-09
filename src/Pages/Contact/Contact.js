@@ -174,8 +174,9 @@ export default function Contact() {
                                                         <label htmlFor="name">Your Name</label>
                                                         <input
                                                             type="text"
-                                                            value={Connected.UserName.charAt(0).toUpperCase() + Connected.UserName.slice(1)}
-                                                            disabled
+                                                            value={Connected?.UserName}
+                                                            disabled =  {Connected ? true : false}
+                                                            placeholder= " Name"
                                                             id="name"
                                                         />
                                                     </div>
@@ -186,8 +187,9 @@ export default function Contact() {
                                                         <label htmlFor="email">Email Address</label>
                                                         <input
                                                             type="text"
-                                                            value={Connected.Email}
-                                                            disabled
+                                                            value={Connected?.Email }
+                                                            disabled =  {Connected ? true : false}
+                                                            placeholder = "@email.com"
                                                             id="email"
                                                         />
                                                     </div>

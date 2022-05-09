@@ -22,9 +22,9 @@ export default function Navbar() {
     const navigate = useNavigate();
     const User = JSON.parse(localStorage.getItem('user'))
     const push = () => {
-        window.history.pushState(null, "payment", "localhost:3000/off");
+        window.history.pushState(null, "payment", "https://mindstakeback.herokuapp.com/off");
 
-        window.history.replaceState(null, "payment", "localhost:3000/off")
+        window.history.replaceState(null, "payment", "https://mindstakeback.herokuapp.com/off")
     }
     const theme = { "icon": { "borderColor": "#6113A3", "width": "24px" }, "unseenBadge": { "backgroundColor": "#DF4759" }, "header": { "backgroundColor": "#6113A3", "textColor": "#ffffff", "borderRadius": "16px" }, "footer": { "backgroundColor": "#6113A3", "textColor": "#ffffff", "borderRadius": "16px" }, "notification": { "default": { "textColor": "#15091F", "borderRadius": "8px", "backgroundColor": "#6113A3" }, "unseen": { "backgroundColor": "#6113A3" }, "unread": { "backgroundColor": "#6113A3" } } };
     // function changeLocale(l) {
@@ -35,8 +35,9 @@ export default function Navbar() {
 
     const [walletInfo, setWalletInfo] = useState({});
 
-
+ 
     useEffect(() => {
+      if(User){
         const fetchData = async () => {
             await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${User.userId}`)
                 .then(res => {
@@ -46,24 +47,26 @@ export default function Navbar() {
                 })
 
         }
-        fetchData().then(walletInfo)
+        fetchData().then(walletInfo)   
+      }
+        
     }, []);
 
     const bal = Number(walletInfo.balance)
 
     const activateAccount = (e) => {
         e.preventDefault()
-        const data ={
+        const data = {
             Email: User.Email
         }
-        axios.post(`${process.env.REACT_APP_API_URL}/users/activate-account-email`,data)
+        axios.post(`${process.env.REACT_APP_API_URL}/users/activate-account-email`, data)
             .then(
                 Swal.fire(
                     'Done!',
                     'Activation email sent successfully!',
                     'success'
                 )
-                
+
 
             )
             .catch(err => {
@@ -145,7 +148,7 @@ export default function Navbar() {
                                     <li className={(window.location.pathname === "/projects" || window.location.pathname === "/createproject" || window.location.pathname === "/myprojects") && "current"}>
                                         <NavLink to="projects"  >Project </NavLink>
                                         <ul className="submenu">
-                                            {User.Role === "Creator" &&
+                                            {User && User.Role === "Creator" &&
                                                 <div><li>
                                                     <a href="/createproject">Create Project</a>
                                                 </li>
@@ -164,13 +167,12 @@ export default function Navbar() {
                                     <li className={window.location.pathname === "/contact" && "current"}>
                                         <NavLink to="/contact">Contact</NavLink>
                                     </li>
-                                    {
-                                        localStorage.getItem('user') ? <li className={window.location.pathname === "/messenger" && "current"}>
-                                            <NavLink to="/messenger">Messenger</NavLink>
-                                        </li> : null
+                                    {User && User.Role !== "SimpleUser" ? <li className={window.location.pathname === "/messenger" && "current"}>
+                                        <NavLink to="/messenger">Messenger</NavLink>
+                                    </li> : User && <div style={{ marginRight: "170px" }}></div>
                                     }
-
-                                    {User.isActivated ?
+                                   
+                                    {User && User.isActivated ?
                                         <div className='btn-group'>
                                             <div className="icon0 text-amount">
 
@@ -184,10 +186,10 @@ export default function Navbar() {
 
                                             </div>
                                         </div>
-                                        :
-                                        <button onClick={activateAccount} className="main-btn1" style={{ marginLeft: '170px', backgroundColor: 'green', color: 'white' }}   >
-                                            Activate account
-                                        </button>
+                                        : User ?
+                                            <button onClick={activateAccount} className="main-btn1" style={{ marginLeft: '170px', backgroundColor: 'green', color: 'white' }}   >
+                                                Activate account
+                                            </button> : <div style={{ marginRight: "550px" }}></div>
                                     }
 
 
@@ -207,7 +209,7 @@ export default function Navbar() {
                                             </a>
                                         </li>
 
-                                        {User.Role === "Creator" && <li>
+                                        {User && User.Role === "Creator" && <li>
                                             <Link to='/pricing'>
                                                 <span className="icon1">
                                                     <i className="fas fa-rocket"></i>
@@ -223,16 +225,16 @@ export default function Navbar() {
                                                 </span>
                                             </a>
                                             <ul className="submenu">
-                                                <li key={User.userId}>
+                                                {User && <li key={User.userId}>
                                                     <NavLink hidden={!localStorage.getItem("token")} to={'/profile/' + User.userId}>Profile</NavLink>
-                                                </li>
-                                                <li key={User.userId}>
+                                                </li>}
+                                                {User && <li key={User.userId}>
                                                     <NavLink hidden={!localStorage.getItem("token")} to={'/wallet'}>My Wallet</NavLink>
-                                                </li>
-                                                <li key={User.userId}>
+                                                </li>}
+                                                {User && <li key={User.userId}>
                                                     <NavLink hidden={!localStorage.getItem("token")} to={'/bookmarks'}>My Bookmarks</NavLink>
-                                                </li>
-                                                {User.Role === "Creator" &&
+                                                </li>}
+                                                {User && User.Role === "Creator" &&
                                                     <li key={User.userId}>
                                                         <NavLink hidden={!localStorage.getItem("token")} to={'/listproposal/' + User.userId}>List Proposal</NavLink>
                                                     </li>}

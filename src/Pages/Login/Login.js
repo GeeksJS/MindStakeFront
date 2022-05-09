@@ -65,7 +65,7 @@ export default function Login({ setToken }) {
             <div className='iconGroup' style={{ height: '50px' }}>
                 <LinkedIn
                     clientId="778pwi5gutqz7v"
-                    redirectUri={`http://localhost:3002/`}
+                    redirectUri={`https://mindstake.vercel.app`}
                     onSuccess={(code) => {
                         
                     }}
@@ -156,7 +156,7 @@ export default function Login({ setToken }) {
 
 
         <GoogleLogin
-            clientId="517644931989-igjmauces87orj0hvdr03168js1458e8.apps.googleusercontent.com"
+            clientId="900068590144-db1qb2lcn7vmbe5ung9u5vv5kstf6a76.apps.googleusercontent.com"
             buttonText="Login with Google"
             onSuccess={responseSuccessGoogle}
             onFailure={responseErrorGoogle}

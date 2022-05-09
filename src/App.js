@@ -142,8 +142,8 @@ function App() {
 
       </BrowserRouter >
       <ScrollToTop smooth style={{ backgroundColor: '#02a95c', borderRadius: '50%', marginBottom: '60px', zIndex: '999' }} color='white'></ScrollToTop>
-      {User && User.Role==="Creator" &&
-        <ChatDialog style={{ backgroundColor: '#02a95c', borderRadius: '50%', zIndex: '999' }} />}
+      {/* {User && User.Role==="Creator" &&
+        <ChatDialog style={{ backgroundColor: '#02a95c', borderRadius: '50%', zIndex: '999' }} />} */}
     </div >
 
   );

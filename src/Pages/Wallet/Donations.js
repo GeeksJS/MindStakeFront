@@ -15,7 +15,7 @@ export default function Donations() {
             if (Connected.Role === "Creator") {
                 await axios.get(`${process.env.REACT_APP_API_URL}/payment/donations-creator/${Connected.userId}`)
                     .then(res => {
-                        console.log(res.data)
+                       
                         setDonations(res.data)
 
                     })
@@ -23,7 +23,7 @@ export default function Donations() {
             else {
                 await axios.get(`${process.env.REACT_APP_API_URL}/payment/donations-user/${Connected.userId}`)
                     .then(res => {
-                        console.log(res.data)
+                        
                         setDonations(res.data)
 
                     })
@@ -92,7 +92,7 @@ export default function Donations() {
         useEffect(() => {
             // Fetch items from another resources.
             const endOffset = itemOffset + itemsPerPage;
-            console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+            
             setCurrentItems(donations.slice(itemOffset, endOffset));
             setPageCount(Math.ceil(donations.length / itemsPerPage));
         }, [itemOffset, itemsPerPage]);
@@ -100,7 +100,7 @@ export default function Donations() {
         // Invoke when user click to request another page.
         const handlePageClick = (event) => {
             const newOffset = event.selected * itemsPerPage % donations.length;
-            console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
+            
             setItemOffset(newOffset);
         };
 

@@ -50,7 +50,7 @@ export default function ProjectDetails() {
                     setDate(new Date(project.CreationDate))
 
                     // pourcentage = project.Raised / (100 * project.Goal)
-                    console.log(new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(project.EndDate))
+                    
                     setEndDate(new Intl.DateTimeFormat('en-UK', { year: 'numeric', month: 'numeric', day: 'numeric'}).format(project.EndDate))
                     // start1 = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
                     setStartDate(new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(date))
@@ -63,11 +63,8 @@ export default function ProjectDetails() {
         }
         fetchData().then(project, user)
     }, []);
-    // console.log("date: " +date)
-    // const start = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(date)
-    // const end = new Intl.DateTimeFormat('en-US', { day: 'numeric' }).format(endDate)
-    // const leftDays = end - start;
-    // console.log(leftDays)
+   
+   
 
     const click5 = () => {
         setDollar5(true)
@@ -223,7 +220,7 @@ export default function ProjectDetails() {
                                                                 const data = {
                                                                     Raised: raised
                                                                 }
-                                                                await axios.put(`${process.env.REACT_APP_API_URL}/projects/updateprojectRaised/${id}`, data)
+                                                                await axiosconfig.put(`/projects/updateprojectRaised/${id}`, data)
                                                                     .then(() => {
                                                                         Swal.fire(
                                                                             'Done!',
@@ -254,7 +251,7 @@ export default function ProjectDetails() {
     useEffect(async () => {
         await axiosconfig.get(`/payment/all-donations-byProject/${id}`).then((res) => {
             setDonations(res.data)
-            console.log(res.data)
+          
        
     })}, [])
 

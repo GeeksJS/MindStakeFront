@@ -298,7 +298,7 @@ export default function Home() {
                     <div className="row align-items-center justify-content-lg-start justify-content-center">
                         <div className="col-xl-6 col-lg-7 col-md-9">
                             <div className="">
-                                <img src="assets/img/hero/chatbot.jpeg" alt="Image" />
+                                <img src="assets/img/hero/Chatbot.jpeg" alt="Image" />
                             </div>
 
                         </div>

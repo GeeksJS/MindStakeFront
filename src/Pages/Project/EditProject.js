@@ -36,10 +36,10 @@ export default function EditProject(props) {
         data.append("file", pic)
         data.append("file", vid)
         data.append("Description", project.Description)
-        console.log(data)
+       
         axiosconfig.put(`/projects/updateproject/${id}` , data)
         .then(res => {
-            console.log("updated")
+        
             window.location.reload()
         })
         .catch(err => {

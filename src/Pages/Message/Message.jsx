@@ -5,7 +5,7 @@ import axios from 'axios';
 import axiosconfig from '../../axiosConfig'
 
 export default function Message({ message, own, users }) {
-    //console.log(senderImage)
+   
 
     const Connected = JSON.parse(localStorage.getItem('user'))
 
@@ -16,7 +16,6 @@ export default function Message({ message, own, users }) {
 
 
 
-    //console.log(id)
 
 
 
@@ -24,12 +23,12 @@ export default function Message({ message, own, users }) {
 
         users.map(user => {
             id = (user.members[0] === Connected.userId ? user.members[1] : user.members[0])
-            console.log(id)
+      
         })
         axiosconfig.get(`/users/` + id)
             .then(res => {
                 setFriend(res.data[0])
-                console.log(res.data[0])
+            
             })
             .catch(err => console.log(err));
 

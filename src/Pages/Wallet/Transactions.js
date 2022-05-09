@@ -14,7 +14,7 @@ export default function Transactions() {
         const fetchData = async () => {
             await axios.get(`${process.env.REACT_APP_API_URL}/payment/transactions/${Connected.userId}`)
                 .then(res => {
-                    console.log(res.data)
+                    
                     setTransactions(res.data)
 
                 })
@@ -77,7 +77,7 @@ export default function Transactions() {
         useEffect(() => {
             // Fetch items from another resources.
             const endOffset = itemOffset + itemsPerPage;
-            console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+            
             setCurrentItems(transactions.slice(itemOffset, endOffset));
             setPageCount(Math.ceil(transactions.length / itemsPerPage));
         }, [itemOffset, itemsPerPage]);
@@ -85,7 +85,7 @@ export default function Transactions() {
         // Invoke when user click to request another page.
         const handlePageClick = (event) => {
             const newOffset = event.selected * itemsPerPage % transactions.length;
-            console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
+         
             setItemOffset(newOffset);
         };
 

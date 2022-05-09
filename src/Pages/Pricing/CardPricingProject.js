@@ -34,7 +34,7 @@ export default function CardPricingProject() {
         await axiosconfig.get(`/packs/${idPack}`)
             .then((res) => {
                 setPack(res.data[0])
-                    console.log("hello", res.data[0])
+                   
 
             })
     }

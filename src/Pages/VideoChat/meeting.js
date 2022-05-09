@@ -7,7 +7,7 @@ import DailyIframe from '@daily-co/daily-js';
 
 export default function Video({ match }) {
     let { id } = useParams();
-    console.log(id)
+   
 
     useEffect(() => {
         const domain = 'https://beatsup.daily.co/';

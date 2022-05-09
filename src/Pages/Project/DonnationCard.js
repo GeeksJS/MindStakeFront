@@ -6,13 +6,13 @@ export default function DonnationCard(propos) {
 
   const idUser = propos.don.Sender
   const [user, setUser] = useState();
-  console.log(idUser)
+
   useEffect(async () => {
     await axiosconfig.get(`/users/${idUser}`)
       .then((res) => {
         setUser(res.data[0])
 
-        console.log(user)
+    
       })
   }
     , [])

@@ -14,7 +14,7 @@ export default function ForgotPassword() {
         }
         axios.post(`${process.env.REACT_APP_API_URL}/password-reset`, data)
             .then(res => {
-                console.log(res.data)
+             
                 localStorage.setItem('ResetPasswordUserId', JSON.stringify(res.data.ResetPasswordUserId))
                 localStorage.setItem('ResetPasswordToken', JSON.stringify(res.data.ResetPasswordToken))
                 Swal.fire(

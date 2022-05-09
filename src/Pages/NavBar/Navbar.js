@@ -41,7 +41,7 @@ export default function Navbar() {
         const fetchData = async () => {
             await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${User.userId}`)
                 .then(res => {
-                    console.log(res.data)
+                
                     setWalletInfo(res.data)
 
                 })

@@ -22,15 +22,12 @@ export default function Checkout() {
   ).then(async () => {
     await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/payment`)
       .then(res => {
-        console.log(res.data.data[0].amount / 100)
-        console.log((res.data.data[0].amount / 100) / 0.6)
-        // console.log((res.data.data[0].created).toLocaleDateString())
-        console.log((res.data.data[0].currency))
-        console.log((res.data.data[0].status))
+    
+       
 
         const date = new Date((res.data.data[0].created) * 1000).toLocaleDateString()
 
-        console.log(date)
+    
 
         //setCoins((res.data.data[0].amount / 100) / 0.6)
         const qte = (res.data.data[0].amount / 100) / 0.6
@@ -49,8 +46,7 @@ export default function Checkout() {
               .then(async (res1) => {
                 
 
-                //setAddress(res1.data.address)
-                console.log(res1.data.address)
+           
 
                 const data = {
                   recipient: res1.data.address,

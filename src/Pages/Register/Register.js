@@ -180,7 +180,7 @@ export default function Register({ setToken }) {
                                 }
                             })}
                             value={newuser.Password} onChange={handleChange} />
-                        {console.log(errors)}
+                     
                         {errors.Password?.type === 'required' && !errors.Password.ref.value &&
                             <div className='text-danger' style={{ marginRight: '40%' }}>*{errors.Password.message}</div>}
                         {errors.Password?.type === 'minLength' &&

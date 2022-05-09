@@ -17,7 +17,7 @@ import axiosconfig from '../../axiosConfig'
 export default function Proposal(props) {
     const Connected = JSON.parse(localStorage.getItem('user'))
     const { project_id, owner,openPopup, setOpenPopup  } = props;
-    console.log(owner)
+   
     const [proposal, setProposal] = useState({
         projectId: project_id,
         ownerId: owner,
@@ -35,7 +35,7 @@ export default function Proposal(props) {
 
     const doModify = async (e) => {
         e.preventDefault()
-        console.log(proposal)
+        
         await axiosconfig.post(`/proposal/`, proposal)
             .then(() => {
                 setOpenPopup(false)

@@ -24,7 +24,7 @@ export default function Login({ setToken }) {
         }
         axios.post(`${process.env.REACT_APP_API_URL}/users/login`, data)
             .then(res => {
-                console.log(res.data)
+             
                 setToken(res.data.token)
 
                 if (res.data.token) {
@@ -41,8 +41,6 @@ export default function Login({ setToken }) {
 
 
 
-                console.log(localStorage.getItem('token'))
-                console.log(res.data)
             })
             .catch(err => {
                 console.error(err);
@@ -69,10 +67,10 @@ export default function Login({ setToken }) {
                     clientId="778pwi5gutqz7v"
                     redirectUri={`http://localhost:3002/`}
                     onSuccess={(code) => {
-                        console.log(code);
+                        
                     }}
                     onError={(error) => {
-                        console.log(error);
+                      
                     }}
                 >
                     {({ linkedInLogin }) => (
@@ -105,7 +103,7 @@ export default function Login({ setToken }) {
                     url: `${process.env.REACT_APP_API_URL}/users/facebooklogin`,
                     data: { accessToken: response.accessToken, userID: response.userID, name: response.name, emailAdresse: email }
                 }).then(response => {
-                    console.log("facebook login success, client side", response);
+                    
                     localStorage.setItem('token', JSON.stringify(response.data.token))
                     localStorage.setItem('user', JSON.stringify(response.data))
                     navigate('/')
@@ -118,7 +116,7 @@ export default function Login({ setToken }) {
                 url: `${process.env.REACT_APP_API_URL}/users/facebooklogin`,
                 data: { accessToken: response.accessToken, userID: response.userID, name: response.name, emailAdresse: response.email }
             }).then(response => {
-                console.log("facebook login success, client side", response);
+                
                 localStorage.setItem('token', JSON.stringify(response.data.token))
                 localStorage.setItem('user', JSON.stringify(response.data))
                 navigate('/')
@@ -142,7 +140,7 @@ export default function Login({ setToken }) {
             url: `${process.env.REACT_APP_API_URL}/users/googlelogin`,
             data: { tokenId: response.tokenId }
         }).then(response => {
-            console.log("Google login success", response);
+           
             localStorage.setItem('token', JSON.stringify(response.data.token))
             localStorage.setItem('user', JSON.stringify(response.data))
             navigate('/')
@@ -152,7 +150,7 @@ export default function Login({ setToken }) {
 
     }
     const responseErrorGoogle = (response) => {
-        console.log(response);
+        
     }
     const Google = props => (
 

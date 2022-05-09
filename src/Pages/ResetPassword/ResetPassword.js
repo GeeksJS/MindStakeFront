@@ -18,7 +18,7 @@ export default function ResetPassword() {
         }
         axios.post(`${process.env.REACT_APP_API_URL}/password-reset/${userId}/${token}`, data)
             .then(res => {
-                console.log(res.data)
+                
                 localStorage.removeItem('ResetPasswordUserId')
                 localStorage.removeItem('ResetPasswordToken')
                 Swal.fire(

@@ -99,7 +99,7 @@ export default function MyProjects() {
                                 if (searchTerm === "All projects") {
                                     return project
                                 }
-                                //console.log(keys)
+                              
                                 if (keys.some((key) => project[key].toString().toLowerCase().includes(searchTerm.toLowerCase()))) {
 
                                     return project

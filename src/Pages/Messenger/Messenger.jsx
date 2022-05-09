@@ -64,7 +64,7 @@ export default function Messenger() {
 
       await axios.get(`${process.env.REACT_APP_API_URL}/conversations/` + user.userId)
         .then(res => {
-          //console.log(res.data)
+    
           setUser(res.data)
           setConversations(res.data);  //res.data is an array of conversations
         })
@@ -120,7 +120,7 @@ export default function Messenger() {
           <div className="chatMenuWrapper">
             <input placeholder="Search for friends" className="chatMenuInput" style={{backgroundColor:'#edf9f3'}}/>
             {conversations.map((conversation, index) => {
-              //console.log(conversation);
+             
               
               return (<div onClick={() => setCurrentChat(conversation)}>
                 <Conversation conversation={conversation} key={index} currentUser={user} />

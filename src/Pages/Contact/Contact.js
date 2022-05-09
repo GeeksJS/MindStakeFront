@@ -23,11 +23,11 @@ export default function Contact() {
             confirmButtonText: 'Yes, send it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log("hahaa")
+              
 
                 axiosconfig.post(`/complaints/addcomplaint/`, data)
                     .then(res => {
-                        console.log("Sent")
+                    
                     })
                     .catch(err => {
                         console.error(err);

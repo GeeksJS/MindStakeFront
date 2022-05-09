@@ -71,7 +71,7 @@ export default function EditProfile(props) {
         }
 
 
-        console.log("hethi l data", data)
+      
 
         await axiosconfig.put(`/users/update/${User_id}`, data)
             .then(res => {

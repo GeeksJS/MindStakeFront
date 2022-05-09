@@ -6,7 +6,7 @@
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
 function initAutocomplete() {
-    console.log(window.google)
+   
     const map = new window.google.maps.Map(document.getElementById("map"), {
       center: { lat: 36.821138, lng: 10.196395 },
       zoom: 10,
@@ -44,10 +44,10 @@ function initAutocomplete() {
   
       places.forEach((place) => {
         if (!place.geometry || !place.geometry.location) {
-          console.log("Returned place contains no geometry");
+          
           return;
         }
-        //console.log(places)
+       
 
         const icon = {
           url: place.icon,

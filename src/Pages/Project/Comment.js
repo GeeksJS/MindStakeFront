@@ -20,7 +20,7 @@ export default function Comment(props) {
         //  e.preventDefault()
         setReplyForm(!replyform)
         setIdCom(comment._id)
-        // console.log(comment._id)
+       
     }
 
     const deleteComment = (e) =>{

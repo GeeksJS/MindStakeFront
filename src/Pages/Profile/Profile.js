@@ -38,7 +38,7 @@ export default function Profile() {
     const LinkedIn = props => (
         <i class="fab fa-linkedin fa-3x icon-linkedin "></i>
     );
-    console.log("userId", Connected.userId, "id", id)
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -88,7 +88,7 @@ export default function Profile() {
                                     <li>
                                         <Link to='/'>Home</Link>
                                     </li>
-                                    <li>Profile</li>{console.log("user connecté", Connected.userId, "Profile id", Profile._id)}
+                                    <li>Profile</li>
                                 </ul>
                             </div>
                         </div>

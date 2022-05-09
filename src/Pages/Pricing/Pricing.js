@@ -25,7 +25,7 @@ export default function Pricing() {
             .then((res) => {
                 setPacks(res.data)
 
-                console.log(packs)
+            
             })
     }
         , [])

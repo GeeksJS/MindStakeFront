@@ -14,7 +14,7 @@ export default function ListProposal() {
             try {
                 await axiosconfig.get(`/proposal/owner/${Connected.userId}`).then(res => {
                     setListProp(res.data);
-                    console.log("this my data ", res)
+                  
                 }
 
                 )
@@ -98,7 +98,7 @@ export default function ListProposal() {
         useEffect(() => {
             // Fetch items from another resources.
             const endOffset = itemOffset + itemsPerPage;
-            console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+           
             setCurrentItems(ListProp.slice(itemOffset, endOffset));
             setPageCount(Math.ceil(ListProp.length / itemsPerPage));
         }, [itemOffset, itemsPerPage]);
@@ -106,7 +106,7 @@ export default function ListProposal() {
         // Invoke when user click to request another page.
         const handlePageClick = (event) => {
             const newOffset = event.selected * itemsPerPage % ListProp.length;
-            console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
+           
             setItemOffset(newOffset);
         };
 

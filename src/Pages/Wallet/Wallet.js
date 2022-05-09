@@ -32,7 +32,7 @@ export default function Wallet() {
         const fetchData = async () => {
             await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${Connected.userId}`)
                 .then(res => {
-                    console.log(res.data)
+                   
                     setWalletInfo(res.data)
 
                 })

@@ -41,7 +41,7 @@ export default function Comments(props) {
     const handleChange = (e) => {
         e.preventDefault()
         setNewComment({ ...newcomment, [e.target.name]: e.target.value })
-        //  console.log(newcomment)
+       
     }
 
     useEffect(() => {

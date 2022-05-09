@@ -27,7 +27,7 @@ export default function Reply(props) {
             try {
                 const { data: response } = await axiosconfig.get(`/users/${reply.User}`);
                 setUser(response[0]);
-                //console.log(user)
+               
             } catch (error) {
                 console.error(error)
             }

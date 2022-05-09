@@ -12,7 +12,7 @@ export default function Conversation({ conversation, currentUser }) {
     //const friendId = conversation.members.find((m) => m !== currentUser._id);
     //let friendId
     let id =conversation.members[0]===Connected.userId ?  conversation.members[1] :  conversation.members[0]
-    console.log(Connected.userId)
+   
     const getUser = async () => {
       await axiosconfig.get("/users/" + id)
         .then(res => {

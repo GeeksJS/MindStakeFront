@@ -13,9 +13,8 @@ export default function ActivateAccount() {
         
         axios.post(`${process.env.REACT_APP_API_URL}/users/activate-account/${user.userId}`)
             .then(res => {
-                console.log(res.data)
-                // localStorage.removeItem('ResetPasswordUserId')
-                // localStorage.removeItem('ResetPasswordToken')
+            
+              
                 Connected.isActivated = true;
                 localStorage.removeItem('user')
                 localStorage.setItem('user', JSON.stringify(Connected))

@@ -22,9 +22,9 @@ export default function Navbar() {
     const navigate = useNavigate();
     const User = JSON.parse(localStorage.getItem('user'))
     const push = () => {
-        window.history.pushState(null, "payment", "https://mindstakeback.herokuapp.com//off");
+        window.history.pushState(null, "payment", "https://mindstakeback.herokuapp.com/off");
 
-        window.history.replaceState(null, "payment", "https://mindstakeback.herokuapp.com//off")
+        window.history.replaceState(null, "payment", "https://mindstakeback.herokuapp.com/off")
     }
     const theme = { "icon": { "borderColor": "#6113A3", "width": "24px" }, "unseenBadge": { "backgroundColor": "#DF4759" }, "header": { "backgroundColor": "#6113A3", "textColor": "#ffffff", "borderRadius": "16px" }, "footer": { "backgroundColor": "#6113A3", "textColor": "#ffffff", "borderRadius": "16px" }, "notification": { "default": { "textColor": "#15091F", "borderRadius": "8px", "backgroundColor": "#6113A3" }, "unseen": { "backgroundColor": "#6113A3" }, "unread": { "backgroundColor": "#6113A3" } } };
     // function changeLocale(l) {
@@ -35,8 +35,9 @@ export default function Navbar() {
 
     const [walletInfo, setWalletInfo] = useState({});
 
-
+ 
     useEffect(() => {
+      if(User){
         const fetchData = async () => {
             await axios.get(`${process.env.REACT_APP_API_URL}/blockchain/wallet/${User.userId}`)
                 .then(res => {
@@ -46,7 +47,9 @@ export default function Navbar() {
                 })
 
         }
-        fetchData().then(walletInfo)
+        fetchData().then(walletInfo)   
+      }
+        
     }, []);
 
     const bal = Number(walletInfo.balance)
@@ -164,11 +167,11 @@ export default function Navbar() {
                                     <li className={window.location.pathname === "/contact" && "current"}>
                                         <NavLink to="/contact">Contact</NavLink>
                                     </li>
-                                    {User.Role !== "SimpleUser" ? <li className={window.location.pathname === "/messenger" && "current"}>
+                                    {User && User.Role !== "SimpleUser" ? <li className={window.location.pathname === "/messenger" && "current"}>
                                         <NavLink to="/messenger">Messenger</NavLink>
-                                    </li> : <div style={{ marginRight: "170px" }}></div>
+                                    </li> : User && <div style={{ marginRight: "170px" }}></div>
                                     }
-                                    {console.log(User.Role ==="Creator")}
+                                   
                                     {User && User.isActivated ?
                                         <div className='btn-group'>
                                             <div className="icon0 text-amount">
